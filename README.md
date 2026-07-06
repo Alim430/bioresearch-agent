@@ -71,7 +71,7 @@ The three agents and six engines collaborate across 12 lifecycle stages, each wi
 
 <div align="center">
 
-![12-Stage Lifecycle](assets/figure2_lifecycle.png)
+![12-Stage Lifecycle](assets/figure2_lifecycle.svg)
 
 *Wide pipeline diagram — click to enlarge.*
 

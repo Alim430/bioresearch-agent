@@ -1,0 +1,135 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1240 200" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif">
+  <defs>
+    <!-- arrow marker -->
+    <marker id="arrow" viewBox="0 0 10 6" refX="9" refY="3" markerWidth="9" markerHeight="5.4" orient="auto-start-reverse">
+      <path d="M0,0 L10,3 L0,6 Z" fill="#64748B"/>
+    </marker>
+    <!-- subtle shadow -->
+    <filter id="shadow" x="-2%" y="-2%" width="104%" height="108%">
+      <feDropShadow dx="0" dy="1.2" stdDeviation="1.8" flood-opacity="0.08"/>
+    </filter>
+  </defs>
+
+  <!-- background -->
+  <rect x="0" y="0" width="1240" height="200" fill="#FFFFFF"/>
+
+  <!-- Title -->
+  <text x="620" y="32" text-anchor="middle" fill="#0F172A" font-size="18" font-weight="700">Biomedical Research Lifecycle</text>
+
+  <!-- Stage boxes — 12 stages, left-to-right flow (corrected direction) -->
+  <!-- Box dimensions: 88x52, gap between = 22px, total content width ≈ 1300 → fit within 1240 -->
+
+  <!-- ① Question -->
+  <g filter="url(#shadow)">
+    <rect x="14" y="58" width="86" height="52" rx="8" fill="#FEF2F2" stroke="#FCA5A5" stroke-width="1.2"/>
+    <text x="57" y="89" text-anchor="middle" fill="#991B1B" font-size="13.5" font-weight="600">Question</text>
+  </g>
+
+  <!-- arrow Q→H -->
+  <line x1="104" y1="84" x2="126" y2="84" stroke="#64748B" stroke-width="1.4" marker-end="url(#arrow)"/>
+
+  <!-- ② Hypothesis -->
+  <g filter="url(#shadow)">
+    <rect x="132" y="58" width="90" height="52" rx="8" fill="#FFFBEB" stroke="#FCD34D" stroke-width="1.2"/>
+    <text x="177" y="89" text-anchor="middle" fill="#92400E" font-size="13.5" font-weight="600">Hypothesis</text>
+  </g>
+
+  <!-- arrow H→L -->
+  <line x1="226" y1="84" x2="248" y2="84" stroke="#64748B" stroke-width="1.4" marker-end="url(#arrow)"/>
+
+  <!-- ③ Literature -->
+  <g filter="url(#shadow)">
+    <rect x="254" y="58" width="84" height="52" rx="8" fill="#FEFCE8" stroke="#FDE68A" stroke-width="1.2"/>
+    <text x="296" y="89" text-anchor="middle" fill="#854D0E" font-size="13.5" font-weight="600">Literature</text>
+  </g>
+
+  <!-- arrow L→D -->
+  <line x1="342" y1="84" x2="364" y2="84" stroke="#64748B" stroke-width="1.4" marker-end="url(#arrow)"/>
+
+  <!-- ④ Design -->
+  <g filter="url(#shadow)">
+    <rect x="370" y="58" width="76" height="52" rx="8" fill="#ECFDF5" stroke="#6EE7B7" stroke-width="1.2"/>
+    <text x="408" y="89" text-anchor="middle" fill="#065F46" font-size="13.5" font-weight="600">Design</text>
+  </g>
+
+  <!-- arrow D→Da -->
+  <line x1="450" y1="84" x2="472" y2="84" stroke="#64748B" stroke-width="1.4" marker-end="url(#arrow)"/>
+
+  <!-- ⑤ Data -->
+  <g filter="url(#shadow)">
+    <rect x="478" y="58" width="72" height="52" rx="8" fill="#ECFEFF" stroke="#67E8F9" stroke-width="1.2"/>
+    <text x="514" y="89" text-anchor="middle" fill="#155E75" font-size="13.5" font-weight="600">Data</text>
+  </g>
+
+  <!-- arrow Da→S -->
+  <line x1="554" y1="84" x2="576" y2="84" stroke="#64748B" stroke-width="1.4" marker-end="url(#arrow)"/>
+
+  <!-- ⑥ Stats -->
+  <g filter="url(#shadow)">
+    <rect x="582" y="58" width="74" height="52" rx="8" fill="#EFF6FF" stroke="#93C5FD" stroke-width="1.2"/>
+    <text x="619" y="89" text-anchor="middle" fill="#1E40AF" font-size="13.5" font-weight="600">Stats</text>
+  </g>
+
+  <!-- arrow S→Bi -->
+  <line x1="660" y1="84" x2="682" y2="84" stroke="#64748B" stroke-width="1.4" marker-end="url(#arrow)"/>
+
+  <!-- ⑦ Bioinfo -->
+  <g filter="url(#shadow)">
+    <rect x="688" y="58" width="82" height="52" rx="8" fill="#EEF2FF" stroke="#A5B4FC" stroke-width="1.2"/>
+    <text x="729" y="89" text-anchor="middle" fill="#3730A3" font-size="13.5" font-weight="600">Bioinfo</text>
+  </g>
+
+  <!-- arrow Bi→E -->
+  <line x1="774" y1="84" x2="796" y2="84" stroke="#64748B" stroke-width="1.4" marker-end="url(#arrow)"/>
+
+  <!-- ⑧ Evidence -->
+  <g filter="url(#shadow)">
+    <rect x="802" y="58" width="82" height="52" rx="8" fill="#F5F3FF" stroke="#C4B5FD" stroke-width="1.2"/>
+    <text x="843" y="89" text-anchor="middle" fill="#5B21B6" font-size="13.5" font-weight="600">Evidence</text>
+  </g>
+
+  <!-- arrow E→W -->
+  <line x1="888" y1="84" x2="910" y2="84" stroke="#64748B" stroke-width="1.4" marker-end="url(#arrow)"/>
+
+  <!-- ⑨ Writing -->
+  <g filter="url(#shadow)">
+    <rect x="916" y="58" width="78" height="52" rx="8" fill="#FDF2F8" stroke="#F9A8D4" stroke-width="1.2"/>
+    <text x="955" y="89" text-anchor="middle" fill="#9D174D" font-size="13.5" font-weight="600">Writing</text>
+  </g>
+
+  <!-- arrow W→R -->
+  <line x1="998" y1="84" x2="1020" y2="84" stroke="#64748B" stroke-width="1.4" marker-end="url(#arrow)"/>
+
+  <!-- ⑩ Review -->
+  <g filter="url(#shadow)">
+    <rect x="1026" y="58" width="78" height="52" rx="8" fill="#FFF1F2" stroke="#FDA4AF" stroke-width="1.2"/>
+    <text x="1065" y="89" text-anchor="middle" fill="#9F1239" font-size="13.5" font-weight="600">Review</text>
+  </g>
+
+  <!-- arrow R→P -->
+  <line x1="1108" y1="84" x2="1130" y2="84" stroke="#64748B" stroke-width="1.4" marker-end="url(#arrow)"/>
+
+  <!-- ⑪ Publish -->
+  <g filter="url(#shadow)">
+    <rect x="1138" y="58" width="82" height="52" rx="8" fill="#F0FDFA" stroke="#5EEAD4" stroke-width="1.2"/>
+    <text x="1179" y="89" text-anchor="middle" fill="#115E59" font-size="13.5" font-weight="600">Publish</text>
+  </g>
+
+  <!-- Subtitle / footer note -->
+  <text x="620" y="142" text-anchor="middle" fill="#64748B" font-size="12.5" font-style="italic">Each stage is gated by evidence quality (A–E) and human approval</text>
+
+  <!-- Stage number labels below each box -->
+  <g fill="#94A3B8" font-size="9" text-anchor="middle" font-weight="500">
+    <text x="57" y="126">1</text>
+    <text x="177" y="126">2</text>
+    <text x="296" y="126">3</text>
+    <text x="408" y="126">4</text>
+    <text x="514" y="126">5</text>
+    <text x="619" y="126">6</text>
+    <text x="729" y="126">7</text>
+    <text x="843" y="126">8</text>
+    <text x="955" y="126">9</text>
+    <text x="1065" y="126">10</text>
+    <text x="1179" y="126">11</text>
+  </g>
+</svg>
