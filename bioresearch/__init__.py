@@ -105,6 +105,8 @@ class Agent:
         figures = []
         tables = []
         report_path = None
+        report_candidates = []
+        report_keywords = ("report", "outline", "interpretation", "gaps")
 
         if success and Path(output_dir).exists():
             for f in Path(output_dir).iterdir():
@@ -112,8 +114,18 @@ class Agent:
                     figures.append(str(f))
                 elif f.suffix in (".csv", ".tsv"):
                     tables.append(str(f))
-                elif f.suffix in (".md", ".txt") and ("report" in f.name or "interpretation" in f.name or "outline" in f.name or "gaps" in f.name):
-                    report_path = str(f)
+                elif f.suffix in (".md", ".txt") and any(k in f.name for k in report_keywords):
+                    report_candidates.append(str(f))
+
+        # Deterministic primary-report selection (directory iteration order is
+        # not guaranteed, so pick by priority instead of "last match wins").
+        for key in report_keywords:
+            for cand in report_candidates:
+                if key in os.path.basename(cand):
+                    report_path = cand
+                    break
+            if report_path:
+                break
 
         return AgentResult(
             workflow=workflow,
