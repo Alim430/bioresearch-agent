@@ -56,11 +56,13 @@
     <text x="94" y="76" text-anchor="middle" fill="#9D174D" font-size="8.5">Detect · Score</text>
   </g>
 
-  <!-- inter-agent + loop -->
-  <path d="M232,232 Q240,218 254,232" fill="none" stroke="#94A3B8" stroke-width="0.8" stroke-dasharray="3,2" marker-end="url(#ar)"/>
-  <path d="M434,232 Q442,218 456,232" fill="none" stroke="#94A3B8" stroke-width="0.8" stroke-dasharray="3,2" marker-end="url(#ar)"/>
-  <path d="M544,272 Q548,296 136,296 Q132,296 136,276" fill="none" stroke="#DB2777" stroke-width="0.75" stroke-dasharray="4,3" marker-end="url(#ard)" opacity="0.55"/>
-  <text x="340" y="300" text-anchor="middle" fill="#94A3B8" font-size="8" font-style="italic">iterative refinement loop</text>
+  <!-- ═══ AGENT INTERACTION: forward pass + refinement loop ═══ -->
+  <!-- forward micro-arrows (Hypothesis -> Evidence -> Critique) -->
+  <path d="M233,214 L246,214" fill="none" stroke="#CBD5E1" stroke-width="1.1" stroke-linecap="round" marker-end="url(#ar)"/>
+  <path d="M435,214 L448,214" fill="none" stroke="#CBD5E1" stroke-width="1.1" stroke-linecap="round" marker-end="url(#ar)"/>
+  <!-- refinement return loop (Critique -> Hypothesis) -->
+  <path d="M436,280 C436,304 244,304 142,280" fill="none" stroke="#DB2777" stroke-width="1.2" stroke-dasharray="6,3" stroke-linecap="round" marker-end="url(#ard)" opacity="0.8"/>
+  <text x="340" y="296" text-anchor="middle" fill="#BE185D" font-size="9.5" font-weight="600" font-style="italic" paint-order="stroke" stroke="#ffffff" stroke-width="3.5" stroke-linejoin="round">iterative refinement loop</text>
 
   <line x1="340" y1="312" x2="340" y2="332" stroke="#94A3B8" stroke-width="1.4" marker-end="url(#ar)"/>
 
