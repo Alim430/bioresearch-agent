@@ -9,7 +9,17 @@
 
 ---
 
-## 🖼️ What It Produces (Hero Showcase)
+<div align="center">
+
+![System Overview](assets/system_overview_v1.svg)
+
+*End-to-end architecture: 3 cognitive agents · 6 core engines · 3 research workflows · deterministic outputs*
+
+</div>
+
+---
+
+## 🖼️ What It Produces
 
 One image shows the real outputs of all three workflows — understand what this is in 3 seconds, no reading required:
 
