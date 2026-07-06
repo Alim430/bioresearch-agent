@@ -1,6 +1,6 @@
 # BioResearch Agent Framework v1.0.0
 
-> From hypothesis to publication, one command.
+> From structured research inputs to reproducible computational outputs.
 
 ## Highlights
 
@@ -10,11 +10,11 @@
   - **Literature Review** — PubMed synthesis, entity co-occurrence knowledge graph, gap analysis
   - **Biomarker Discovery** — (GEO or synthetic) differential expression, volcano plot, pathway enrichment
   - **Causal Inference** — Mendelian randomization (IVW) with leave-one-out sensitivity plots
-- **Deterministic, contract-tested outputs** — every CI run asserts `report_path`, `tables`, and
-  `figures` exist on disk; no more "last-file-wins" non-determinism.
+- **Reproducible, contract-tested outputs** — every CI run asserts `report_path`, `tables`, and
+  `figures` exist on disk; consistent output structure across runs via fixed seeds.
 - **CI-tested on Python 3.9 – 3.12** via GitHub Actions (CLI Smoke, SDK Contract, Determinism).
 - **Programmatic Python SDK + CLI + LLM tool spec** (`toolspec.json`) for Claude / Cursor / LangChain.
-- **Evidence-graded (A–E) outputs** with gate checks at every lifecycle stage.
+- **Standardized outputs** with validation checks at each execution stage.
 
 ## Installation
 

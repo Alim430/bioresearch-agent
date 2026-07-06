@@ -1,6 +1,6 @@
 # BioResearch Agent Framework
 
-> An open framework for AI-driven biomedical research.
+> An open-source, reproducible workflow framework for biomedical analysis pipelines.
 
 [![CI](https://github.com/Alim430/bioresearch-agent/actions/workflows/ci.yml/badge.svg)](https://github.com/Alim430/bioresearch-agent/actions/workflows/ci.yml)
 [![Python 3.9+](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/)
@@ -13,7 +13,7 @@
 
 ![System Overview](assets/system_overview_v1.svg)
 
-*End-to-end architecture: 3 cognitive agents · 6 core engines · 3 research workflows · deterministic outputs*
+*Reproducible biomedical workflow framework: 3 analysis pipelines &middot; 6 processing modules &middot; standardized execution outputs*
 
 </div>
 
@@ -27,7 +27,7 @@ One image shows the real outputs of all three workflows — understand what this
 
 ![BioResearch Agent Output Gallery](assets/figure3_output_gallery.png)
 
-*Left: literature co-occurrence knowledge graph · Middle: differential-expression volcano plot · Right: MR scatter plot — covering Literature / Biomarker / Causal scenarios.*
+*Left: literature co-occurrence knowledge graph &middot; Middle: differential-expression volcano plot &middot; Right: MR scatter plot — covering Literature / Biomarker / Causal scenarios.*
 
 </div>
 
@@ -44,7 +44,7 @@ pip install -e .
 # 2. Environment check
 bioresearch doctor
 
-# 3. Run the three real workflows
+# 3. Run the three workflows
 bioresearch run literature --query "microglia Alzheimer's disease"
 bioresearch run biomarker --disease "Parkinson's disease"
 bioresearch run causal   --exposure BMI --outcome "Type 2 Diabetes"
@@ -57,60 +57,58 @@ ls outputs/literature/ outputs/biomarker/ outputs/causal/
 
 ---
 
-## 🔄 End-to-End Workflow
+## 🔄 Workflow Overview
 
-From a single natural-language question to publication-ready figures and reports:
+From structured research inputs to reproducible computational outputs:
 
-![BioResearch Agent End-to-End Workflow](assets/bioresearch_pipeline.svg)
+![BioResearch Agent Workflow](assets/bioresearch_pipeline.svg)
 
-**Core design:** capabilities live in the *reasoning layer* (abstract, model-agnostic); methods live in the *plugin layer* (swappable, domain-specific); workflows orchestrate the two. Each of the 12 lifecycle stages has a gate: `PASS` proceeds · `REVISE` loops · `FAIL` aborts with a reason.
+**Core design:** Workflows provide standardized execution interfaces over existing biomedical analysis tools. Computational methods remain delegated to domain-specific libraries (limma, GSEA, TwoSampleMR). The framework defines explicit execution stages and standardized outputs for reproducible workflow organization.
 
-## 🔁 12-Stage Lifecycle
+## 🔁 12-Stage Execution Diagram
 
-The three agents and six engines collaborate across 12 lifecycle stages, each with a gate check:
+Stages 1&ndash;8 (Question &rarr; Hypothesis &rarr; Literature &rarr; Design &rarr; Data &rarr; Stats &rarr; Bioinfo &rarr; Output) are implemented in the current release. Stages 9&ndash;12 (Writing &rarr; Review &rarr; Critique &rarr; Publication) represent conceptual extensions toward end-to-end research organization and are not automated.
 
 <div align="center">
 
-![12-Stage Lifecycle](assets/figure2_lifecycle.svg)
+![12-Stage Execution Diagram](assets/figure2_lifecycle.svg)
 
-*Wide pipeline diagram — click to enlarge.*
+*Execution diagram across 12 stages. Stages 1&ndash;8 are implemented; stages 9&ndash;12 are conceptual and not automated.*
 
 </div>
 
 ---
 
-## 🏗️ Architecture: Five Layers
+## 🏗️ Architecture
 
 <div align="center">
 
-![Five-Layer Architecture](assets/figure1_framework.png)
+![Architecture](assets/figure1_framework.png)
 
 </div>
 
 | Layer | Responsibility |
 |:---|:---|
-| **User Interface** | CLI · Python SDK · LLM tool (Claude / Cursor / LangChain) |
+| **User Interface** | CLI &middot; Python SDK &middot; API contract (tool spec) |
 | **Workflow** | literature / biomarker / causal (extensible) |
-| **Reasoning · 6 Engines** | Question → Retrieval → Analysis → Evidence → Narrative → Execution |
-| **Lifecycle · 12 Stages** | Ideation → … → Publication, each gated |
-| **Plugin** | PubMed · GEO · KEGG · GO · GWAS · DESeq2 · IVW-MR |
+| **Processing Modules &middot; 6 Components** | Question &rarr; Retrieval &rarr; Analysis &rarr; Evidence &rarr; Narrative &rarr; Execution |
+| **Execution Stages &middot; 12-Stage Diagram** | Question &rarr; … &rarr; Output; 8 implemented / 4 conceptual |
+| **External Tool Interfaces** | PubMed &middot; GEO &middot; KEGG &middot; GO &middot; GWAS &middot; DESeq2 &middot; IVW-MR |
 
 ---
 
 ## 🎯 What It Does
 
-**BioResearch Agent Framework** is a **runnable AI system** that automates end-to-end biomedical research through structured reasoning workflows.
+**BioResearch Agent Framework** is a runnable biomedical workflow framework that integrates existing analysis tools through standardized execution interfaces.
 
-| Capability (reasoning layer) | Description |
+| Capability | Description |
 |:---|:---|
-| Biomedical literature reasoning | entity extraction, knowledge-graph construction, research-gap identification |
-| Omics data interpretation | gene expression / variant / molecular-profile statistics with biological context |
-| Causal inference for biosystems | Mendelian randomization and causal discovery |
-| Multimodal evidence integration | literature + statistics + mechanistic evidence → unified confidence |
-| Hypothesis generation & testing | cross-domain evidence → falsifiable hypotheses |
-| Scientific narrative synthesis | structured reports with evidence grading, citation management, figures |
+| Literature analysis | PubMed retrieval, entity extraction, co-occurrence analysis |
+| Omics analysis | Differential expression and pathway enrichment workflows |
+| Causal analysis | Mendelian randomization workflows |
+| Structured reporting | Standardized tables, figures, and workflow outputs |
 
-**Key difference:** we don't just generate text — we run the **full pipeline**: data retrieval, statistical analysis, evidence grading, publication-ready output.
+**Key difference:** The framework executes reproducible computational workflows rather than generating text-only summaries. Outputs include data-derived tables, statistical results, and formatted figures.
 
 ---
 
@@ -120,46 +118,34 @@ The three agents and six engines collaborate across 12 lifecycle stages, each wi
 ```bash
 bioresearch run literature --query "microglia Alzheimer's disease"
 ```
-PubMed retrieval → abstract extraction → entity co-occurrence knowledge graph → heuristic gap detection → structured review outline.
-**Outputs:** `lit_review_summary_table.csv` · `lit_review_knowledge_graph.png` · `lit_review_knowledge_gaps.txt` · `lit_review_outline.md`
+PubMed retrieval &rarr; abstract extraction &rarr; entity co-occurrence knowledge graph &rarr; research-gap identification &rarr; structured review outline.
+**Outputs:** `lit_review_summary_table.csv` &middot; `lit_review_knowledge_graph.png` &middot; `lit_review_knowledge_gaps.txt` &middot; `lit_review_outline.md`
 
 ### 2. Biomarker Discovery
 ```bash
 bioresearch run biomarker --disease "Parkinson's disease"
 ```
-GEO dataset (GSE7621) or synthetic → differential expression (t-test + Bonferroni) → hypergeometric pathway enrichment (KEGG/GO) → candidate ranking → volcano plot.
-**Outputs:** `biomarker_deg_table.csv` · `biomarker_top_candidates.csv` · `biomarker_pathway_enrichment.csv` · `biomarker_volcano_plot.png` · `biomarker_report.txt`
+GEO dataset (GSE7621) or synthetic &rarr; differential expression (t-test + Bonferroni) &rarr; hypergeometric pathway enrichment (KEGG/GO) &rarr; candidate ranking &rarr; volcano plot.
+**Outputs:** `biomarker_deg_table.csv` &middot; `biomarker_top_candidates.csv` &middot; `biomarker_pathway_enrichment.csv` &middot; `biomarker_volcano_plot.png` &middot; `biomarker_report.txt`
 
 ### 3. Causal Inference (MR)
 ```bash
 bioresearch run causal --exposure BMI --outcome "Type 2 Diabetes"
 ```
-Simulated GWAS summary stats → genome-wide significant SNP instruments → IVW estimation → leave-one-out sensitivity → MR scatter / funnel plots.
-**Outputs:** `causal_ivw_results.csv` · `causal_loo_results.csv` · `causal_mr_scatter.png` · `causal_mr_funnel.png` · `causal_interpretation.txt`
+Simulated GWAS summary stats &rarr; genome-wide significant SNP instruments &rarr; IVW estimation &rarr; leave-one-out sensitivity &rarr; MR scatter / funnel plots.
+**Outputs:** `causal_ivw_results.csv` &middot; `causal_loo_results.csv` &middot; `causal_mr_scatter.png` &middot; `causal_mr_funnel.png` &middot; `causal_interpretation.txt`
 
 ---
 
-## 📊 Output Gallery
+## 📊 Example Workflow Outputs
 
 | Workflow | Representative Figure | Size |
 |:---|:---|:---:|
 | Literature | entity co-occurrence knowledge graph (40 entities / 30 abstracts) | varies |
-| Biomarker | publication-grade volcano plot (DEG analysis) | 86 KB |
+| Biomarker | formatted volcano plot (DEG analysis) | 86 KB |
 | Causal | MR scatter plot (IVW slope labeled) + funnel | 127 KB |
 
 > The knowledge graph is a high-resolution network graph — view it locally in `outputs/literature/`. The other figures are all < 1 MB and preview directly.
-
----
-
-## 🆚 Why Choose It
-
-| Task | Manual | ChatGPT / Claude | BioResearch Agent |
-|:---|:---:|:---:|:---:|
-| Literature review (20 papers) | 4–6 h | 5 min (text only) | **1.5 min** (report + graph + gaps) |
-| Biomarker discovery | 1–2 days | cannot access GEO / run stats | **3 min** (end-to-end) |
-| Causal inference (MR) | 1–2 h | no MR capability | **2 min** (analysis + figures) |
-
-**Every output is evidence-graded (A–E)**, every stage is gate-checked, every claim is traceable to data.
 
 ---
 
@@ -174,7 +160,7 @@ pip install -e .
 # Option 2: pip (after publish)
 pip install bioresearch-agent
 ```
-**Dependencies:** Python 3.9+, pandas · numpy · scipy · matplotlib · requests · networkx
+**Dependencies:** Python 3.9+, pandas &middot; numpy &middot; scipy &middot; matplotlib &middot; requests &middot; networkx
 
 ### Environment check
 ```bash
@@ -210,7 +196,7 @@ print(result.report_path)  # outline.md path
 print(result.figures)      # ["knowledge_graph.png"]
 ```
 
-### LLM Tool Integration
+### API Contract (Tool Spec)
 Register as a tool for Claude Desktop / Cursor / LangChain / any OpenAI-compatible function-calling system:
 ```json
 {
@@ -234,7 +220,7 @@ Full tool spec in `bioresearch/toolspec.json`.
 ```
 bioresearch-agent/
 ├── bioresearch/         # SDK + CLI package
-├── bio-research-os/      # core framework (engines, demos, examples)
+├── bio-research-os/      # core framework (modules, demos, examples)
 ├── outputs/              # generated outputs (gitignored)
 ├── assets/               # documentation figures
 ├── README.md
@@ -250,7 +236,7 @@ bioresearch-agent/
 ### Planned
 
 - Declarative workflow configuration
-- Pluggable LLM backend interface
+- Pluggable model-agnostic backend interface
 - Additional research workflows
 - Expanded data source integrations
 
@@ -262,4 +248,4 @@ MIT
 
 ---
 
-> **BioResearch Agent Framework** — *From hypothesis to publication, one command.*
+> **BioResearch Agent Framework** — *From structured research inputs to reproducible computational outputs.*

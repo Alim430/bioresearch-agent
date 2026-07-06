@@ -14,10 +14,9 @@
   <rect x="0" y="0" width="1240" height="200" fill="#FFFFFF"/>
 
   <!-- Title -->
-  <text x="620" y="32" text-anchor="middle" fill="#0F172A" font-size="18" font-weight="700">Biomedical Research Lifecycle</text>
+  <text x="620" y="32" text-anchor="middle" fill="#0F172A" font-size="18" font-weight="700">Biomedical Research Execution Diagram</text>
 
-  <!-- Stage boxes — 12 stages, left-to-right flow (corrected direction) -->
-  <!-- Box dimensions: 88x52, gap between = 22px, total content width ≈ 1300 → fit within 1240 -->
+  <!-- Stage boxes — 12 stages, left-to-right flow -->
 
   <!-- ① Question -->
   <g filter="url(#shadow)">
@@ -82,41 +81,49 @@
   <!-- arrow Bi→E -->
   <line x1="774" y1="84" x2="796" y2="84" stroke="#64748B" stroke-width="1.4" marker-end="url(#arrow)"/>
 
-  <!-- ⑧ Evidence -->
+  <!-- ⑧ Output -->
   <g filter="url(#shadow)">
     <rect x="802" y="58" width="82" height="52" rx="8" fill="#F5F3FF" stroke="#C4B5FD" stroke-width="1.2"/>
-    <text x="843" y="89" text-anchor="middle" fill="#5B21B6" font-size="13.5" font-weight="600">Evidence</text>
+    <text x="843" y="89" text-anchor="middle" fill="#5B21B6" font-size="13.5" font-weight="600">Output</text>
   </g>
 
   <!-- arrow E→W -->
   <line x1="888" y1="84" x2="910" y2="84" stroke="#64748B" stroke-width="1.4" marker-end="url(#arrow)"/>
 
-  <!-- ⑨ Writing -->
+  <!-- ⑨ Writing (conceptual — dashed border) -->
   <g filter="url(#shadow)">
-    <rect x="916" y="58" width="78" height="52" rx="8" fill="#FDF2F8" stroke="#F9A8D4" stroke-width="1.2"/>
-    <text x="955" y="89" text-anchor="middle" fill="#9D174D" font-size="13.5" font-weight="600">Writing</text>
+    <rect x="916" y="58" width="78" height="52" rx="8" fill="#FDF2F8" stroke="#F9A8D4" stroke-width="1.2" stroke-dasharray="4,3"/>
+    <text x="955" y="89" text-anchor="middle" fill="#9D174D" font-size="13.5" font-weight="600" opacity="0.7">Writing</text>
   </g>
 
   <!-- arrow W→R -->
-  <line x1="998" y1="84" x2="1020" y2="84" stroke="#64748B" stroke-width="1.4" marker-end="url(#arrow)"/>
+  <line x1="998" y1="84" x2="1020" y2="84" stroke="#64748B" stroke-width="1.4" stroke-dasharray="4,3" marker-end="url(#arrow)"/>
 
-  <!-- ⑩ Review -->
+  <!-- ⑩ Review (conceptual — dashed border) -->
   <g filter="url(#shadow)">
-    <rect x="1026" y="58" width="78" height="52" rx="8" fill="#FFF1F2" stroke="#FDA4AF" stroke-width="1.2"/>
-    <text x="1065" y="89" text-anchor="middle" fill="#9F1239" font-size="13.5" font-weight="600">Review</text>
+    <rect x="1026" y="58" width="78" height="52" rx="8" fill="#FFF1F2" stroke="#FDA4AF" stroke-width="1.2" stroke-dasharray="4,3"/>
+    <text x="1065" y="89" text-anchor="middle" fill="#9F1239" font-size="13.5" font-weight="600" opacity="0.7">Review</text>
   </g>
 
   <!-- arrow R→P -->
-  <line x1="1108" y1="84" x2="1130" y2="84" stroke="#64748B" stroke-width="1.4" marker-end="url(#arrow)"/>
+  <line x1="1108" y1="84" x2="1130" y2="84" stroke="#64748B" stroke-width="1.4" stroke-dasharray="4,3" marker-end="url(#arrow)"/>
 
-  <!-- ⑪ Publish -->
+  <!-- ⑪ Publish (conceptual — dashed border) -->
   <g filter="url(#shadow)">
-    <rect x="1138" y="58" width="82" height="52" rx="8" fill="#F0FDFA" stroke="#5EEAD4" stroke-width="1.2"/>
-    <text x="1179" y="89" text-anchor="middle" fill="#115E59" font-size="13.5" font-weight="600">Publish</text>
+    <rect x="1138" y="58" width="82" height="52" rx="8" fill="#F0FDFA" stroke="#5EEAD4" stroke-width="1.2" stroke-dasharray="4,3"/>
+    <text x="1179" y="89" text-anchor="middle" fill="#115E59" font-size="13.5" font-weight="600" opacity="0.7">Publish</text>
   </g>
 
   <!-- Subtitle / footer note -->
-  <text x="620" y="142" text-anchor="middle" fill="#64748B" font-size="12.5" font-style="italic">Each stage is gated by evidence quality (A–E) and human approval</text>
+  <text x="620" y="138" text-anchor="middle" fill="#059669" font-size="12" font-weight="600">Stages 1&ndash;8: implemented (solid) &nbsp;&nbsp;|&nbsp;&nbsp; Stages 9&ndash;12: conceptual extensions, not automated (dashed)</text>
+
+  <!-- Legend -->
+  <g transform="translate(480,152)">
+    <rect x="0" y="0" width="16" height="12" rx="3" fill="#EFF6FF" stroke="#93C5FD" stroke-width="1.2"/>
+    <text x="22" y="10" fill="#64748B" font-size="10">Implemented</text>
+    <rect x="100" y="0" width="16" height="12" rx="3" fill="#FFF1F2" stroke="#FDA4AF" stroke-width="1.2" stroke-dasharray="3,2"/>
+    <text x="122" y="10" fill="#64748B" font-size="10">Conceptual</text>
+  </g>
 
   <!-- Stage number labels below each box -->
   <g fill="#94A3B8" font-size="9" text-anchor="middle" font-weight="500">
