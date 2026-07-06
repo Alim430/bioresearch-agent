@@ -13,9 +13,13 @@
 
 一张图看完全部三种工作流的真实输出 —— 无需读文字，3 秒明白「这是什么」：
 
+<div align="center">
+
 ![BioResearch Agent Output Gallery](assets/figure3_output_gallery.png)
 
-> 左：文献共现知识图谱 · 中：差异表达火山图 · 右：孟德尔随机化（MR）散点图 —— 覆盖文献 / 标志物 / 因果三大场景。
+*左：文献共现知识图谱 · 中：差异表达火山图 · 右：MR 散点图 —— 覆盖文献 / 标志物 / 因果三大场景。*
+
+</div>
 
 ---
 
@@ -51,11 +55,27 @@ ls outputs/literature/ outputs/biomarker/ outputs/causal/
 
 **核心设计：** 能力沉淀在「推理层」（抽象、模型无关），方法放在「插件层」（可替换、领域专属），工作流串联二者。12 个生命周期阶段各自带门控：`PASS` 推进 · `REVISE` 回环 · `FAIL` 中止并给出原因。
 
+## 🔁 12 阶段生命周期
+
+三大智能体与 6 引擎在 12 个生命周期阶段中协作，每阶段带门控检查：
+
+<div align="center">
+
+![12-Stage Lifecycle](assets/figure2_lifecycle.png)
+
+*宽幅流水线图，点击查看大图。*
+
+</div>
+
 ---
 
 ## 🏗️ 架构：五层抽象
 
+<div align="center">
+
 ![Five-Layer Architecture](assets/figure1_framework.png)
+
+</div>
 
 | 层 | 职责 |
 |:---|:---|
