@@ -140,12 +140,13 @@ jobs:
               output_dir='outputs/sdk-literature',
               use_mock=True
           )
-          print('=== DIAGNOSTIC ===')
+          print('=== SDK DIAGNOSTIC ===')
           print('success:', r.success)
           print('error:', r.error)
           print('report_path:', r.report_path)
+          print('tables:', r.tables)
           print('figures:', r.figures)
-          print('==================')
+          print('=====================')
           assert r.success is True, f'Workflow failed: {r.error}'
           assert r.report_path is not None
           assert len(r.figures) > 0
@@ -163,6 +164,13 @@ jobs:
               output_dir='outputs/sdk-biomarker',
               use_synthetic=True
           )
+          print('=== SDK DIAGNOSTIC ===')
+          print('success:', r.success)
+          print('error:', r.error)
+          print('report_path:', r.report_path)
+          print('tables:', r.tables)
+          print('figures:', r.figures)
+          print('=====================')
           assert r.success is True, f'Workflow failed: {r.error}'
           assert len(r.figures) > 0
           print(f'✅ SDK biomarker workflow passed: {r}')
@@ -179,6 +187,13 @@ jobs:
               outcome='Type 2 Diabetes',
               output_dir='outputs/sdk-causal'
           )
+          print('=== SDK DIAGNOSTIC ===')
+          print('success:', r.success)
+          print('error:', r.error)
+          print('report_path:', r.report_path)
+          print('tables:', r.tables)
+          print('figures:', r.figures)
+          print('=====================')
           assert r.success is True, f'Workflow failed: {r.error}'
           assert len(r.figures) >= 2
           print(f'✅ SDK causal workflow passed: {r}')
