@@ -184,7 +184,7 @@ Validates Python version, dependencies, demo files, network connectivity, and ou
 
 ---
 
-## 🎮 Usage
+## 🎮 Interfaces
 
 ### CLI
 ```bash
@@ -247,11 +247,12 @@ bioresearch-agent/
 
 ## 🛣️ Roadmap
 
-| Phase | Feature | Status |
-|:---|:---|:---:|
-| **v1.0.0** | 3 workflows · CLI · SDK · `doctor` · LLM tool spec | ✅ |
-| **v1.1** | LLM adapters (OpenAI / Claude / local) · workflow YAML config | 🔜 |
-| **v1.2** | Plugin SDK · additional workflows | 🔜 |
+### Planned
+
+- Declarative workflow configuration
+- Pluggable LLM backend interface
+- Additional research workflows
+- Expanded data source integrations
 
 ---
 
