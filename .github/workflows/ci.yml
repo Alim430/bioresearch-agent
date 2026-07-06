@@ -132,6 +132,7 @@ jobs:
       - name: Test SDK Agent.run() — literature
         run: |
           python3 -c "
+          from pathlib import Path
           from bioresearch import Agent
           a = Agent()
           r = a.run(
@@ -147,15 +148,21 @@ jobs:
           print('tables:', r.tables)
           print('figures:', r.figures)
           print('=====================')
+          # Output contract
           assert r.success is True, f'Workflow failed: {r.error}'
+          assert r.error is None
           assert r.report_path is not None
+          assert Path(r.report_path).exists()
+          assert len(r.tables) > 0
+          assert Path(r.tables[0]).exists()
           assert len(r.figures) > 0
-          print(f'✅ SDK literature workflow passed: {r}')
+          print(f'SDK literature workflow passed: {r}')
           "
 
       - name: Test SDK Agent.run() — biomarker
         run: |
           python3 -c "
+          from pathlib import Path
           from bioresearch import Agent
           a = Agent()
           r = a.run(
@@ -171,14 +178,21 @@ jobs:
           print('tables:', r.tables)
           print('figures:', r.figures)
           print('=====================')
+          # Output contract
           assert r.success is True, f'Workflow failed: {r.error}'
+          assert r.error is None
+          assert r.report_path is not None
+          assert Path(r.report_path).exists()
+          assert len(r.tables) > 0
+          assert Path(r.tables[0]).exists()
           assert len(r.figures) > 0
-          print(f'✅ SDK biomarker workflow passed: {r}')
+          print(f'SDK biomarker workflow passed: {r}')
           "
 
       - name: Test SDK Agent.run() — causal
         run: |
           python3 -c "
+          from pathlib import Path
           from bioresearch import Agent
           a = Agent()
           r = a.run(
@@ -194,9 +208,15 @@ jobs:
           print('tables:', r.tables)
           print('figures:', r.figures)
           print('=====================')
+          # Output contract
           assert r.success is True, f'Workflow failed: {r.error}'
+          assert r.error is None
+          assert r.report_path is not None
+          assert Path(r.report_path).exists()
+          assert len(r.tables) > 0
+          assert Path(r.tables[0]).exists()
           assert len(r.figures) >= 2
-          print(f'✅ SDK causal workflow passed: {r}')
+          print(f'SDK causal workflow passed: {r}')
           "
 
       - name: Upload SDK artifacts
