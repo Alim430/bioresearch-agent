@@ -184,12 +184,12 @@ def run_doctor():
         except ImportError:
             checks.append((f"Package: {dep}", False, "NOT FOUND — run: pip install -r requirements.txt"))
 
-    # 3. Optional: networkx (WARNING ONLY — does not block all_ok)
+    # 3. networkx (REQUIRED — the literature knowledge-graph figure depends on it)
     try:
         importlib.import_module("networkx")
-        checks.append(("Package: networkx", True, "installed (optional, for knowledge graphs)"))
+        checks.append(("Package: networkx", True, "installed (knowledge-graph figure)"))
     except ImportError:
-        checks.append(("Package: networkx", None, "not installed (optional)"))  # None = warning
+        checks.append(("Package: networkx", False, "NOT FOUND — run: pip install -e ."))
 
     # 4. Demo files exist (REQUIRED)
     for demo in ["literature", "biomarker", "causal"]:
