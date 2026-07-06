@@ -1,0 +1,113 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 720" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'PingFang SC', 'Microsoft YaHei', sans-serif">
+  <!-- background -->
+  <rect x="0" y="0" width="900" height="720" fill="#FFFFFF"/>
+
+  <!-- Title bar -->
+  <rect x="20" y="20" width="860" height="60" rx="12" fill="#0F172A"/>
+  <text x="450" y="46" text-anchor="middle" fill="#FFFFFF" font-size="21" font-weight="700">BioResearch Agent · 端到端科研流程</text>
+  <text x="450" y="66" text-anchor="middle" fill="#94A3B8" font-size="12.5">From hypothesis to publication, one command</text>
+
+  <!-- ① INPUT -->
+  <text x="30" y="96"><tspan fill="#B91C1C" font-weight="700" font-size="15">①</tspan><tspan fill="#0F172A" font-weight="700" font-size="15"> 输入 · Input</tspan></text>
+  <rect x="30" y="104" width="840" height="60" rx="10" fill="#F8FAFC" stroke="#CBD5E1"/>
+  <text x="50" y="132" fill="#0F172A" font-size="16" font-weight="700">💬 自然语言研究问题</text>
+  <text x="50" y="152" fill="#334155" font-size="13">例：TREM2 与小胶质细胞在 AD 中的调控机制？</text>
+
+  <!-- arrow 1 -->
+  <path d="M441 168 L459 168 L450 180 Z" fill="#94A3B8"/>
+
+  <!-- ② AGENTS -->
+  <text x="30" y="200"><tspan fill="#B91C1C" font-weight="700" font-size="15">②</tspan><tspan fill="#0F172A" font-weight="700" font-size="15"> 三大认知智能体 · Cognitive Agents</tspan></text>
+  <g>
+    <rect x="30" y="208" width="269" height="78" rx="10" fill="#FFFFFF" stroke="#CBD5E1"/>
+    <rect x="30" y="213" width="4" height="68" fill="#B91C1C"/>
+    <text x="50" y="236" fill="#0F172A" font-size="15" font-weight="700">Question Agent</text>
+    <text x="50" y="258" fill="#334155" font-size="13">解析问题 · 拆解假设</text>
+
+    <rect x="315" y="208" width="269" height="78" rx="10" fill="#FFFFFF" stroke="#CBD5E1"/>
+    <rect x="315" y="213" width="4" height="68" fill="#B91C1C"/>
+    <text x="335" y="236" fill="#0F172A" font-size="15" font-weight="700">Evidence Agent</text>
+    <text x="335" y="258" fill="#334155" font-size="13">检索证据 · A–E 分级</text>
+
+    <rect x="600" y="208" width="269" height="78" rx="10" fill="#FFFFFF" stroke="#CBD5E1"/>
+    <rect x="600" y="213" width="4" height="68" fill="#B91C1C"/>
+    <text x="620" y="236" fill="#0F172A" font-size="15" font-weight="700">Review Agent</text>
+    <text x="620" y="258" fill="#334155" font-size="13">校验逻辑 · 门控把关</text>
+  </g>
+
+  <!-- arrow 2 -->
+  <path d="M441 290 L459 290 L450 302 Z" fill="#94A3B8"/>
+
+  <!-- ③ ENGINES -->
+  <text x="30" y="322"><tspan fill="#B91C1C" font-weight="700" font-size="15">③</tspan><tspan fill="#0F172A" font-weight="700" font-size="15"> 六大研究引擎 · Research Engines</tspan></text>
+  <g fill="#F1F5F9" stroke="#E2E8F0">
+    <rect x="30" y="330" width="269" height="64" rx="8"/>
+    <rect x="315" y="330" width="269" height="64" rx="8"/>
+    <rect x="600" y="330" width="269" height="64" rx="8"/>
+    <rect x="30" y="404" width="269" height="64" rx="8"/>
+    <rect x="315" y="404" width="269" height="64" rx="8"/>
+    <rect x="600" y="404" width="269" height="64" rx="8"/>
+  </g>
+  <g>
+    <text x="44" y="358" fill="#0F172A" font-size="14" font-weight="700">Literature</text>
+    <text x="44" y="378" fill="#334155" font-size="12.5">文献检索</text>
+    <text x="329" y="358" fill="#0F172A" font-size="14" font-weight="700">Evidence Grading</text>
+    <text x="329" y="378" fill="#334155" font-size="12.5">证据分级</text>
+    <text x="614" y="358" fill="#0F172A" font-size="14" font-weight="700">Statistics</text>
+    <text x="614" y="378" fill="#334155" font-size="12.5">统计分析</text>
+    <text x="44" y="432" fill="#0F172A" font-size="14" font-weight="700">Biomarker</text>
+    <text x="44" y="452" fill="#334155" font-size="12.5">标志物发现</text>
+    <text x="329" y="432" fill="#0F172A" font-size="14" font-weight="700">Causal (MR)</text>
+    <text x="329" y="452" fill="#334155" font-size="12.5">因果推断</text>
+    <text x="614" y="432" fill="#0F172A" font-size="14" font-weight="700">Synthesis</text>
+    <text x="614" y="452" fill="#334155" font-size="12.5">综合叙事</text>
+  </g>
+
+  <!-- arrow 3 -->
+  <path d="M441 472 L459 472 L450 484 Z" fill="#94A3B8"/>
+
+  <!-- ④ DEMOS -->
+  <text x="30" y="506"><tspan fill="#B91C1C" font-weight="700" font-size="15">④</tspan><tspan fill="#0F172A" font-weight="700" font-size="15"> 三条可运行工作流 · Runnable Workflows</tspan></text>
+  <g>
+    <rect x="30" y="514" width="269" height="78" rx="10" fill="#FFFFFF" stroke="#CBD5E1"/>
+    <rect x="30" y="514" width="269" height="4" fill="#0F172A"/>
+    <text x="46" y="540" fill="#0F172A" font-size="15" font-weight="700">Literature Review</text>
+    <text x="46" y="560" fill="#0F172A" font-size="12.5" font-family="ui-monospace, SFMono-Regular, Menlo, monospace">bioresearch run literature</text>
+    <text x="46" y="580" fill="#334155" font-size="12.5">综述 + 知识图谱</text>
+
+    <rect x="315" y="514" width="269" height="78" rx="10" fill="#FFFFFF" stroke="#CBD5E1"/>
+    <rect x="315" y="514" width="269" height="4" fill="#0F172A"/>
+    <text x="331" y="540" fill="#0F172A" font-size="15" font-weight="700">Biomarker Discovery</text>
+    <text x="331" y="560" fill="#0F172A" font-size="12.5" font-family="ui-monospace, SFMono-Regular, Menlo, monospace">bioresearch run biomarker</text>
+    <text x="331" y="580" fill="#334155" font-size="12.5">火山图 + 通路</text>
+
+    <rect x="600" y="514" width="269" height="78" rx="10" fill="#FFFFFF" stroke="#CBD5E1"/>
+    <rect x="600" y="514" width="269" height="4" fill="#0F172A"/>
+    <text x="616" y="540" fill="#0F172A" font-size="15" font-weight="700">Causal Inference</text>
+    <text x="616" y="560" fill="#0F172A" font-size="12.5" font-family="ui-monospace, SFMono-Regular, Menlo, monospace">bioresearch run causal</text>
+    <text x="616" y="580" fill="#334155" font-size="12.5">MR散点 + 解读</text>
+  </g>
+
+  <!-- arrow 4 -->
+  <path d="M441 596 L459 596 L450 608 Z" fill="#94A3B8"/>
+
+  <!-- ⑤ OUTPUTS -->
+  <text x="30" y="630"><tspan fill="#B91C1C" font-weight="700" font-size="15">⑤</tspan><tspan fill="#0F172A" font-weight="700" font-size="15"> 输出成果 · Deliverables（证据分级 A–E）</tspan></text>
+  <g fill="#B91C1C">
+    <rect x="30" y="638" width="158" height="48" rx="24"/>
+    <rect x="200" y="638" width="158" height="48" rx="24"/>
+    <rect x="370" y="638" width="158" height="48" rx="24"/>
+    <rect x="540" y="638" width="158" height="48" rx="24"/>
+    <rect x="710" y="638" width="158" height="48" rx="24"/>
+  </g>
+  <g fill="#FFFFFF" font-size="14" font-weight="600" text-anchor="middle">
+    <text x="109" y="667">知识图谱</text>
+    <text x="279" y="667">火山图</text>
+    <text x="449" y="667">MR 散点</text>
+    <text x="619" y="667">证据分级</text>
+    <text x="789" y="667">发表就绪报告</text>
+  </g>
+
+  <!-- footer -->
+  <text x="450" y="708" text-anchor="middle" fill="#64748B" font-size="12" font-style="italic">Evidence-graded (A–E) · 每阶段门控 · 每项主张可追溯</text>
+</svg>
