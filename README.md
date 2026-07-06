@@ -184,9 +184,9 @@ Validates Python version, dependencies, demo files, network connectivity, and ou
 
 ---
 
-## 🎮 Usage: Three Layers
+## 🎮 Usage
 
-### Layer 1 · CLI (80% of users)
+### CLI
 ```bash
 bioresearch run literature --query "microglia Alzheimer's disease"
 bioresearch run biomarker --disease "Parkinson's disease"
@@ -194,7 +194,7 @@ bioresearch run causal   --exposure BMI --outcome "Type 2 Diabetes"
 bioresearch doctor
 ```
 
-### Layer 2 · Python SDK
+### Python SDK
 ```python
 from bioresearch import Agent
 
@@ -210,7 +210,7 @@ print(result.report_path)  # outline.md path
 print(result.figures)      # ["knowledge_graph.png"]
 ```
 
-### Layer 3 · LLM Tool Integration
+### LLM Tool Integration
 Register as a tool for Claude Desktop / Cursor / LangChain / any OpenAI-compatible function-calling system:
 ```json
 {
@@ -233,42 +233,14 @@ Full tool spec in `bioresearch/toolspec.json`.
 
 ```
 bioresearch-agent/
-├── bioresearch/              # SDK + CLI package
-│   ├── __init__.py           # Agent class
-│   ├── cli.py                # bioresearch CLI
-│   ├── __main__.py           # python -m bioresearch
-│   └── toolspec.json         # LLM tool spec
-├── bio-research-os/          # core framework
-│   ├── core/                 # Router / State / Orchestrator
-│   ├── engines/              # 6 research engines (reasoning layer)
-│   ├── demos/                # 3 runnable workflows
-│   └── examples/             # SDK usage examples
-├── outputs/                  # generated outputs (gitignored)
-├── assets/                   # documentation figures
-├── README.md                 # this file
-├── RELEASE_NOTES.md          # v1.0.0 release notes
-├── arxiv-abstract.md         # paper abstract
-├── setup.py / pyproject.toml
-└── Makefile                  # shortcuts
-```
-
----
-
-## 📄 Paper
-
-- **Title:** *BioResearch Agent: A Tool-First Multi-Agent Framework for Biomedical Research Automation*
-- **Abstract:** see `arxiv-abstract.md`
-- **Target:** arXiv (cs.AI, q-bio.QM) → NeurIPS / ICML AI for Science Workshop
-
-**Citation:**
-```bibtex
-@misc{bioresearch2026,
-  title  = {BioResearch Agent: A Tool-First Multi-Agent Framework for Biomedical Research Automation},
-  author = {Alim, [Full Name]},
-  year   = {2026},
-  howpublished = {\url{https://github.com/Alim430/bioresearch-agent}},
-  note   = {v1.0.0}
-}
+├── bioresearch/         # SDK + CLI package
+├── bio-research-os/      # core framework (engines, demos, examples)
+├── outputs/              # generated outputs (gitignored)
+├── assets/               # documentation figures
+├── README.md
+├── RELEASE_NOTES.md      # v1.0.0 release notes
+├── pyproject.toml
+└── Makefile
 ```
 
 ---
@@ -277,15 +249,9 @@ bioresearch-agent/
 
 | Phase | Feature | Status |
 |:---|:---|:---:|
-| **Now** | 3 runnable workflows (literature / biomarker / causal) | ✅ |
-| **Now** | unified CLI (`bioresearch run`) | ✅ |
-| **Now** | SDK (`Agent.run()`) | ✅ |
-| **Now** | environment check (`bioresearch doctor`) | ✅ |
-| **Now** | LLM tool spec (`toolspec.json`) | ✅ |
-| **Next** | LLM adapters (OpenAI / Claude / local) | 🔜 |
-| **Next** | workflow YAML configuration | 🔜 |
-| **Future** | plugin ecosystem (new data sources & methods) | 📋 |
-| **Future** | multi-agent collaboration (reviewer / editor agents) | 📋 |
+| **v1.0.0** | 3 workflows · CLI · SDK · `doctor` · LLM tool spec | ✅ |
+| **v1.1** | LLM adapters (OpenAI / Claude / local) · workflow YAML config | 🔜 |
+| **v1.2** | Plugin SDK · additional workflows | 🔜 |
 
 ---
 
