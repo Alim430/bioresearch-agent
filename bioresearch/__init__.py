@@ -17,7 +17,6 @@ Usage:
 """
 
 import os
-import subprocess
 import sys
 from dataclasses import dataclass, field
 from pathlib import Path
@@ -98,26 +97,14 @@ class Agent:
             elif key == "use_synthetic" and value:
                 cmd.append("--use-synthetic")
 
-        # Run with safe execution
-        try:
-            result = subprocess.run(
-                cmd,
-                capture_output=True,
-                text=True,
-                timeout=300,
-                check=False,
-            )
-            success = result.returncode == 0
-            if not success:
-                error = f"Command: {' '.join(cmd)}\nExit code: {result.returncode}\nSTDERR:\n{result.stderr}\nSTDOUT:\n{result.stdout}"
-            else:
-                error = None
-        except subprocess.TimeoutExpired:
-            success = False
-            error = f"Workflow timed out after 300 seconds. Command: {' '.join(cmd)}"
-        except Exception as e:
-            success = False
-            error = f"Exception: {e}. Command: {' '.join(cmd)}"
+        # Delegate to the CLI's safe executor — identical execution path AND error handling
+        from .cli import _run_safely
+
+        success, stdout, stderr = _run_safely(cmd)
+        if not success:
+            error = f"Command: {' '.join(cmd)}\nSTDERR:\n{stderr}\nSTDOUT:\n{stdout}"
+        else:
+            error = None
 
         # Discover outputs
         figures = []
