@@ -2,16 +2,9 @@
 
 > **A biomedical LLM tool framework that executes structured research workflows via modular agents and engines.**
 
-[![CI](https://github.com/yourname/bioresearch-agent/actions/workflows/ci.yml/badge.svg)](https://github.com/yourname/bioresearch-agent/actions/workflows/ci.yml)
+[![CI](https://github.com/Alim430/bioresearch-agent/actions/workflows/ci.yml/badge.svg)](https://github.com/Alim430/bioresearch-agent/actions/workflows/ci.yml)
 [![Python 3.9+](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-
-```bash
-pip install bioresearch-agent
-bioresearch run literature --query "microglia Alzheimer's disease"
-```
-
-> **A biomedical LLM tool framework that executes structured research workflows via modular agents and engines.**
 
 ```bash
 pip install bioresearch-agent
@@ -24,7 +17,7 @@ bioresearch run literature --query "microglia Alzheimer's disease"
 
 ```bash
 # 1. Clone & install
-git clone https://github.com/yourname/bioresearch-agent.git
+git clone https://github.com/Alim430/bioresearch-agent.git
 cd bioresearch-agent
 pip install -e .
 
@@ -188,12 +181,12 @@ pip install bioresearch-agent
 
 ### Option 2: From source (now)
 ```bash
-git clone https://github.com/yourname/bioresearch-agent.git
+git clone https://github.com/Alim430/bioresearch-agent.git
 cd bioresearch-agent
 pip install -e .
 ```
 
-**Requirements:** Python 3.9+, pandas, numpy, scipy, matplotlib, requests
+**Requirements:** Python 3.9+, pandas, numpy, scipy, matplotlib, requests, networkx
 
 ### Health Check
 ```bash
@@ -306,8 +299,7 @@ bioresearch-agent/
 ## 📄 Paper
 
 - **Title:** *BioResearch Agent: A Tool-First Multi-Agent Framework for Biomedical Research Automation*
-- **Abstract:** See `docs/academic/arxiv_abstract.md`
-- **Target:** arXiv (cs.AI, q-bio.QM) → NeurIPS / ICML AI for Science Workshop
+- **Abstract:** See `arxiv-abstract.md`
 - **Target:** arXiv (cs.AI, q-bio.QM) → NeurIPS / ICML AI for Science Workshop
 
 ---
