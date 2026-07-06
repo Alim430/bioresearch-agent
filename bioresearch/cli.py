@@ -16,10 +16,8 @@ import subprocess
 import sys
 from pathlib import Path
 
-# Project root detection
-PROJECT_ROOT = Path(__file__).parent.parent.resolve()
-DEMO_DIR = PROJECT_ROOT / "bio-research-os" / "demos"
-MAIN_PY = PROJECT_ROOT / "bio-research-os" / "main.py"
+# Path resolution — single source of truth, shared with the SDK
+from .core.paths import PROJECT_ROOT, DEMO_DIR, MAIN_PY
 
 
 # ---------------------------------------------------------------------------

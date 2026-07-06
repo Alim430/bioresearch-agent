@@ -22,11 +22,6 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import List, Optional
 
-# Project root detection
-PROJECT_ROOT = Path(__file__).parent.parent.resolve()
-DEMO_DIR = PROJECT_ROOT / "bio-research-os" / "demos"
-
-
 @dataclass
 class AgentResult:
     """Result container for a workflow execution."""
