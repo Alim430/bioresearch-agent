@@ -1,0 +1,262 @@
+name: CI
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+  workflow_dispatch:
+
+jobs:
+  # ──────────────────────────────────────────
+  # Job 1: CLI Smoke Test
+  # ──────────────────────────────────────────
+  cli-smoke:
+    name: CLI Smoke Test
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.9", "3.10", "3.11", "3.12"]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Cache pip dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ matrix.python-version }}-${{ hashFiles('setup.py', 'pyproject.toml') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-${{ matrix.python-version }}-
+            ${{ runner.os }}-pip-
+
+      - name: Install package
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e .
+
+      - name: Run bioresearch doctor
+        run: |
+          bioresearch doctor
+
+      - name: Smoke test — literature workflow
+        run: |
+          set +e
+          bioresearch run literature \
+            --query "microglia Alzheimers disease" \
+            --output-dir outputs/literature \
+            --use-mock
+          EXIT=$?
+          echo "=== DIAGNOSTIC: literature workflow exit code = $EXIT ==="
+          ls -la outputs/literature/ || echo "No outputs/literature directory"
+          exit $EXIT
+
+      - name: Smoke test — biomarker workflow
+        run: |
+          bioresearch run biomarker \
+            --disease "Parkinson disease" \
+            --output-dir outputs/biomarker \
+            --use-synthetic
+          test -f outputs/biomarker/biomarker_deg_table.csv
+          test -f outputs/biomarker/biomarker_volcano_plot.png
+          test -f outputs/biomarker/biomarker_report.txt
+          echo "✅ Biomarker workflow outputs verified"
+
+      - name: Smoke test — causal workflow
+        run: |
+          bioresearch run causal \
+            --exposure BMI \
+            --outcome "Type 2 Diabetes" \
+            --output-dir outputs/causal
+          test -f outputs/causal/causal_ivw_results.csv
+          test -f outputs/causal/causal_mr_scatter.png
+          test -f outputs/causal/causal_interpretation.txt
+          echo "✅ Causal workflow outputs verified"
+
+      - name: Upload workflow artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: demo-outputs-py${{ matrix.python-version }}
+          path: outputs/
+          retention-days: 7
+
+  # ──────────────────────────────────────────
+  # Job 2: SDK Test
+  # ──────────────────────────────────────────
+  sdk-test:
+    name: SDK Test
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.11"]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Cache pip dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ matrix.python-version }}-${{ hashFiles('setup.py', 'pyproject.toml') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-${{ matrix.python-version }}-
+
+      - name: Install package
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e .
+
+      - name: Test SDK Agent instantiation
+        run: |
+          python3 -c "
+          from bioresearch import Agent
+          a = Agent()
+          print(a)
+          assert str(a) == '<BioResearchAgent llm=mock>'
+          print('✅ Agent instantiation passed')
+          "
+
+      - name: Test SDK Agent.run() — literature
+        run: |
+          python3 -c "
+          from bioresearch import Agent
+          a = Agent()
+          r = a.run(
+              workflow='literature',
+              query='microglia Alzheimers disease',
+              output_dir='outputs/sdk-literature',
+              use_mock=True
+          )
+          print('=== DIAGNOSTIC ===')
+          print('success:', r.success)
+          print('error:', r.error)
+          print('report_path:', r.report_path)
+          print('figures:', r.figures)
+          print('==================')
+          assert r.success is True, f'Workflow failed: {r.error}'
+          assert r.report_path is not None
+          assert len(r.figures) > 0
+          print(f'✅ SDK literature workflow passed: {r}')
+          "
+
+      - name: Test SDK Agent.run() — biomarker
+        run: |
+          python3 -c "
+          from bioresearch import Agent
+          a = Agent()
+          r = a.run(
+              workflow='biomarker',
+              disease='Parkinson disease',
+              output_dir='outputs/sdk-biomarker',
+              use_synthetic=True
+          )
+          assert r.success is True, f'Workflow failed: {r.error}'
+          assert len(r.figures) > 0
+          print(f'✅ SDK biomarker workflow passed: {r}')
+          "
+
+      - name: Test SDK Agent.run() — causal
+        run: |
+          python3 -c "
+          from bioresearch import Agent
+          a = Agent()
+          r = a.run(
+              workflow='causal',
+              exposure='BMI',
+              outcome='Type 2 Diabetes',
+              output_dir='outputs/sdk-causal'
+          )
+          assert r.success is True, f'Workflow failed: {r.error}'
+          assert len(r.figures) >= 2
+          print(f'✅ SDK causal workflow passed: {r}')
+          "
+
+      - name: Upload SDK artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: sdk-outputs
+          path: outputs/sdk-*/
+          retention-days: 7
+
+  # ──────────────────────────────────────────
+  # Job 3: Determinism Test
+  # ──────────────────────────────────────────
+  determinism:
+    name: Determinism Check
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.11"]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install package
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e .
+
+      - name: Run causal workflow (run 1)
+        run: |
+          bioresearch run causal \
+            --exposure BMI \
+            --outcome "Type 2 Diabetes" \
+            --output-dir outputs/run1 \
+            --seed 42
+          ls outputs/run1/ > outputs/run1_files.txt
+
+      - name: Run causal workflow (run 2, same seed)
+        run: |
+          bioresearch run causal \
+            --exposure BMI \
+            --outcome "Type 2 Diabetes" \
+            --output-dir outputs/run2 \
+            --seed 42
+          ls outputs/run2/ > outputs/run2_files.txt
+
+      - name: Verify output structure consistency
+        run: |
+          echo "=== Run 1 files ==="
+          cat outputs/run1_files.txt
+          echo "=== Run 2 files ==="
+          cat outputs/run2_files.txt
+          echo "=== Diff ==="
+          diff outputs/run1_files.txt outputs/run2_files.txt
+          if [ $? -eq 0 ]; then
+            echo "✅ Output structure is deterministic"
+          else
+            echo "❌ Output structure diverged between runs"
+            exit 1
+          fi
+
+      - name: Verify no crash divergence
+        run: |
+          test -f outputs/run1/causal_ivw_results.csv
+          test -f outputs/run2/causal_ivw_results.csv
+          echo "✅ Both runs produced IVW results without crash"
+
+      - name: Upload determinism artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: determinism-outputs
+          path: outputs/run*/
+          retention-days: 3

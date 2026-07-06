@@ -1,0 +1,21 @@
+# Default Domain Configuration
+# Used when no specific domain is selected
+
+domain:
+  name: default
+  description: General biomedical research
+  
+  datasets:
+    - GEO
+    - PubMed
+    - Google Scholar
+    
+  evaluation_metrics:
+    - statistical_significance
+    - effect_size
+    - reproducibility
+    
+  evidence_weights:
+    experimental: 5
+    observational: 3
+    literature: 1

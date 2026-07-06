@@ -1,0 +1,48 @@
+# Domain Pack: Neurodegeneration
+# Defines datasets, metrics, and biological priors for neurodegenerative research
+
+domain:
+  name: neurodegeneration
+  description: Neurodegenerative diseases (AD, PD, ALS, FTD)
+  
+  datasets:
+    pre_reviewed:
+      - AMP-AD
+      - ADNI
+      - UK Biobank
+      - ROSMAP
+      - MSBB
+    single_cell:
+      - SEA-AD
+      - AD scRNA-seq atlases
+    genetics:
+      - IGAP
+      - AMP-AD WGS
+    
+  evaluation_metrics:
+    - AUC-ROC
+    - hazard_ratio
+    - odds_ratio
+    - sensitivity
+    - specificity
+    
+  biological_priors:
+    cell_types:
+      - microglia
+      - astrocytes
+      - neurons
+      - oligodendrocytes
+    pathways:
+      - immune_response
+      - lipid_metabolism
+      - synaptic_function
+      - protein_homeostasis
+    
+  evidence_weights:
+    GWAS: 2
+    eQTL: 2
+    scRNA-seq_DEG: 3
+    MR: 4
+    Coloc: 4
+    CRISPR: 5
+    animal_model: 5

@@ -1,0 +1,35 @@
+# Domain Pack: Oncology
+# Defines datasets, metrics, and biological priors for cancer research
+
+domain:
+  name: oncology
+  description: Cancer biology and oncology research
+  
+  datasets:
+    pre_reviewed:
+      - TCGA
+      - GTEx
+      - CCLE
+    single_cell:
+      - tumor atlases
+    genetics:
+      - COSMIC
+      - TCGA mutation data
+    
+  evaluation_metrics:
+    - survival_analysis
+    - response_rate
+    - hazard_ratio
+    
+  biological_priors:
+    hallmarks:
+      - proliferation
+      - apoptosis
+      - metastasis
+      - immune_evasion
+    
+  evidence_weights:
+    mutation: 3
+    expression: 2
+    survival: 3
+    drug_response: 4
