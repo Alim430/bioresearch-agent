@@ -11,7 +11,7 @@
 
 <div align="center">
 
-![System Overview](assets/system_overview_v1.svg)
+![System Overview](assets/system_overview_v1.png)
 
 *Reproducible biomedical workflow framework: 3 analysis pipelines &middot; 6 processing modules &middot; standardized execution outputs*
 
@@ -61,7 +61,7 @@ ls outputs/literature/ outputs/biomarker/ outputs/causal/
 
 From structured research inputs to reproducible computational outputs:
 
-![BioResearch Agent Workflow](assets/bioresearch_pipeline.svg)
+![BioResearch Agent Workflow](assets/bioresearch_pipeline.png)
 
 **Core design:** Workflows provide standardized execution interfaces over existing biomedical analysis tools. Computational methods remain delegated to domain-specific libraries (limma, GSEA, TwoSampleMR). The framework defines explicit execution stages and standardized outputs for reproducible workflow organization.
 
@@ -71,7 +71,7 @@ Stages 1&ndash;8 (Question &rarr; Hypothesis &rarr; Literature &rarr; Design &ra
 
 <div align="center">
 
-![12-Stage Execution Diagram](assets/figure2_lifecycle.svg)
+![12-Stage Execution Diagram](assets/figure2_lifecycle.png)
 
 *Execution diagram across 12 stages. Stages 1&ndash;8 are implemented; stages 9&ndash;12 are conceptual and not automated.*
 
