@@ -11,7 +11,7 @@
 
 <div align="center">
 
-![System Overview](assets/system_overview_v1.png)
+<img src="assets/system_overview_v1.png" alt="System Overview" width="720"/>
 
 *Reproducible biomedical workflow framework: 3 analysis pipelines &middot; 6 processing modules &middot; standardized execution outputs*
 
@@ -25,7 +25,7 @@ One image shows the real outputs of all three workflows — understand what this
 
 <div align="center">
 
-![BioResearch Agent Output Gallery](assets/figure3_output_gallery.png)
+<img src="assets/figure3_output_gallery.png" alt="BioResearch Agent Output Gallery" width="880"/>
 
 *Left: literature co-occurrence knowledge graph &middot; Middle: differential-expression volcano plot &middot; Right: MR scatter plot — covering Literature / Biomarker / Causal scenarios.*
 
@@ -81,7 +81,11 @@ Restart the client after importing. See [External Client Integration](#external-
 
 From structured research inputs to reproducible computational outputs:
 
-![BioResearch Agent Workflow](assets/bioresearch_pipeline.png)
+<div align="center">
+
+<img src="assets/bioresearch_pipeline.png" alt="BioResearch Agent Workflow" width="880"/>
+
+</div>
 
 **Core design:** Workflows provide standardized execution interfaces over existing biomedical analysis tools. Computational methods remain delegated to domain-specific libraries (limma, GSEA, TwoSampleMR). The framework defines explicit execution stages and standardized outputs for reproducible workflow organization.
 
@@ -91,7 +95,7 @@ Stages 1&ndash;8 (Question &rarr; Hypothesis &rarr; Literature &rarr; Design &ra
 
 <div align="center">
 
-![12-Stage Execution Diagram](assets/figure2_lifecycle.png)
+<img src="assets/figure2_lifecycle.png" alt="12-Stage Execution Diagram" width="940"/>
 
 *Execution diagram across 12 stages. Stages 1&ndash;8 are implemented; stages 9&ndash;12 are conceptual and not automated.*
 
@@ -103,7 +107,7 @@ Stages 1&ndash;8 (Question &rarr; Hypothesis &rarr; Literature &rarr; Design &ra
 
 <div align="center">
 
-![Architecture](assets/figure1_framework.png)
+<img src="assets/figure1_framework.png" alt="Architecture" width="900"/>
 
 </div>
 
