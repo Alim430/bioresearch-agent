@@ -177,13 +177,13 @@ Simulated GWAS summary stats &rarr; genome-wide significant SNP instruments &rar
 ## 📦 Installation
 
 ```bash
-# Option 1: source install (current)
+# Option 1: source install (recommended)
 git clone https://github.com/Alim430/bioresearch-agent.git
 cd bioresearch-agent
 pip install -e .
 
-# Option 2: pip (after publish)
-pip install bioresearch-agent
+# Option 2: pip install (coming after v1.0 validation phase)
+# pip install bioresearch-agent
 ```
 **Dependencies:** Python 3.9+, pandas &middot; numpy &middot; scipy &middot; matplotlib &middot; requests &middot; networkx
 
