@@ -3,12 +3,12 @@ from setuptools import setup, find_packages
 setup(
     name="bioresearch-agent",
     version="0.1.0",
-    description="An AI assistant for end-to-end biomedical research workflows",
+    description="An open-source, reproducible workflow framework for structured biomedical research",
     long_description=open("README.md").read(),
     long_description_content_type="text/markdown",
-    author="BioResearch Team",
-    author_email="hello@bioresearch.dev",
-    url="https://github.com/yourname/bioresearch-agent",
+    author="Alimujiang Tudiyusufu",
+    author_email="Alim_T@foxmail.com",
+    url="https://github.com/Alim430/bioresearch-agent",
     packages=find_packages(),
     entry_points={
         "console_scripts": [

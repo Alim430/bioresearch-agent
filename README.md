@@ -64,14 +64,15 @@ ls outputs/literature/ outputs/biomarker/ outputs/causal/
 ### 5. Load into AI clients (optional)
 BioResearch Agent ships an optional client-integration package for compatible AI environments. It exposes the existing workflows through a standardized schema — it adds **no new computational methods**; all analysis runs in the framework's workflow modules.
 
-Copy the tool specification:
+The recommended way is to run the installer (installs framework + skills + verifies):
 ```bash
-cp bioresearch/toolspec.json ~/.config/bioresearch/toolspec.json
+./skills/install.sh
 ```
 
-Or import the ready-made skill definitions into a Claude/Cursor-style client:
+Or manually copy the tool specification and skill definitions:
 ```bash
-cp -r skills/* ~/Library/Application\ Support/Claude/skills/
+cp bioresearch/toolspec.json ~/.config/bioresearch/toolspec.json
+cp -r skills/literature skills/biomarker skills/causal ~/Library/Application\ Support/Claude/skills/
 ```
 Restart the client after importing. See [External Client Integration](#external-client-integration-skills--tool-interface).
 

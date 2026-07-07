@@ -99,7 +99,14 @@ verify() {
     fi
     echo -e "${GREEN}  ✓ Framework importable${NC}"
 
-    if ! bioresearch doctor >/dev/null 2>&1; then
+    # Try bioresearch doctor; fall back to python -m when entry point is not in PATH
+    if command -v bioresearch >/dev/null 2>&1; then
+        DOCTOR_CMD="bioresearch doctor"
+    else
+        DOCTOR_CMD="python3 -m bioresearch.cli doctor"
+    fi
+
+    if ! ${DOCTOR_CMD} >/dev/null 2>&1; then
         echo -e "${RED}  ✗ Doctor check failed${NC}"
         return 1
     fi

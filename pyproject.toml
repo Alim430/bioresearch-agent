@@ -5,11 +5,11 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "bioresearch-agent"
 version = "0.1.0"
-description = "An AI assistant for end-to-end biomedical research workflows"
+description = "An open-source, reproducible workflow framework for structured biomedical research"
 readme = "README.md"
 license = {text = "MIT"}
 authors = [
-    {name = "BioResearch Team", email = "hello@bioresearch.dev"}
+    {name = "Alimujiang Tudiyusufu", email = "Alim_T@foxmail.com"}
 ]
 classifiers = [
     "Development Status :: 3 - Alpha",
@@ -42,7 +42,7 @@ llm = ["openai>=1.0", "anthropic>=0.8"]
 bioresearch = "bioresearch.cli:main"
 
 [project.urls]
-Homepage = "https://github.com/yourname/bioresearch-agent"
-Documentation = "https://github.com/yourname/bioresearch-agent#readme"
-Repository = "https://github.com/yourname/bioresearch-agent"
-Issues = "https://github.com/yourname/bioresearch-agent/issues"
+Homepage = "https://github.com/Alim430/bioresearch-agent"
+Documentation = "https://github.com/Alim430/bioresearch-agent#readme"
+Repository = "https://github.com/Alim430/bioresearch-agent"
+Issues = "https://github.com/Alim430/bioresearch-agent/issues"

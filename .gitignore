@@ -54,3 +54,6 @@ demo_outputs/
 # Model checkpoints (if any)
 checkpoints/
 models/
+
+# Skill installer fallback directory
+bioresearch-skills/

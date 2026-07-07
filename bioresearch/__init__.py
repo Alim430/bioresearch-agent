@@ -69,7 +69,12 @@ class Agent:
         os.makedirs(output_dir, exist_ok=True)
 
         # Build CLI command (same as user would run)
-        cmd = ["bioresearch", "run", workflow, "--output-dir", output_dir]
+        # Use python -m bioresearch.cli when the 'bioresearch' entry-point is not in PATH
+        import shutil
+        if shutil.which("bioresearch"):
+            cmd = ["bioresearch", "run", workflow, "--output-dir", output_dir]
+        else:
+            cmd = [sys.executable, "-m", "bioresearch.cli", "run", workflow, "--output-dir", output_dir]
 
         # Map kwargs to CLI args
         arg_map = {
