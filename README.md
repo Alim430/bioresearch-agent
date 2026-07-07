@@ -35,25 +35,45 @@ One image shows the real outputs of all three workflows — understand what this
 
 ## ⚡ Quick Start
 
+### 1. Clone and install
 ```bash
-# 1. Clone & install
 git clone https://github.com/Alim430/bioresearch-agent.git
 cd bioresearch-agent
 pip install -e .
+```
 
-# 2. Environment check
+### 2. Verify installation
+```bash
 bioresearch doctor
+```
 
-# 3. Run the three workflows
+### 3. Run the three workflows
+```bash
 bioresearch run literature --query "microglia Alzheimer's disease"
 bioresearch run biomarker --disease "Parkinson's disease"
 bioresearch run causal   --exposure BMI --outcome "Type 2 Diabetes"
+```
 
-# 4. Inspect outputs
+### 4. Inspect outputs
+```bash
 ls outputs/literature/ outputs/biomarker/ outputs/causal/
 ```
 
 **Demos require no LLM key** — they run on public APIs + synthetic fallback data.
+
+### 5. Load into AI clients (optional)
+BioResearch Agent ships an optional client-integration package for compatible AI environments. It exposes the existing workflows through a standardized schema — it adds **no new computational methods**; all analysis runs in the framework's workflow modules.
+
+Copy the tool specification:
+```bash
+cp bioresearch/toolspec.json ~/.config/bioresearch/toolspec.json
+```
+
+Or import the ready-made skill definitions into a Claude/Cursor-style client:
+```bash
+cp -r skills/* ~/Library/Application\ Support/Claude/skills/
+```
+Restart the client after importing. See [External Client Integration](#external-client-integration-skills--tool-interface).
 
 ---
 
@@ -213,6 +233,21 @@ Register as a tool for Claude Desktop / Cursor / LangChain / any OpenAI-compatib
 ```
 Full tool spec in `bioresearch/toolspec.json`.
 
+### External Client Integration (Skills / Tool Interface)
+BioResearch Agent provides a lightweight **client-integration layer** that lets external AI clients and developer environments invoke the biomedical workflows through a standardized schema. This is an *interface layer, not an autonomous capability layer*: it dispatches to the underlying workflow modules and introduces no reasoning or analysis of its own.
+
+Supported clients:
+- Claude Desktop
+- Cursor
+- LangChain-compatible agents
+- OpenAI-compatible function-calling systems
+
+The integration package ships as:
+- `bioresearch/toolspec.json` — the full tool specification
+- `skills/` — optional client-side skill definitions for Claude/Cursor-style loading
+
+These files carry invocation instructions and parameter schemas only. All computation is executed by the framework's workflow modules.
+
 ---
 
 ## 📂 Project Structure
@@ -221,6 +256,7 @@ Full tool spec in `bioresearch/toolspec.json`.
 bioresearch-agent/
 ├── bioresearch/         # SDK + CLI package
 ├── bio-research-os/      # core framework (modules, demos, examples)
+├── skills/              # optional client-side skill definitions (Claude/Cursor)
 ├── outputs/              # generated outputs (gitignored)
 ├── assets/               # documentation figures
 ├── README.md
