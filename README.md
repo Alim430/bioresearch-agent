@@ -255,6 +255,30 @@ These files carry invocation instructions and parameter schemas only. All comput
 
 ---
 
+## 🧩 Workflow Skills
+
+BioResearch Agent ships reusable **workflow skill templates** — client-side interface definitions that let compatible AI clients (Claude Desktop, Cursor, LangChain, OpenAI-compatible) invoke the three pipelines through a standardized schema. These are *integration interfaces, not reasoning modules*: they only carry invocation instructions and parameter schemas; all computation runs in the framework's workflow modules.
+
+| Skill | Pipeline | What it invokes |
+|:---|:---|:---|
+| `literature` | Literature review | PubMed retrieval + entity co-occurrence graph |
+| `biomarker` | Biomarker discovery | Differential expression + pathway enrichment |
+| `causal` | Causal inference | Mendelian randomization (IVW) |
+
+**Install (recommended):**
+```bash
+./skills/install.sh
+```
+The installer detects your agent's skill directory, copies the three skills, and verifies the framework with `bioresearch doctor`.
+
+**Or copy manually:**
+```bash
+cp -r skills/literature skills/biomarker skills/causal ~/.config/agent/skills/
+```
+Restart the client. The pipelines then become available as reusable biomedical analysis commands through compatible agent interfaces.
+
+---
+
 ## 📂 Project Structure
 
 ```
