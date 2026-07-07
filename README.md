@@ -1,6 +1,6 @@
 # BioResearch Agent Framework
 
-> An open-source, reproducible workflow framework for biomedical analysis pipelines.
+> Run biomedical literature review, biomarker discovery, and Mendelian randomization in one reproducible workflow.
 
 [![CI](https://github.com/Alim430/bioresearch-agent/actions/workflows/ci.yml/badge.svg)](https://github.com/Alim430/bioresearch-agent/actions/workflows/ci.yml)
 [![Python 3.9+](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/)
