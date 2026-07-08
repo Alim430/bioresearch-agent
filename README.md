@@ -15,7 +15,7 @@ CLI · Python SDK · API · Agent Skills
 [![CI](https://github.com/Alim430/bioresearch-agent/actions/workflows/ci.yml/badge.svg)](https://github.com/Alim430/bioresearch-agent/actions/workflows/ci.yml)
 [![Python 3.9+](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![v1.0.0](https://img.shields.io/badge/release-v1.0.0-green.svg)](https://github.com/Alim430/bioresearch-agent/releases/tag/v1.0.0)
+[![v1.1.0](https://img.shields.io/badge/release-v1.1.0-green.svg)](https://github.com/Alim430/bioresearch-agent/releases/tag/v1.1.0)
 
 ---
 
@@ -382,7 +382,7 @@ bioresearch-agent/
 ├── assets/               # documentation figures
 ├── README.md
 ├── CITATION.cff          # cite this repository
-├── RELEASE_NOTES.md      # v1.0.0 release notes
+├── RELEASE_NOTES.md      # v1.1.0 release notes
 ├── pyproject.toml
 └── Makefile
 ```

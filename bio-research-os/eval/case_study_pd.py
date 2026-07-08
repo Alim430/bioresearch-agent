@@ -299,7 +299,7 @@ def main():
             "dataset": f"GEO:{GEO_ID}",
             "platform": PLATFORM,
             "date": "2026-07-08",
-            "agent_version": "bioresearch-agent v1.0.0 + case-study-pd",
+            "agent_version": "bioresearch-agent v1.1.0 + case-study-pd",
             "mode": data_mode,
         },
         "provenance": {

@@ -6,55 +6,56 @@ Topic            : microglia in Alzheimer's disease
 Data mode        : real PubMed E-utilities
 Articles         : 10
 Summary rows     : 10
-Graph nodes/edges: 40 / 632
-Knowledge gaps   : 3
+Graph nodes/edges: 40 / 545
+Knowledge gaps   : 4
 Outline non-empty: True
 AD-term coverage : 0.89 (8/9)
 Pipeline sanity  : PASS
 
 Top entities (by frequency):
-  - microglia: 30
-  - neuroinflammation: 18
+  - microglia: 24
+  - x3b2: 20
   - disease: 18
-  - alzheimer: 15
-  - x3b2: 15
-  - neurodegeneration: 15
-  - cognitive: 15
-  - amyloid: 14
-  - inflammatory: 13
-  - tlr4: 13
-  - signaling: 12
-  - activation: 11
-  - neuronal: 11
-  - therapeutic: 11
-  - mouse: 11
-  - regions: 11
-  - microglial: 10
+  - apoe: 17
+  - neuroinflammation: 16
+  - microglial: 15
+  - alzheimer: 13
+  - inflammatory: 12
+  - neurodegeneration: 12
+  - cognitive: 12
+  - amyloid: 10
+  - regions: 10
   - brain: 9
-  - model: 9
+  - across: 9
+  - immune: 9
+  - activation: 9
+  - therapeutic: 9
+  - hippocampal: 9
+  - signaling: 9
   - x3ba: 9
   - saha: 9
   - cholinergic: 9
-  - ptau: 9
-  - immune: 8
-  - hippocampal: 8
-  - memory: 8
-  - metabolic: 8
-  - density: 8
-  - progression: 7
-  - inflammation: 7
+  - lipid: 8
+  - model: 8
+  - mice: 8
+  - x3b1: 8
   - pathology: 7
-  - mice: 7
-  - neurodegenerative: 6
-  - x3b1: 6
+  - pathway: 7
+  - metabolic: 7
+  - density: 6
+  - individuals: 6
+  - factors: 6
+  - memory: 6
+  - neuronal: 6
+  - oxidative: 6
+  - lps-induced: 6
+  - inflammation: 6
   - dysfunction: 6
-  - strategies: 6
-  - evaluated: 6
   - apx1: 6
   - senescent: 6
-  - accumulation: 6
 
 Identified knowledge gaps:
   1. Limited very recent (2023+) studies; emerging mechanisms may be underexplored.
   2. Sparse single-cell resolution data; cellular heterogeneity may be overlooked.
   3. Epigenetic regulation in microglia during disease progression is understudied.
+  4. Sex-specific microglial responses are rarely addressed; precision medicine potential untapped.

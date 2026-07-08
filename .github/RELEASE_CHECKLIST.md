@@ -8,7 +8,7 @@
 - [ ] Push `main` branch (commit a0f07b0)
 - [ ] Verify CI badge green
 - [ ] Verify 3 demos run on GitHub Actions
-- [ ] Tag v1.0 release
+- [ ] Tag v1.1.0 release
 - [ ] Copy release notes from docs/RELEASE_NOTES.md
 
 ## Post-Release (T+0 to T+6h)
@@ -32,5 +32,5 @@
 
 ## Done Criteria
 - [ ] GitHub stars > 0 (first star)
-- [ ] arXiv arXiv ID received
+- [ ] Preprint posted (bioRxiv preferred; arXiv after human endorser secured)
 - [ ] CI remains green for 7 days

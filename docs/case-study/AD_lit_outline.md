@@ -28,6 +28,7 @@
 - Limited very recent (2023+) studies; emerging mechanisms may be underexplored.
 - Sparse single-cell resolution data; cellular heterogeneity may be overlooked.
 - Epigenetic regulation in microglia during disease progression is understudied.
+- Sex-specific microglial responses are rarely addressed; precision medicine potential untapped.
 
 ## 5. Future Directions
 - Prioritize single-cell and spatial transcriptomics to resolve microglial heterogeneity.

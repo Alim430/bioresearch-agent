@@ -5,11 +5,11 @@
     "exposure": "Educational attainment (years)",
     "outcome": "Alzheimer's disease",
     "date": "2026-07-08",
-    "agent_version": "bioresearch-agent v1.0.0 + case-study-ad-mr",
+    "agent_version": "bioresearch-agent v1.1.0 + case-study-ad-mr",
     "mode": "synthetic GWAS (ground-truth known by construction)"
   },
   "provenance": {
-    "git_commit": "b179991a2e2ad59a33fe2a38339cfd982a0a8cad",
+    "git_commit": "f0f2f326d1381103c22dd4181a5b8c592ffe162b",
     "python": "3.13.12",
     "env": "managed venv (python3.13 + numpy/pandas/scipy/matplotlib)",
     "seed": 42,

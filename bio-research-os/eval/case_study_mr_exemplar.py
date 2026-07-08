@@ -220,7 +220,7 @@ def main():
             "exposure": EXPOSURE,
             "outcome": OUTCOME,
             "date": "2026-07-08",
-            "agent_version": "bioresearch-agent v1.0.0 + case-study-mr-exemplar",
+            "agent_version": "bioresearch-agent v1.1.0 + case-study-mr-exemplar",
             "mode": "synthetic GWAS (ground-truth known by construction)",
         },
         "provenance": {

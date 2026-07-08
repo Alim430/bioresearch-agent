@@ -197,7 +197,7 @@ def main():
             "workflow": "literature-analysis",
             "topic": args.topic,
             "date": "2026-07-08",
-            "agent_version": "bioresearch-agent v1.0.0 + case-study-ad-literature",
+            "agent_version": "bioresearch-agent v1.1.0 + case-study-ad-literature",
             "mode": data_mode,
         },
         "provenance": {

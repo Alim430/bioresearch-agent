@@ -4,11 +4,11 @@
     "dataset": "GEO:GSE7621",
     "platform": "GPL570",
     "date": "2026-07-08",
-    "agent_version": "bioresearch-agent v1.0.0 + case-study-pd",
+    "agent_version": "bioresearch-agent v1.1.0 + case-study-pd",
     "mode": "real_public_data (pre-downloaded)"
   },
   "provenance": {
-    "git_commit": "c2faa783a5761c53cf51a9d477bbb16bd6fcd28c",
+    "git_commit": "f0f2f326d1381103c22dd4181a5b8c592ffe162b",
     "python": "3.13.12",
     "env": "managed venv (python3.13 + pandas/numpy/scipy/matplotlib/requests)",
     "matrix_sha256": "1389f0dc93fcde0e2e7c1996b1b4f33f1eebe30c11c6684907171ec5873c3aeb",

@@ -4,11 +4,11 @@
     "workflow": "literature-analysis",
     "topic": "microglia in Alzheimer's disease",
     "date": "2026-07-08",
-    "agent_version": "bioresearch-agent v1.0.0 + case-study-ad-literature",
+    "agent_version": "bioresearch-agent v1.1.0 + case-study-ad-literature",
     "mode": "real PubMed E-utilities"
   },
   "provenance": {
-    "git_commit": "b179991a2e2ad59a33fe2a38339cfd982a0a8cad",
+    "git_commit": "f0f2f326d1381103c22dd4181a5b8c592ffe162b",
     "python": "3.13.12",
     "env": "managed venv (python3.13 + numpy/pandas/matplotlib/networkx)",
     "engine": "demo_literature_review.py (extract_entities, build_cooccurrence_graph, identify_knowledge_gaps, generate_review_outline)"
@@ -25,26 +25,26 @@
     "n_articles": 10,
     "n_summary_rows": 10,
     "graph_nodes": 40,
-    "graph_edges": 632,
-    "n_knowledge_gaps": 3,
+    "graph_edges": 545,
+    "n_knowledge_gaps": 4,
     "outline_nonempty": true,
     "ad_term_coverage": 0.8888888888888888,
     "top_entities": [
       "microglia",
-      "neuroinflammation",
-      "disease",
-      "alzheimer",
       "x3b2",
+      "disease",
+      "apoe",
+      "neuroinflammation",
+      "microglial",
+      "alzheimer",
+      "inflammatory",
       "neurodegeneration",
       "cognitive",
       "amyloid",
-      "inflammatory",
-      "tlr4",
-      "signaling",
-      "activation",
-      "neuronal",
-      "therapeutic",
-      "mouse"
+      "regions",
+      "brain",
+      "across",
+      "immune"
     ]
   },
   "benchmark": {
