@@ -1,0 +1,51 @@
+{
+  "name": "bioresearch",
+  "version": "1.0.0",
+  "skill_spec": "v1",
+  "release_tag": "v1.0.0-arxiv",
+  "frozen_commit": "cc5911e",
+  "submission_artifact": true,
+  "description": "End-to-end biomedical research automation exposed as a callable AI-native capability unit: literature review, biomarker discovery, and causal inference (Mendelian randomization). Returns a stable, structured output contract (report path, tables, figures).",
+  "status": "Frozen as part of the v1.0.0 arXiv submission snapshot (release tag v1.0.0-arxiv). Canonical source: branch feat/skills-layer at commit cc5911e (this bundled copy is byte-identical on functional files). Do not modify until after the arXiv submission is cut; subsequent changes require a version bump (v1.0.1+).",
+  "entry": {
+    "type": "python",
+    "module": "bioresearch",
+    "function": "Agent.run"
+  },
+  "router": {
+    "type": "explicit-or-auto",
+    "note": "Skill -> WorkflowRouter (skills/bioresearch/entry.py) -> Agent.run. The router is a thin semantic wrapper, not a new system layer; it only forwards to the existing Agent runtime and never re-implements workflow logic."
+  },
+  "workflows": {
+    "literature": {
+      "required": ["query"],
+      "optional": ["output_dir", "use_mock", "max_results"]
+    },
+    "biomarker": {
+      "required": ["disease"],
+      "optional": ["output_dir", "use_synthetic", "geo_id", "alpha"]
+    },
+    "causal": {
+      "required": ["exposure", "outcome"],
+      "optional": ["output_dir", "n_snps", "seed"]
+    }
+  },
+  "outputs": {
+    "success": "bool",
+    "error": "string | null",
+    "report_path": "string | null",
+    "tables": "list[string]",
+    "figures": "list[string]"
+  },
+  "runtime": {
+    "type": "local-python",
+    "requires": ["numpy", "pandas", "scipy", "matplotlib", "requests", "yaml", "networkx"]
+  },
+  "llm_binding": "decoupled — Agent() defaults to llm='mock' (deterministic, no network/API key required); real LLM optional via extras_require[llm]",
+  "compatibility": [
+    "Any tool-calling LLM (Claude, GPT, Cursor agent, local LLM runtimes)",
+    "OpenAI function calling",
+    "LangChain tool",
+    "MCP server (when wrapped — see INTEGRATION.md)"
+  ]
+}

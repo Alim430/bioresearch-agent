@@ -1,0 +1,58 @@
+{
+  "tools": [
+    {
+      "name": "bioresearch_run",
+      "description": "Execute a biomedical research workflow (literature review, biomarker discovery, or causal inference) and return structured outputs (report path, tables, figures).",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "workflow": {
+            "type": "string",
+            "enum": ["literature", "biomarker", "causal"],
+            "description": "Type of research workflow to execute."
+          },
+          "query": {
+            "type": "string",
+            "description": "Research query for literature review workflow."
+          },
+          "disease": {
+            "type": "string",
+            "description": "Disease name for biomarker discovery workflow."
+          },
+          "exposure": {
+            "type": "string",
+            "description": "Exposure trait for causal inference workflow."
+          },
+          "outcome": {
+            "type": "string",
+            "description": "Outcome trait for causal inference workflow."
+          },
+          "output_dir": {
+            "type": "string",
+            "description": "Directory for outputs (default: outputs/{workflow}/)."
+          }
+        },
+        "required": ["workflow"],
+        "allOf": [
+          {
+            "if": { "properties": { "workflow": { "const": "literature" } } },
+            "then": { "required": ["query"] }
+          },
+          {
+            "if": { "properties": { "workflow": { "const": "biomarker" } } },
+            "then": { "required": ["disease"] }
+          },
+          {
+            "if": { "properties": { "workflow": { "const": "causal" } } },
+            "then": { "required": ["exposure", "outcome"] }
+          }
+        ]
+      }
+    }
+  ],
+  "notes": {
+    "explicit_subtools": "The runtime entry (entry.py) also exposes literature_review(query), biomarker_discovery(disease), causal_inference(exposure, outcome) as separate functions for agent chaining / prompt control.",
+    "determinism": "In mock mode (default) outputs are deterministic for a fixed seed (causal default seed=42). No network or API key required.",
+    "model_agnostic": "This schema is plain JSON-Schema and is consumable by Claude tool use, OpenAI function calling, and LangChain without modification."
+  }
+}

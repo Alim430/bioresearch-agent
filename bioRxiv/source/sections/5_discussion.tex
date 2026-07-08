@@ -1,0 +1,17 @@
+The system demonstrates how structured execution pipelines can support reproducible biomedical research workflows. The biomedical workflows are presented as reproducible computational demonstrations on synthetic and mock fixtures rather than as clinical validation studies.
+
+\subsection{Limitations}
+\begin{itemize}
+    \item The biomarker and causal-inference workflows use partially simulated data by default; real cohort or GWAS inputs are supported but not required.
+    \item Limited real-world clinical validation is performed.
+    \item No claims of clinical deployment or diagnostic use are made.
+\end{itemize}
+
+\subsection{Reproducibility and Availability}
+\label{sec:repro}
+The framework ensures reproducibility via fixed random seeds for all stochastic steps, continuous integration across Python~3.9--3.12, and a standardized output schema shared by all interface layers. Under identical inputs and a fixed seed, the framework produces an identical output structure across supported Python versions (validated in CI).
+
+This paper describes a frozen system snapshot. The core framework is pinned at commit~\texttt{\corecommit} (branch \texttt{main}); the standardized interface package at commit~\texttt{\skillcommit} (branch \texttt{feat/skills-layer}); and this submission (paper source and bundled artifacts) at release tag~\texttt{\releasetag} (branch \texttt{\papersub}). All artifacts are archived at the cited commits and are verifiable by reviewers. A full reproducibility appendix, including the CI matrix and the reproducibility check, accompanies this submission.
+
+\subsection{Conclusion}
+We introduce a tool-first biomedical workflow framework that integrates reproducible execution, standardized interfaces, and consistent output formatting. The system is released with a CLI, SDK, API invocation contract, and a standardized external interface, all sharing a single reproducible workflow runner.

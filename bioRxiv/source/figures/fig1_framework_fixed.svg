@@ -1,0 +1,158 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 620" role="img" style="background:#ffffff;font-family:-apple-system,'SF Pro Display','Segoe UI',Roboto,sans-serif">
+  <title>BioResearch Agent Framework — System Architecture</title>
+  <desc>Workflow architecture of BioResearch Agent: User Query, 12 Execution Stages, Processing Modules, Shared Infrastructure, External Tool Interfaces.</desc>
+  <defs>
+    <marker id="ar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+      <path d="M2 1L8 5L2 9" fill="none" stroke="#94A3B8" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+    <filter id="soft" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="1.5" stdDeviation="2.5" flood-color="#0F172A" flood-opacity="0.08"/>
+    </filter>
+    <linearGradient id="hd" x1="0" y1="0" x2="920" y2="0">
+      <stop offset="0" stop-color="#0F172A"/><stop offset="1" stop-color="#1E293B"/>
+    </linearGradient>
+  </defs>
+
+  <!-- ═════════ LAYER 1: HEADER + USER QUERY ═════════ -->
+  <rect x="0" y="0" width="920" height="56" fill="url(#hd)" rx="0"/>
+  <text x="460" y="26" text-anchor="middle" fill="#F8FAFC" font-size="18" font-weight="700" letter-spacing="0.5">BioResearch Agent Framework</text>
+  <text x="460" y="44" text-anchor="middle" fill="#94A3B8" font-size="11.5">Reproducible Workflow Architecture</text>
+
+  <g transform="translate(370,70)">
+    <rect x="0" y="0" width="180" height="44" rx="22" fill="#EFF6FF" stroke="#3B82F6" stroke-width="1.2" filter="url(#soft)"/>
+    <text x="90" y="19" text-anchor="middle" fill="#1D4ED8" font-size="12" font-weight="600">User Query</text>
+    <text x="90" y="34" text-anchor="middle" fill="#64748B" font-size="9.5">Natural-language research question</text>
+  </g>
+
+  <!-- arrow -->
+  <line x1="460" y1="118" x2="460" y2="134" stroke="#94A3B8" stroke-width="1.5" marker-end="url(#ar)"/>
+
+  <!-- ═════════ LAYER 2: EXECUTION STAGES (12 — FULL ENGLISH, matching fig2) ═════════ -->
+  <rect x="24" y="142" width="872" height="58" rx="10" fill="#FFFBEB" stroke="#F59E0B" stroke-width="1"/>
+  <text x="460" y="157" text-anchor="middle" fill="#92400E" font-size="10.5" font-weight="600" letter-spacing="0.8">Execution Stages (12)</text>
+
+  <!-- 12 stage boxes — full English labels, styled like figure2 (1–8 solid, 9–12 dashed/conceptual) -->
+  <g transform="translate(33,166)">
+    <!-- 1 Question -->
+    <rect x="0" y="0" width="64" height="28" rx="6" fill="#FEF2F2" stroke="#FCA5A5" stroke-width="0.9"/><text x="32" y="18" text-anchor="middle" fill="#991B1B" font-size="10" font-weight="600">Question</text>
+    <!-- 2 Hypothesis -->
+    <rect x="74" y="0" width="64" height="28" rx="6" fill="#FFFBEB" stroke="#FCD34D" stroke-width="0.9"/><text x="106" y="18" text-anchor="middle" fill="#92400E" font-size="10" font-weight="600">Hypothesis</text>
+    <!-- 3 Literature -->
+    <rect x="148" y="0" width="64" height="28" rx="6" fill="#FEFCE8" stroke="#FDE68A" stroke-width="0.9"/><text x="180" y="18" text-anchor="middle" fill="#854D0E" font-size="10" font-weight="600">Literature</text>
+    <!-- 4 Design -->
+    <rect x="222" y="0" width="64" height="28" rx="6" fill="#ECFDF5" stroke="#6EE7B7" stroke-width="0.9"/><text x="254" y="18" text-anchor="middle" fill="#065F46" font-size="10" font-weight="600">Design</text>
+    <!-- 5 Data -->
+    <rect x="296" y="0" width="64" height="28" rx="6" fill="#ECFEFF" stroke="#67E8F9" stroke-width="0.9"/><text x="328" y="18" text-anchor="middle" fill="#155E75" font-size="10" font-weight="600">Data</text>
+    <!-- 6 Stats -->
+    <rect x="370" y="0" width="64" height="28" rx="6" fill="#EFF6FF" stroke="#93C5FD" stroke-width="0.9"/><text x="402" y="18" text-anchor="middle" fill="#1E40AF" font-size="10" font-weight="600">Stats</text>
+    <!-- 7 Bioinfo -->
+    <rect x="444" y="0" width="64" height="28" rx="6" fill="#EEF2FF" stroke="#A5B4FC" stroke-width="0.9"/><text x="476" y="18" text-anchor="middle" fill="#3730A3" font-size="10" font-weight="600">Bioinfo</text>
+    <!-- 8 Evidence -->
+    <rect x="518" y="0" width="64" height="28" rx="6" fill="#F5F3FF" stroke="#C4B5FD" stroke-width="0.9"/><text x="550" y="18" text-anchor="middle" fill="#5B21B6" font-size="10" font-weight="600">Evidence</text>
+    <!-- 9 Writing (conceptual) -->
+    <rect x="592" y="0" width="64" height="28" rx="6" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="0.9" stroke-dasharray="4,3"/><text x="624" y="18" text-anchor="middle" fill="#64748B" font-size="10" font-weight="600">Writing</text>
+    <!-- 10 Review (conceptual) -->
+    <rect x="666" y="0" width="64" height="28" rx="6" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="0.9" stroke-dasharray="4,3"/><text x="698" y="18" text-anchor="middle" fill="#64748B" font-size="10" font-weight="600">Review</text>
+    <!-- 11 Critique (conceptual) -->
+    <rect x="740" y="0" width="64" height="28" rx="6" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="0.9" stroke-dasharray="4,3"/><text x="772" y="18" text-anchor="middle" fill="#64748B" font-size="10" font-weight="600">Critique</text>
+    <!-- 12 Publish (conceptual) -->
+    <rect x="814" y="0" width="64" height="28" rx="6" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="0.9" stroke-dasharray="4,3"/><text x="846" y="18" text-anchor="middle" fill="#64748B" font-size="10" font-weight="600">Publish</text>
+  </g>
+
+  <!-- arrow -->
+  <line x1="460" y1="206" x2="460" y2="222" stroke="#94A3B8" stroke-width="1.5" marker-end="url(#ar)"/>
+
+  <!-- ═════════ LAYER 3: PROCESSING MODULES ═════════ -->
+  <text x="460" y="240" text-anchor="middle" fill="#0F172A" font-size="11" font-weight="600" letter-spacing="0.6">Processing Modules</text>
+
+  <g transform="translate(38,250)">
+    <!-- Module 1: Question -->
+    <rect x="0" y="0" width="136" height="48" rx="10" fill="#DBEAFE" stroke="#3B82F6" stroke-width="0.8" filter="url(#soft)"/>
+    <text x="68" y="21" text-anchor="middle" fill="#1D4ED8" font-size="11.5" font-weight="600">Question</text>
+    <text x="68" y="37" text-anchor="middle" fill="#2563EB" font-size="9">Decompose · Plan</text>
+    <!-- Module 2: Retrieval -->
+    <rect x="146" y="0" width="136" height="48" rx="10" fill="#DCFCE7" stroke="#22C55E" stroke-width="0.8" filter="url(#soft)"/>
+    <text x="214" y="21" text-anchor="middle" fill="#15803D" font-size="11.5" font-weight="600">Retrieval</text>
+    <text x="214" y="37" text-anchor="middle" fill="#16A34A" font-size="9">Search · Extract</text>
+    <!-- Module 3: Analysis -->
+    <rect x="292" y="0" width="136" height="48" rx="10" fill="#FEF3C7" stroke="#F59E0B" stroke-width="0.8" filter="url(#soft)"/>
+    <text x="360" y="21" text-anchor="middle" fill="#92400E" font-size="11.5" font-weight="600">Analysis</text>
+    <text x="360" y="37" text-anchor="middle" fill="#D97706" font-size="9">Stats · Bioinfo</text>
+    <!-- Module 4: Evidence -->
+    <rect x="438" y="0" width="136" height="48" rx="10" fill="#FCE7F3" stroke="#EC4899" stroke-width="0.8" filter="url(#soft)"/>
+    <text x="506" y="21" text-anchor="middle" fill="#9D174D" font-size="11.5" font-weight="600">Evidence</text>
+    <text x="506" y="37" text-anchor="middle" fill="#BE185D" font-size="9">Output Categorization</text>
+    <!-- Module 5: Narrative -->
+    <rect x="584" y="0" width="136" height="48" rx="10" fill="#F3E8FF" stroke="#A855F7" stroke-width="0.8" filter="url(#soft)"/>
+    <text x="652" y="21" text-anchor="middle" fill="#6B21A8" font-size="11.5" font-weight="600">Narrative</text>
+    <text x="652" y="37" text-anchor="middle" fill="#7C3AED" font-size="9">Draft · Cite</text>
+    <!-- Module 6: Execution -->
+    <rect x="730" y="0" width="136" height="48" rx="10" fill="#CFFAFE" stroke="#06B6D4" stroke-width="0.8" filter="url(#soft)"/>
+    <text x="798" y="21" text-anchor="middle" fill="#155E75" font-size="11.5" font-weight="600">Execution</text>
+    <text x="798" y="37" text-anchor="middle" fill="#0891B2" font-size="9">Orchestrate · Run</text>
+  </g>
+
+  <!-- arrow -->
+  <line x1="460" y1="306" x2="460" y2="322" stroke="#94A3B8" stroke-width="1.5" marker-end="url(#ar)"/>
+
+  <!-- ═════════ LAYER 4: SHARED INFRASTRUCTURE ═════════ -->
+  <text x="460" y="340" text-anchor="middle" fill="#64748B" font-size="10.5" font-weight="500" letter-spacing="0.6">Shared Infrastructure</text>
+
+  <g transform="translate(110,350)">
+    <rect x="0" y="0" width="130" height="40" rx="8" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="0.7" filter="url(#soft)"/>
+    <text x="65" y="17" text-anchor="middle" fill="#334155" font-size="10.5" font-weight="500">Evidence Store</text>
+    <text x="65" y="31" text-anchor="middle" fill="#94A3B8" font-size="8.5">Provenance log</text>
+
+    <rect x="144" y="0" width="130" height="40" rx="8" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="0.7" filter="url(#soft)"/>
+    <text x="209" y="17" text-anchor="middle" fill="#334155" font-size="10.5" font-weight="500">Memory</text>
+    <text x="209" y="31" text-anchor="middle" fill="#94A3B8" font-size="8.5">State cache</text>
+
+    <rect x="288" y="0" width="130" height="40" rx="8" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="0.7" filter="url(#soft)"/>
+    <text x="353" y="17" text-anchor="middle" fill="#334155" font-size="10.5" font-weight="500">Knowledge Graph</text>
+    <text x="353" y="31" text-anchor="middle" fill="#94A3B8" font-size="8.5">Entity relations</text>
+
+    <rect x="432" y="0" width="130" height="40" rx="8" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="0.7" filter="url(#soft)"/>
+    <text x="497" y="17" text-anchor="middle" fill="#334155" font-size="10.5" font-weight="500">State Manager</text>
+    <text x="497" y="31" text-anchor="middle" fill="#94A3B8" font-size="8.5">Workflow state</text>
+
+    <rect x="576" y="0" width="130" height="40" rx="8" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="0.7" filter="url(#soft)"/>
+    <text x="641" y="17" text-anchor="middle" fill="#334155" font-size="10.5" font-weight="500">Tool Interface Manager</text>
+    <text x="641" y="31" text-anchor="middle" fill="#94A3B8" font-size="8.5">Tool registry</text>
+  </g>
+
+  <!-- arrow -->
+  <line x1="460" y1="398" x2="460" y2="414" stroke="#94A3B8" stroke-width="1.5" marker-end="url(#ar)"/>
+
+  <!-- ═════════ LAYER 5: EXTERNAL TOOL INTERFACES ═════════ -->
+  <text x="460" y="430" text-anchor="middle" fill="#1E40AF" font-size="10.5" font-weight="600" letter-spacing="0.6">External Tool Interfaces</text>
+
+  <g transform="translate(134,440)">
+    <rect x="0" y="0" width="120" height="42" rx="8" fill="#EEF2FF" stroke="#6366F1" stroke-width="0.7" filter="url(#soft)"/>
+    <text x="60" y="18" text-anchor="middle" fill="#3730A3" font-size="11" font-weight="600">PubMed</text>
+    <text x="60" y="33" text-anchor="middle" fill="#4338CA" font-size="8.5">Literature DB</text>
+
+    <rect x="134" y="0" width="120" height="42" rx="8" fill="#EEF2FF" stroke="#6366F1" stroke-width="0.7" filter="url(#soft)"/>
+    <text x="194" y="18" text-anchor="middle" fill="#3730A3" font-size="11" font-weight="600">GEO</text>
+    <text x="194" y="33" text-anchor="middle" fill="#4338CA" font-size="8.5">Expression data</text>
+
+    <rect x="268" y="0" width="120" height="42" rx="8" fill="#EEF2FF" stroke="#6366F1" stroke-width="0.7" filter="url(#soft)"/>
+    <text x="328" y="18" text-anchor="middle" fill="#3730A3" font-size="11" font-weight="600">CELLEXP</text>
+    <text x="328" y="33" text-anchor="middle" fill="#4338CA" font-size="8.5">Cell line DB</text>
+
+    <rect x="402" y="0" width="120" height="42" rx="8" fill="#EEF2FF" stroke="#6366F1" stroke-width="0.7" filter="url(#soft)"/>
+    <text x="462" y="18" text-anchor="middle" fill="#3730A3" font-size="11" font-weight="600">GTEx</text>
+    <text x="462" y="33" text-anchor="middle" fill="#4338CA" font-size="8.5">Tissue eQTL</text>
+
+    <rect x="536" y="0" width="120" height="42" rx="8" fill="#EEF2FF" stroke="#6366F1" stroke-width="0.7" filter="url(#soft)"/>
+    <text x="596" y="18" text-anchor="middle" fill="#3730A3" font-size="11" font-weight="600">OpenTargets</text>
+    <text x="596" y="33" text-anchor="middle" fill="#4338CA" font-size="8.5">Target validation</text>
+
+    <rect x="670" y="0" width="120" height="42" rx="8" fill="#EEF2FF" stroke="#6366F1" stroke-width="0.7" filter="url(#soft)"/>
+    <text x="730" y="18" text-anchor="middle" fill="#3730A3" font-size="11" font-weight="600">UniProt</text>
+    <text x="730" y="33" text-anchor="middle" fill="#4338CA" font-size="8.5">Protein DB</text>
+  </g>
+
+  <!-- ═════════ FOOTER NOTE ═════════ -->
+  <text x="460" y="504" text-anchor="middle" fill="#94A3B8" font-size="9" font-style="italic">Stages 1–8 are implemented; stages 9–12 are conceptual extensions (not automated).</text>
+
+</svg>

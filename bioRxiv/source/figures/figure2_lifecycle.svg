@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1240 200" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 6" refX="9" refY="3" markerWidth="9" markerHeight="5.4" orient="auto-start-reverse">
+      <path d="M0,0 L10,3 L0,6 Z" fill="#64748B"/>
+    </marker>
+    <filter id="shadow" x="-2%" y="-2%" width="104%" height="108%">
+      <feDropShadow dx="0" dy="1.2" stdDeviation="1.8" flood-opacity="0.08"/>
+    </filter>
+  </defs>
+
+  <rect x="0" y="0" width="1240" height="200" fill="#FFFFFF"/>
+
+  <text x="620" y="32" text-anchor="middle" fill="#0F172A" font-size="18" font-weight="700">Biomedical Research Execution Diagram</text>
+
+  <!-- 12 stage boxes: implemented 1-8 (solid), conceptual 9-12 (dashed). box width 72, gap 16, start x=100 -->
+
+  <!-- 1 Question -->
+  <g filter="url(#shadow)"><rect x="100" y="58" width="72" height="52" rx="8" fill="#FEF2F2" stroke="#FCA5A5" stroke-width="1.2"/><text x="136" y="89" text-anchor="middle" fill="#991B1B" font-size="13" font-weight="600">Question</text></g>
+  <line x1="172" y1="84" x2="188" y2="84" stroke="#64748B" stroke-width="1.4" marker-end="url(#arrow)"/>
+  <!-- 2 Hypothesis -->
+  <g filter="url(#shadow)"><rect x="188" y="58" width="72" height="52" rx="8" fill="#FFFBEB" stroke="#FCD34D" stroke-width="1.2"/><text x="224" y="89" text-anchor="middle" fill="#92400E" font-size="13" font-weight="600">Hypothesis</text></g>
+  <line x1="260" y1="84" x2="276" y2="84" stroke="#64748B" stroke-width="1.4" marker-end="url(#arrow)"/>
+  <!-- 3 Literature -->
+  <g filter="url(#shadow)"><rect x="276" y="58" width="72" height="52" rx="8" fill="#FEFCE8" stroke="#FDE68A" stroke-width="1.2"/><text x="312" y="89" text-anchor="middle" fill="#854D0E" font-size="13" font-weight="600">Literature</text></g>
+  <line x1="348" y1="84" x2="364" y2="84" stroke="#64748B" stroke-width="1.4" marker-end="url(#arrow)"/>
+  <!-- 4 Design -->
+  <g filter="url(#shadow)"><rect x="364" y="58" width="72" height="52" rx="8" fill="#ECFDF5" stroke="#6EE7B7" stroke-width="1.2"/><text x="400" y="89" text-anchor="middle" fill="#065F46" font-size="13" font-weight="600">Design</text></g>
+  <line x1="436" y1="84" x2="452" y2="84" stroke="#64748B" stroke-width="1.4" marker-end="url(#arrow)"/>
+  <!-- 5 Data -->
+  <g filter="url(#shadow)"><rect x="452" y="58" width="72" height="52" rx="8" fill="#ECFEFF" stroke="#67E8F9" stroke-width="1.2"/><text x="488" y="89" text-anchor="middle" fill="#155E75" font-size="13" font-weight="600">Data</text></g>
+  <line x1="524" y1="84" x2="540" y2="84" stroke="#64748B" stroke-width="1.4" marker-end="url(#arrow)"/>
+  <!-- 6 Stats -->
+  <g filter="url(#shadow)"><rect x="540" y="58" width="72" height="52" rx="8" fill="#EFF6FF" stroke="#93C5FD" stroke-width="1.2"/><text x="576" y="89" text-anchor="middle" fill="#1E40AF" font-size="13" font-weight="600">Stats</text></g>
+  <line x1="612" y1="84" x2="628" y2="84" stroke="#64748B" stroke-width="1.4" marker-end="url(#arrow)"/>
+  <!-- 7 Bioinfo -->
+  <g filter="url(#shadow)"><rect x="628" y="58" width="72" height="52" rx="8" fill="#EEF2FF" stroke="#A5B4FC" stroke-width="1.2"/><text x="664" y="89" text-anchor="middle" fill="#3730A3" font-size="13" font-weight="600">Bioinfo</text></g>
+  <line x1="700" y1="84" x2="716" y2="84" stroke="#64748B" stroke-width="1.4" marker-end="url(#arrow)"/>
+  <!-- 8 Evidence -->
+  <g filter="url(#shadow)"><rect x="716" y="58" width="72" height="52" rx="8" fill="#F5F3FF" stroke="#C4B5FD" stroke-width="1.2"/><text x="752" y="89" text-anchor="middle" fill="#5B21B6" font-size="13" font-weight="600">Evidence</text></g>
+  <line x1="788" y1="84" x2="804" y2="84" stroke="#64748B" stroke-width="1.4" marker-end="url(#arrow)"/>
+  <!-- 9 Writing (conceptual) -->
+  <g filter="url(#shadow)"><rect x="804" y="58" width="72" height="52" rx="8" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1.2" stroke-dasharray="4,3"/><text x="840" y="89" text-anchor="middle" fill="#64748B" font-size="13" font-weight="600">Writing</text></g>
+  <line x1="876" y1="84" x2="892" y2="84" stroke="#94A3B8" stroke-width="1.4" stroke-dasharray="3,3" marker-end="url(#arrow)"/>
+  <!-- 10 Review (conceptual) -->
+  <g filter="url(#shadow)"><rect x="892" y="58" width="72" height="52" rx="8" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1.2" stroke-dasharray="4,3"/><text x="928" y="89" text-anchor="middle" fill="#64748B" font-size="13" font-weight="600">Review</text></g>
+  <line x1="964" y1="84" x2="980" y2="84" stroke="#94A3B8" stroke-width="1.4" stroke-dasharray="3,3" marker-end="url(#arrow)"/>
+  <!-- 11 Critique (conceptual) -->
+  <g filter="url(#shadow)"><rect x="980" y="58" width="72" height="52" rx="8" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1.2" stroke-dasharray="4,3"/><text x="1016" y="89" text-anchor="middle" fill="#64748B" font-size="13" font-weight="600">Critique</text></g>
+  <line x1="1052" y1="84" x2="1068" y2="84" stroke="#94A3B8" stroke-width="1.4" stroke-dasharray="3,3" marker-end="url(#arrow)"/>
+  <!-- 12 Publish (conceptual) -->
+  <g filter="url(#shadow)"><rect x="1068" y="58" width="72" height="52" rx="8" fill="#F8FAFC" stroke="#CBD5E1" stroke-width="1.2" stroke-dasharray="4,3"/><text x="1104" y="89" text-anchor="middle" fill="#64748B" font-size="12.5" font-weight="600">Publish</text></g>
+
+  <text x="620" y="142" text-anchor="middle" fill="#64748B" font-size="12.5" font-style="italic">Stages 1–8 are implemented; stages 9–12 are conceptual extensions (not automated).</text>
+
+  <g fill="#94A3B8" font-size="9" text-anchor="middle" font-weight="500">
+    <text x="136" y="126">1</text>
+    <text x="224" y="126">2</text>
+    <text x="312" y="126">3</text>
+    <text x="400" y="126">4</text>
+    <text x="488" y="126">5</text>
+    <text x="576" y="126">6</text>
+    <text x="664" y="126">7</text>
+    <text x="752" y="126">8</text>
+    <text x="840" y="126">9</text>
+    <text x="928" y="126">10</text>
+    <text x="1016" y="126">11</text>
+    <text x="1104" y="126">12</text>
+  </g>
+</svg>
