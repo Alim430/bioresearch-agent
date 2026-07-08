@@ -1,0 +1,59 @@
+{
+  "suite": "Biomedical Workflow Validation Suite",
+  "description": "Real-public-data validation of BioResearch Agent workflows (honest, reproducible, evidence-graded). Not a leaderboard benchmark.",
+  "framework_version": "1.0.0",
+  "cases": [
+    {
+      "id": 1,
+      "name": "Parkinson's disease biomarker discovery",
+      "disease": "Parkinson's disease",
+      "workflows": ["biomarker-discovery", "differential-expression", "pathway-enrichment"],
+      "data": "GEO:GSE7621 (GPL570, 25 samples: 9 control / 16 PD)",
+      "known_entities": {
+        "mendelian_drivers": ["SNCA", "LRRK2", "PARK7", "PINK1", "PRKN", "GBA"],
+        "dopaminergic_signature": ["TH", "SLC6A3", "SLC18A2", "DDC", "DRD2", "MAOA", "COMT"]
+      },
+      "pathway_sanity": ["dopamine metabolism", "mitochondrial dysfunction", "oxidative stress", "immune response"],
+      "script": "case_study_pd.py",
+      "output_dir": "docs/case-study",
+      "status": "implemented",
+      "evidence_grade": "B (real public data; bulk microarray; single cohort)"
+    },
+    {
+      "id": 2,
+      "name": "Alzheimer's disease causal evidence (risk factor -> AD)",
+      "disease": "Alzheimer's disease",
+      "workflows": ["causal-inference"],
+      "data": "GWAS summary stats (independent cohorts, e.g. GLGC/UKBB exposure + IGAP/GR@P AD outcome)",
+      "known_entities": ["APOE", "TREM2", "BIN1", "CLU"],
+      "pathway_sanity": ["lipid metabolism", "immune/inflammatory response", "amyloid/tau"],
+      "script": "case_study_ad_mr.py",
+      "output_dir": "docs/case-study",
+      "status": "planned"
+    },
+    {
+      "id": 3,
+      "name": "Alzheimer's disease literature gap analysis",
+      "disease": "Alzheimer's disease",
+      "workflows": ["literature-analysis"],
+      "data": "PubMed / OpenAlex",
+      "known_entities": [],
+      "pathway_sanity": [],
+      "script": "case_study_ad_literature.py",
+      "output_dir": "docs/case-study",
+      "status": "planned"
+    },
+    {
+      "id": 4,
+      "name": "Exposure -> outcome MR exemplar",
+      "disease": "general (methodology exemplar)",
+      "workflows": ["causal-inference"],
+      "data": "GWAS summary stats (e.g. BMI -> type 2 diabetes)",
+      "known_entities": [],
+      "pathway_sanity": [],
+      "script": "case_study_mr_exemplar.py",
+      "output_dir": "docs/case-study",
+      "status": "planned"
+    }
+  ]
+}

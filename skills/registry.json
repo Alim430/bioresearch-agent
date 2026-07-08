@@ -58,6 +58,14 @@
       "capability": "Two-sample Mendelian randomization (IVW + sensitivity)",
       "triggers": "causal effect / MR between exposure and outcome",
       "status": "active"
+    },
+    {
+      "name": "bioresearch-disease-case-study",
+      "path": "skills/biomedical/disease-case-study",
+      "group": "biomedical",
+      "capability": "Real-data disease case study + blind benchmark (known-gene recovery / pathway sanity / reproducibility)",
+      "triggers": "disease case study / validation run / benchmark the workflows on real data",
+      "status": "active"
     }
   ],
   "planned": [

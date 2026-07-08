@@ -1,0 +1,60 @@
+GSE7621 Parkinson's Disease — Real-Data Case Study
+================================================================
+
+Data mode                : real_public_data (pre-downloaded)
+Platform                 : GPL570 (Affymetrix HG-U133_Plus_2)
+Samples                  : 25 (9 control / 16 case)
+Genes analyzed           : 21709
+Bonferroni-significant    : 1
+FDR(q<0.05)-significant: 21
+Nominal DE (p<0.05, |lfc|>=0.3): 2126
+
+KNOWN PD GENE RECOVERY — Mendelian drivers (subtle in bulk SN)
+----------------------------------------------------------------
+  In top 100 (volcano)  : 0 / 6
+  Present (of 6)  : 4 / 6
+  In FDR-sig DEGs       : 0 / 6 []
+  SNCA     rank= 1687 (7.77%) log2FC=-0.642 p=4.26e-02 q=3.88e-01
+  LRRK2    rank= 5904 (27.20%) log2FC=-0.315 p=1.29e-01 q=5.56e-01
+  PARK7    rank=18244 (84.04%) log2FC=-0.042 p=7.04e-01 q=9.21e-01
+  PINK1    rank= 2615 (12.05%) log2FC=-0.340 p=1.33e-02 q=2.71e-01
+  PRKN     NOT PRESENT in dataset (no probe mapped / not on array)
+  GBA      NOT PRESENT in dataset (no probe mapped / not on array)
+
+KNOWN PD GENE RECOVERY — Dopaminergic signature (recoverable)
+----------------------------------------------------------------
+  In top 100 (volcano)  : 4 / 7
+  Present (of 7)  : 7 / 7
+  In FDR-sig DEGs       : 0 / 7 []
+  TH       rank=    1 (0.00%) log2FC=-3.664 p=3.56e-04 q=8.12e-02
+  SLC6A3   rank=    8 (0.04%) log2FC=-2.497 p=9.05e-04 q=1.16e-01
+  SLC18A2  rank=    4 (0.02%) log2FC=-3.032 p=2.21e-04 q=6.89e-02
+  DDC      rank=   17 (0.08%) log2FC=-2.622 p=4.34e-03 q=1.91e-01
+  DRD2     rank=  308 (1.42%) log2FC=-0.929 p=4.98e-03 q=1.95e-01
+  MAOA     rank=17598 (81.06%) log2FC=-0.088 p=7.82e-01 q=9.43e-01
+  COMT     rank= 5724 (26.37%) log2FC=+0.215 p=4.35e-02 q=3.92e-01
+
+PATHWAY SANITY (nominal DE set)
+----------------------------------------------------------------
+  dopamine metabolism      significant=True  min_p=0.000159
+  mitochondrial dysfunction significant=False  min_p=0.403
+  oxidative stress         significant=False  min_p=1
+  immune response          significant=False  min_p=0.643
+
+TOP 15 CANDIDATES (volcano rank)
+----------------------------------------------------------------
+  TH           DOWN log2FC=-3.664 p=3.56e-04 q=8.12e-02
+  AXIN1        UP   log2FC=+2.315 p=4.33e-06 q=1.97e-02
+  VN1R2        DOWN log2FC=-2.131 p=2.72e-06 q=1.97e-02
+  SLC18A2      DOWN log2FC=-3.032 p=2.21e-04 q=6.89e-02
+  RRS1-AS1     UP   log2FC=+2.381 p=2.42e-05 q=3.89e-02
+  SSSCA1       DOWN log2FC=-2.360 p=1.26e-04 q=5.83e-02
+  KCNE4        UP   log2FC=+1.777 p=4.13e-05 q=4.58e-02
+  SLC6A3       DOWN log2FC=-2.497 p=9.05e-04 q=1.16e-01
+  UNC13C       DOWN log2FC=-2.327 p=5.50e-04 q=9.94e-02
+  LOC100996756 UP   log2FC=+2.199 p=4.46e-04 q=9.04e-02
+  RBM3         DOWN log2FC=-1.832 p=1.21e-04 q=5.83e-02
+  HTR1F        DOWN log2FC=-1.702 p=6.85e-05 q=5.13e-02
+  PCDH8        DOWN log2FC=-2.199 p=6.80e-04 q=1.09e-01
+  FLJ30901     DOWN log2FC=-2.068 p=6.95e-04 q=1.09e-01
+  SLC10A4      DOWN log2FC=-2.552 p=3.29e-03 q=1.78e-01

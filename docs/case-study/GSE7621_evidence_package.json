@@ -1,0 +1,265 @@
+{
+  "metadata": {
+    "case_study": "GSE7621 Parkinson's disease",
+    "dataset": "GEO:GSE7621",
+    "platform": "GPL570",
+    "date": "2026-07-08",
+    "agent_version": "bioresearch-agent v1.0.0 + case-study-pd",
+    "mode": "real_public_data (pre-downloaded)"
+  },
+  "provenance": {
+    "git_commit": "c2faa783a5761c53cf51a9d477bbb16bd6fcd28c",
+    "python": "3.13.12",
+    "env": "managed venv (python3.13 + pandas/numpy/scipy/matplotlib/requests)",
+    "matrix_sha256": "1389f0dc93fcde0e2e7c1996b1b4f33f1eebe30c11c6684907171ec5873c3aeb",
+    "annot_sha256": "d7cd44352127b1e34f3a720ebea86093ef255a38f1612a85a2962b71bde8f394",
+    "seed_policy": "N/A (real data; DE is deterministic Welch t-test + Bonferroni + BH)"
+  },
+  "methods": [
+    "download_geo",
+    "parse_series_matrix",
+    "probe_to_gene_map",
+    "log2_transform_if_linear",
+    "welch_ttest",
+    "bonferroni",
+    "benjamini_hochberg",
+    "hypergeometric_enrichment",
+    "candidate_ranking"
+  ],
+  "results": {
+    "n_samples": 25,
+    "n_control": 9,
+    "n_case": 16,
+    "n_genes": 21709,
+    "n_significant_bonferroni": 1,
+    "n_significant_fdr": 21,
+    "n_nominal_de": 2126,
+    "n_significant_pathways_fdr": 0,
+    "n_significant_pathways_nominal": 3
+  },
+  "benchmark": {
+    "known_gene_recovery_mendelian_drivers": {
+      "total_genes_ranked": 21709,
+      "ranking_metric": "volcano score = -log10(p_value) * |log2FC| (nominal p)",
+      "known_genes": [
+        "SNCA",
+        "LRRK2",
+        "PARK7",
+        "PINK1",
+        "PRKN",
+        "GBA"
+      ],
+      "n_known_present": 4,
+      "n_in_top100": 0,
+      "n_recovered_in_fdr_significant": 0,
+      "recovered_in_fdr_significant": [],
+      "n_recovered_in_bonferroni_significant": 0,
+      "recovered_in_bonferroni_significant": [],
+      "details": [
+        {
+          "gene": "SNCA",
+          "present": true,
+          "rank": 1687,
+          "rank_percentile": 7.77,
+          "log2FoldChange": -0.6419,
+          "p_value": 0.04258215208958358,
+          "q_value": 0.38786820222940815,
+          "in_top100": false
+        },
+        {
+          "gene": "LRRK2",
+          "present": true,
+          "rank": 5904,
+          "rank_percentile": 27.2,
+          "log2FoldChange": -0.3152,
+          "p_value": 0.12891678374280488,
+          "q_value": 0.5562666177362973,
+          "in_top100": false
+        },
+        {
+          "gene": "PARK7",
+          "present": true,
+          "rank": 18244,
+          "rank_percentile": 84.04,
+          "log2FoldChange": -0.0422,
+          "p_value": 0.7044550273694274,
+          "q_value": 0.9206004207297677,
+          "in_top100": false
+        },
+        {
+          "gene": "PINK1",
+          "present": true,
+          "rank": 2615,
+          "rank_percentile": 12.05,
+          "log2FoldChange": -0.3404,
+          "p_value": 0.013298488368912849,
+          "q_value": 0.2710454257484499,
+          "in_top100": false
+        },
+        {
+          "gene": "PRKN",
+          "present": false,
+          "rank": null,
+          "rank_percentile": null,
+          "log2FoldChange": null,
+          "p_value": null,
+          "q_value": null,
+          "in_top100": false
+        },
+        {
+          "gene": "GBA",
+          "present": false,
+          "rank": null,
+          "rank_percentile": null,
+          "log2FoldChange": null,
+          "p_value": null,
+          "q_value": null,
+          "in_top100": false
+        }
+      ]
+    },
+    "known_gene_recovery_dopaminergic_signature": {
+      "total_genes_ranked": 21709,
+      "ranking_metric": "volcano score = -log10(p_value) * |log2FC| (nominal p)",
+      "known_genes": [
+        "TH",
+        "SLC6A3",
+        "SLC18A2",
+        "DDC",
+        "DRD2",
+        "MAOA",
+        "COMT"
+      ],
+      "n_known_present": 7,
+      "n_in_top100": 4,
+      "n_recovered_in_fdr_significant": 0,
+      "recovered_in_fdr_significant": [],
+      "n_recovered_in_bonferroni_significant": 0,
+      "recovered_in_bonferroni_significant": [],
+      "details": [
+        {
+          "gene": "TH",
+          "present": true,
+          "rank": 1,
+          "rank_percentile": 0.0,
+          "log2FoldChange": -3.6637,
+          "p_value": 0.0003558878442342123,
+          "q_value": 0.08122833012467558,
+          "in_top100": true
+        },
+        {
+          "gene": "SLC6A3",
+          "present": true,
+          "rank": 8,
+          "rank_percentile": 0.04,
+          "log2FoldChange": -2.497,
+          "p_value": 0.0009053608612803179,
+          "q_value": 0.1156145819854966,
+          "in_top100": true
+        },
+        {
+          "gene": "SLC18A2",
+          "present": true,
+          "rank": 4,
+          "rank_percentile": 0.02,
+          "log2FoldChange": -3.032,
+          "p_value": 0.00022133225792060472,
+          "q_value": 0.06885441063596867,
+          "in_top100": true
+        },
+        {
+          "gene": "DDC",
+          "present": true,
+          "rank": 17,
+          "rank_percentile": 0.08,
+          "log2FoldChange": -2.6218,
+          "p_value": 0.004340703010927023,
+          "q_value": 0.19068990915701248,
+          "in_top100": true
+        },
+        {
+          "gene": "DRD2",
+          "present": true,
+          "rank": 308,
+          "rank_percentile": 1.42,
+          "log2FoldChange": -0.9291,
+          "p_value": 0.0049846768568518095,
+          "q_value": 0.19535762798045184,
+          "in_top100": false
+        },
+        {
+          "gene": "MAOA",
+          "present": true,
+          "rank": 17598,
+          "rank_percentile": 81.06,
+          "log2FoldChange": -0.0885,
+          "p_value": 0.7818370236169122,
+          "q_value": 0.9434630320010866,
+          "in_top100": false
+        },
+        {
+          "gene": "COMT",
+          "present": true,
+          "rank": 5724,
+          "rank_percentile": 26.37,
+          "log2FoldChange": 0.2152,
+          "p_value": 0.04350327678391281,
+          "q_value": 0.3918129062659771,
+          "in_top100": false
+        }
+      ]
+    },
+    "pathway_sanity_nominal": {
+      "dopamine metabolism": {
+        "tested_pathways": [
+          "KEGG:Dopaminergic synapse",
+          "GO_BP:dopamine metabolic process",
+          "GO_BP:synaptic transmission, dopaminergic"
+        ],
+        "any_significant": true,
+        "significant_pathways": [
+          "GO_BP:synaptic transmission, dopaminergic",
+          "GO_BP:dopamine metabolic process",
+          "KEGG:Dopaminergic synapse"
+        ],
+        "min_p": 0.00015896687866803538
+      },
+      "mitochondrial dysfunction": {
+        "tested_pathways": [
+          "KEGG:Oxidative phosphorylation",
+          "GO_BP:mitochondrial electron transport",
+          "KEGG:Mitophagy - animal"
+        ],
+        "any_significant": false,
+        "significant_pathways": [],
+        "min_p": 0.40272366900549855
+      },
+      "oxidative stress": {
+        "tested_pathways": [
+          "GO_BP:response to oxidative stress",
+          "KEGG:Glutathione metabolism"
+        ],
+        "any_significant": false,
+        "significant_pathways": [],
+        "min_p": 1.0
+      },
+      "immune response": {
+        "tested_pathways": [
+          "GO_BP:inflammatory response"
+        ],
+        "any_significant": false,
+        "significant_pathways": [],
+        "min_p": 0.6433056011424853
+      }
+    }
+  },
+  "evidence_grade": "B (real public data; bulk microarray; single cohort)",
+  "limitations": [
+    "Bulk tissue (substantia nigra) masks cell-type-specific signal",
+    "Small cohort (n=25, 9 control / 16 case); Mendelian PD driver genes are underpowered for FDR",
+    "Single cohort, no independent replication within this case study",
+    "Probe->gene mapping collapses multiple probes per gene by mean",
+    "Built-in pathway gene sets are illustrative (KEGG/GO subsets), not a full MSigDB run"
+  ],
+  "next_validation": "Independent cohort replication (e.g., GSE49036, ROSMAP) + scRNA-seq deconvolution + full MSigDB/KEGG enrichment"
+}

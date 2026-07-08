@@ -43,8 +43,6 @@ import matplotlib.pyplot as plt
 # Constants
 # ---------------------------------------------------------------------------
 OUTPUT_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "demo_outputs")
-GEO_BASE_URL = "https://ftp.ncbi.nlm.nih.gov/geo/series/GSE7nnn/GSE7621/matrix/"
-GEO_FILENAME = "GSE7621_series_matrix.txt.gz"
 
 # Built-in pathway gene sets (simplified for demo)
 KEGG_PATHWAYS = {
@@ -120,73 +118,187 @@ def generate_synthetic_expression(n_genes: int = 2000, n_samples: int = 40, seed
     return df
 
 
-def download_geo_dataset(geo_id: str, out_dir: str, timeout: int = 60) -> pd.DataFrame:
-    """
-    Attempt to download GSE7621 series matrix from GEO FTP.
-    On failure, return None so caller can use synthetic data.
-    """
+def _geo_get(url: str, timeout: int = 120):
+    """Proxy-robust GET: try direct first (sandboxes may have a dead env proxy), then env proxy."""
     import requests
-    url = f"{GEO_BASE_URL}{GEO_FILENAME}"
+    try:
+        return requests.get(url, timeout=timeout, stream=True, proxies={"http": None, "https": None}, allow_redirects=True)
+    except Exception:
+        return requests.get(url, timeout=timeout, stream=True, allow_redirects=True)
+
+
+def geo_series_matrix_url(geo_id: str) -> str:
+    digits = geo_id[3:]
+    parent = "GSE" + digits[:-3] + "nnn"
+    return f"https://ftp.ncbi.nlm.nih.gov/geo/series/{parent}/{geo_id}/matrix/{geo_id}_series_matrix.txt.gz"
+
+
+def geo_platform_annot_url(platform_id: str) -> str:
+    digits = platform_id[3:]
+    parent = "GPL" + digits[:-3] + "nnn"
+    return f"https://ftp.ncbi.nlm.nih.gov/geo/platforms/{parent}/{platform_id}/annot/{platform_id}.annot.gz"
+
+
+def parse_series_matrix(path: str):
+    """Return (expr_df[probe x sample], groups[list], sample_ids[list])."""
+    print_progress(f"Parsing series matrix {path} ...")
+    with gzip.open(path, "rt", encoding="utf-8", errors="ignore") as fh:
+        lines = fh.readlines()
+    header_lines = [l for l in lines if l.startswith("!")]
+    table_lines = [l for l in lines if not l.startswith("!") and l.strip()]
+    header = table_lines[0].strip().split("\t")
+    data = [l.rstrip("\n").split("\t") for l in table_lines[1:]]
+    df = pd.DataFrame(data, columns=header)
+    df = df.set_index(header[0])
+    df = df.apply(pd.to_numeric, errors="coerce")
+    sample_ids = list(df.columns)
+    groups = infer_groups(header_lines, sample_ids)
+    print_progress(f"Parsed {df.shape[0]} probes x {df.shape[1]} samples "
+                   f"({groups.count('control')} control / {groups.count('case')} case).")
+    return df, groups, sample_ids
+
+
+def infer_groups(header_lines, sample_ids):
+    per_sample = {}
+    for hl in header_lines:
+        if any(k in hl for k in ("Sample_source_name_ch1", "Sample_characteristics_ch1", "Sample_title")):
+            parts = hl.rstrip("\n").split("\t")
+            vals = parts[1:]
+            for i, v in enumerate(vals):
+                per_sample.setdefault(i, []).append(v.strip())
+    labels = []
+    for i in range(len(sample_ids)):
+        blob = " ".join(per_sample.get(i, [])).lower()
+        if "control" in blob or "normal" in blob:
+            labels.append("control")
+        elif "parkinson" in blob or "disease" in blob:
+            labels.append("case")
+        else:
+            labels.append("unknown")
+    if labels.count("unknown") > len(labels) // 2:
+        half = len(labels) // 2
+        labels = ["control"] * half + ["case"] * (len(labels) - half)
+    elif "unknown" in labels:
+        known = [l for l in labels if l != "unknown"]
+        fill = "case" if known.count("case") >= known.count("control") else "control"
+        labels = [fill if l == "unknown" else l for l in labels]
+    return labels
+
+
+def parse_annotation(path: str) -> dict:
+    """Parse GPLxxx.annot.gz -> {probe_id: gene_symbol} (first symbol if multiple).
+
+    GEO annot files begin with ^ / ! / # comment lines; the real tab-separated
+    header (containing 'ID' and 'Gene Symbol') appears later. We skip comments and
+    locate the header dynamically.
+    """
+    print_progress(f"Parsing platform annotation {path} ...")
+    with gzip.open(path, "rt", encoding="utf-8", errors="ignore") as fh:
+        header = None
+        for line in fh:
+            if line.startswith(("^", "!", "#")):
+                continue
+            cols = line.rstrip("\n").split("\t")
+            cols_lc = [c.strip().lower() for c in cols]
+            if "id" in cols_lc and "gene symbol" in cols_lc:
+                header = cols
+                break
+        if header is None:
+            raise ValueError("Could not locate annotation header (ID / Gene Symbol).")
+        idx_id = [c.strip().lower() for c in header].index("id")
+        idx_sym = [c.strip().lower() for c in header].index("gene symbol")
+        annot = {}
+        for line in fh:
+            if line.startswith(("^", "!", "#")):
+                continue
+            f = line.rstrip("\n").split("\t")
+            if len(f) <= max(idx_id, idx_sym):
+                continue
+            pid = f[idx_id].strip().strip('"')
+            sym = f[idx_sym].split("///")[0].split("//")[0].strip().strip('"')
+            if sym and sym != "---":
+                annot[pid] = sym
+    print_progress(f"Annotation map: {len(annot)} probes have a gene symbol.")
+    return annot
+
+
+def map_probes_to_genes(expr_df: pd.DataFrame, annot: dict) -> pd.DataFrame:
+    expr = expr_df.copy()
+    # GEO series-matrix probe IDs are quoted ("1007_s_at"); annot keys are not.
+    expr.index = [str(p).strip().strip('"') for p in expr_df.index]
+    expr.index = [annot.get(p, None) for p in expr.index]
+    expr = expr[expr.index.notna()]
+    before = expr.shape[0]
+    expr = expr.groupby(level=0).mean()
+    print_progress(f"Probes with symbol: {before} -> unique genes: {expr.shape[0]}")
+    return expr
+
+
+def download_platform_annotation(platform_id: str, out_dir: str, timeout: int = 300) -> dict:
+    """Download GPLxxx.annot.gz and return probe_id -> gene_symbol map (empty dict on failure)."""
+    url = geo_platform_annot_url(platform_id)
+    out = os.path.join(out_dir, f"{platform_id}.annot.gz")
+    print_progress(f"Downloading platform annotation {platform_id} from {url} ...")
+    try:
+        with _geo_get(url, timeout=timeout) as r:
+            r.raise_for_status()
+            with open(out, "wb") as fh:
+                for chunk in r.iter_content(chunk_size=65536):
+                    if chunk:
+                        fh.write(chunk)
+        return parse_annotation(out)
+    except Exception as exc:
+        print_progress(f"Platform annotation download failed ({exc}); cannot map probes to genes.")
+        return {}
+
+
+def download_geo_dataset(geo_id: str, out_dir: str, timeout: int = 120, platform_id: str = "GPL570") -> pd.DataFrame:
+    """
+    Attempt to download a REAL GEO series matrix, map probes to genes, and return a
+    gene-level expression DataFrame (MultiIndex columns: group/sample).
+    On failure at any step, return None so the caller can fall back to synthetic data.
+    """
+    url = geo_series_matrix_url(geo_id)
     print_progress(f"Attempting to download {geo_id} from {url} ...")
     try:
-        resp = requests.get(url, timeout=timeout)
-        if resp.status_code == 404:
-            print_progress("Dataset not found at expected URL (404).")
+        with _geo_get(url, timeout=timeout) as r:
+            if r.status_code == 404:
+                print_progress("Dataset not found at expected URL (404).")
+                return None
+            r.raise_for_status()
+            temp_path = os.path.join(out_dir, f"{geo_id}_series_matrix.txt.gz")
+            with open(temp_path, "wb") as f:
+                for chunk in r.iter_content(chunk_size=65536):
+                    if chunk:
+                        f.write(chunk)
+        print_progress(f"Downloaded {os.path.getsize(temp_path)} bytes to {temp_path}")
+        expr_probes, groups, sample_ids = parse_series_matrix(temp_path)
+        annot = download_platform_annotation(platform_id, out_dir)
+        if not annot:
+            print_progress("No annotation available; cannot map probes to genes (returning None).")
             return None
-        resp.raise_for_status()
-        # Save to temp file and parse
-        temp_path = os.path.join(out_dir, f"{geo_id}_series_matrix.txt.gz")
-        with open(temp_path, "wb") as f:
-            f.write(resp.content)
-        print_progress(f"Downloaded {len(resp.content)} bytes to {temp_path}")
-        # Parse series matrix
-        with gzip.open(temp_path, "rt", encoding="utf-8", errors="ignore") as fh:
-            lines = fh.readlines()
-        # Extract sample characteristics and expression table
-        # This is a simplified parser; real GEO files have headers, platform info, etc.
-        header_lines = [l for l in lines if l.startswith("!")]
-        table_lines = [l for l in lines if not l.startswith("!") and l.strip()]
-        if len(table_lines) < 2:
-            print_progress("Downloaded file appears empty or malformed.")
-            return None
-        # First table line is header
-        header = table_lines[0].strip().split("\t")
-        data = [l.strip().split("\t") for l in table_lines[1:]]
-        df = pd.DataFrame(data, columns=header)
-        # First column is ID_REF; rest are expression values
-        df = df.set_index(df.columns[0])
-        # Attempt to infer sample groups from header lines
-        group_map = {}
-        for hl in header_lines:
-            if "Sample_source_name_ch1" in hl or "Sample_characteristics_ch1" in hl:
-                # e.g., !Sample_source_name_ch1\t substantia nigra, control\t substantia nigra, Parkinson's disease\t...
-                parts = hl.strip().split("\t")
-                key = parts[0].replace("!", "").strip()
-                for i, val in enumerate(parts[1:], start=1):
-                    if i - 1 < len(df.columns):
-                        col = df.columns[i - 1]
-                        group_map[col] = val.strip().lower()
-        if group_map:
-            labels = [group_map.get(c, "unknown") for c in df.columns]
-            df.columns = pd.MultiIndex.from_arrays([labels, df.columns], names=["group", "sample"])
-        else:
-            # Fallback: assume first half control, second half case
-            half = len(df.columns) // 2
-            labels = ["control"] * half + ["case"] * (len(df.columns) - half)
-            df.columns = pd.MultiIndex.from_arrays([labels, df.columns], names=["group", "sample"])
-        # Convert to numeric
-        df = df.apply(pd.to_numeric, errors="coerce")
-        print_progress(f"Parsed GEO dataset: {df.shape[0]} genes x {df.shape[1]} samples.")
-        return df
+        expr_genes = map_probes_to_genes(expr_probes, annot)
+        cols = pd.MultiIndex.from_arrays([groups, sample_ids], names=["group", "sample"])
+        expr_genes.columns = cols
+        print_progress(f"Real GEO dataset ready: {expr_genes.shape[0]} genes x {expr_genes.shape[1]} samples.")
+        return expr_genes
     except Exception as exc:
         print_progress(f"GEO download/parse failed ({exc}); will use synthetic data.")
         return None
 
 
-def differential_expression(df: pd.DataFrame, alpha: float = 0.05) -> pd.DataFrame:
+
+def differential_expression(df: pd.DataFrame, alpha: float = 0.05, auto_log2: bool = True) -> pd.DataFrame:
     """
     Perform two-sample t-test for each gene (row) between case and control.
     Returns dataframe with log2 fold-change, t-statistic, p-value, and adjusted p-value (Bonferroni).
+
+    Scale handling: GEO series-matrix intensities are frequently reported on a LINEAR
+    scale (e.g. RMA/MAS5 normalised intensities, median ~ tens to thousands). A proper
+    log2 fold change requires log2-transforming first. We auto-detect: if the median
+    expression across both groups exceeds ~16 (log2 values essentially never do), the
+    data is treated as linear and log2-transformed before statistics. Synthetic demo
+    data is generated already in log2 space (median ~6) and is left unchanged.
     """
     print_progress("Running differential expression analysis (t-test) ...")
     # Extract groups
@@ -194,8 +306,16 @@ def differential_expression(df: pd.DataFrame, alpha: float = 0.05) -> pd.DataFra
     if len(groups) != 2:
         raise ValueError(f"Expected exactly 2 groups, found: {groups}")
     g0, g1 = groups[0], groups[1]
-    vals0 = df.loc[:, g0].values
-    vals1 = df.loc[:, g1].values
+    vals0 = df.loc[:, g0].values.astype(float)
+    vals1 = df.loc[:, g1].values.astype(float)
+
+    if auto_log2:
+        scale_ref = float(np.median(np.concatenate([vals0.ravel(), vals1.ravel()])))
+        if scale_ref > 16 or float(vals0.max()) > 100 or float(vals1.max()) > 100:
+            print_progress(f"Linear-scale intensities detected (median={scale_ref:.2f}); "
+                           f"applying log2 transform before statistics.")
+            vals0 = np.log2(np.clip(vals0, 1e-3, None))
+            vals1 = np.log2(np.clip(vals1, 1e-3, None))
 
     # Compute per-gene statistics
     n_genes = df.shape[0]
@@ -204,17 +324,35 @@ def differential_expression(df: pd.DataFrame, alpha: float = 0.05) -> pd.DataFra
     # Bonferroni correction
     pvals_adj = np.minimum(pvals * n_genes, 1.0)
 
+    q_values = benjamini_hochberg_qvalues(pvals)
     result = pd.DataFrame({
         "gene": df.index,
         "log2FoldChange": log2fc,
         "t_statistic": tstats,
         "p_value": pvals,
         "p_adjusted": pvals_adj,
+        "q_value": q_values,
         "significant": pvals_adj < alpha,
+        "significant_fdr": q_values < alpha,
     })
     result = result.set_index("gene")
     print_progress(f"DEG analysis complete: {result['significant'].sum()} significant genes at alpha={alpha}.")
     return result
+
+
+def benjamini_hochberg_qvalues(pvals: np.ndarray) -> np.ndarray:
+    """Compute BH-adjusted p-values (q-values) without extra dependencies."""
+    p = np.asarray(pvals, dtype=float)
+    n = p.size
+    order = np.argsort(p)
+    ranked = p[order]
+    q = ranked * n / np.arange(1, n + 1)
+    # enforce monotonic non-decreasing from the largest p upward
+    q = np.minimum.accumulate(q[::-1])[::-1]
+    q = np.clip(q, 0.0, 1.0)
+    out = np.empty(n, dtype=float)
+    out[order] = q
+    return out
 
 
 def hypergeometric_test(de_genes: set, pathway_genes: set, background: int) -> Tuple[float, float]:
@@ -242,12 +380,24 @@ def hypergeometric_test(de_genes: set, pathway_genes: set, background: int) -> T
     return odds_ratio, p_value
 
 
-def pathway_enrichment(deg_df: pd.DataFrame, alpha: float = 0.05) -> pd.DataFrame:
+def pathway_enrichment(deg_df: pd.DataFrame, alpha: float = 0.05, de_col: str = "significant",
+                        de_gene_set: list = None) -> pd.DataFrame:
     """
     Run hypergeometric enrichment on built-in KEGG and GO pathways.
+
+    `de_col` selects which significance column defines the DE gene set
+    ("significant" = Bonferroni; "significant_fdr" = Benjamini-Hochberg, the
+    field-standard for microarray studies). If `de_gene_set` is provided, it is
+    used directly as the DE gene set (e.g. a nominal-p filtered set for
+    underpowered studies where FDR is too conservative).
     """
     print_progress("Running pathway enrichment analysis ...")
-    significant_genes = set(deg_df[deg_df["significant"]].index.tolist())
+    if de_gene_set is not None:
+        significant_genes = set(de_gene_set)
+    else:
+        if de_col not in deg_df.columns:
+            de_col = "significant"
+        significant_genes = set(deg_df[deg_df[de_col]].index.tolist())
     background = deg_df.shape[0]
     all_pathways = {}
     all_pathways.update({f"KEGG:{k}": v for k, v in KEGG_PATHWAYS.items()})
@@ -278,22 +428,19 @@ def pathway_enrichment(deg_df: pd.DataFrame, alpha: float = 0.05) -> pd.DataFram
     else:
         print_progress("Pathway enrichment complete: 0 significant pathways.")
     return enrich_df
-    if not enrich_df.empty:
-        enrich_df = enrich_df.sort_values("p_value").reset_index(drop=True)
-    print_progress(f"Pathway enrichment complete: {enrich_df['significant'].sum()} significant pathways.")
-    return enrich_df
 
 
 def rank_biomarkers(deg_df: pd.DataFrame, top_n: int = 20) -> pd.DataFrame:
     """
     Rank biomarker candidates by fold-change magnitude and significance.
+    Volcano-style score uses the nominal p-value (so strong-but-not-Bonferroni-significant
+    candidates still surface, which is the standard biologist-facing ranking).
     """
     print_progress("Ranking top biomarker candidates ...")
     df = deg_df.copy()
-    # Ranking score: combination of -log10(p_adjusted) and abs(log2FC)
-    df["score"] = -np.log10(np.clip(df["p_adjusted"], a_min=1e-300, a_max=1.0)) * np.abs(df["log2FoldChange"])
+    df["score"] = -np.log10(np.clip(df["p_value"], a_min=1e-300, a_max=1.0)) * np.abs(df["log2FoldChange"])
     df = df.sort_values("score", ascending=False).head(top_n)
-    return df[["log2FoldChange", "p_value", "p_adjusted", "significant", "score"]]
+    return df[["log2FoldChange", "p_value", "p_adjusted", "q_value", "significant", "significant_fdr", "score"]]
 
 
 def plot_volcano(deg_df: pd.DataFrame, alpha: float, outpath: str) -> None:
