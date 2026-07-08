@@ -8,7 +8,7 @@
 - [ ] Push `main` branch (commit a0f07b0)
 - [ ] Verify CI badge green
 - [ ] Verify 3 demos run on GitHub Actions
-- [ ] Tag v1.1.0 release
+- [x] Tag v1.1.0 release
 - [ ] Copy release notes from docs/RELEASE_NOTES.md
 
 ## Post-Release (T+0 to T+6h)
