@@ -1,0 +1,19 @@
+cff-version: 1.2.0
+title: BioResearch Agent Framework
+message: "If you use this software, please cite it as below."
+type: software
+authors:
+  - family-names: Tudiyusufu
+    given-names: Alimujiang
+    email: almj@ibms.pumc.edu.cn
+repository-code: "https://github.com/Alim430/bioresearch-agent"
+url: "https://github.com/Alim430/bioresearch-agent"
+license: MIT
+version: 1.0.0
+keywords:
+  - biomedical research
+  - reproducible workflow
+  - agent skills
+  - literature analysis
+  - biomarker discovery
+  - mendelian randomization

@@ -1,24 +1,40 @@
-# BioResearch Agent Framework
+# Repository Metadata (GitHub About & Topics)
 
-A runnable, LLM-agnostic biomedical research agent framework for end-to-end scientific workflows (literature review, biomarker discovery, and causal inference).
+> Paste these into the repo's **About → Settings (gear) → Description / Topics**.
+> (`gh` CLI is not installed in the local environment and the GitHub MCP is disconnected, so
+> these values are staged here for manual application. This file is documentation only.)
+
+## Description (About)
+
+```
+Executable biomedical workflows for AI assistants — literature analysis, biomarker discovery, and Mendelian randomization through reproducible agent skills.
+```
 
 ## Topics
-cs.AI, bioinformatics, agents, llm, biomedical-ai, scientific-computing, workflow-automation, causal-inference, single-cell, research-automation, python, reproducible-research
 
-## Tagline
-Turn biomedical questions into reproducible computational research workflows.
+Apply the following topics (one per line in the Topics field):
 
-## Description (About section)
-BioResearch Agent is a lightweight, extensible AI framework that automates end-to-end biomedical research workflows — from literature synthesis to multi-omics biomarker discovery to Mendelian randomization causal inference. It runs as a Python package with a unified CLI and programmatic SDK, producing reproducible outputs (reports, figures, structured data) from any LLM backend.
+```
+bioinformatics
+biomedical-ai
+agent-skills
+ai-agents
+scientific-computing
+research-automation
+omics
+mendelian-randomization
+reproducibility
+claude-skills
+```
 
-## Visibility
-Public
+## Notes
 
-## License
-MIT
-
-## Default branch
-main
-
-## README
-README.md (product-first, 10-second understanding)
+- **Two clusters, intentionally.** `bioinformatics / omics / reproducibility / mendelian-randomization`
+  serve the research-audience search pool; `agent-skills / claude-skills / ai-agents /
+  biomedical-ai / research-automation` serve the AI-assistant search pool. The project sits at
+  the intersection — tag it as one.
+- **Avoid overclaim tags:** `agi`, `autonomous-agent`, `ai-scientist`. These conflict with the
+  paper's honest framing (skills provide *execution*, not *reasoning*) and read as hype to
+  reviewers and adopters alike.
+- Keep the project name `bioresearch-agent` (contains `bio` + `research` + `agent`); do **not**
+  rename to `bioresearch-skills` — the engine is the asset, skills are one distribution channel.

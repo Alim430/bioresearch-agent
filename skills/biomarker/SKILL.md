@@ -1,6 +1,6 @@
 ---
 name: bioresearch-biomarker
-description: Invoke the BioResearch Agent biomarker workflow (differential expression + pathway enrichment) through the bioresearch CLI.
+description: Invoke the BioResearch Agent biomarker workflow (differential expression + pathway enrichment) through the bioresearch CLI. Use when the user asks to discover candidate biomarkers, run differential-expression analysis, or enrich pathways for a disease from public omics data.
 ---
 
 # BioResearch Biomarker Skill

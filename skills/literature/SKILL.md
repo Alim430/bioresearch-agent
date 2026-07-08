@@ -1,6 +1,6 @@
 ---
 name: bioresearch-literature
-description: Invoke the BioResearch Agent literature workflow (PubMed retrieval, entity co-occurrence knowledge graph, structured review outline) through the bioresearch CLI.
+description: Invoke the BioResearch Agent literature workflow (PubMed retrieval, entity co-occurrence knowledge graph, structured review outline) through the bioresearch CLI. Use when the user asks for a biomedical literature review, research-gap analysis, or a synthesized reading of PubMed papers on a disease or mechanism.
 ---
 
 # BioResearch Literature Skill

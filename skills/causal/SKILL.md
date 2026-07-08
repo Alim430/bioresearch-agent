@@ -1,6 +1,6 @@
 ---
 name: bioresearch-causal
-description: Invoke the BioResearch Agent causal (Mendelian randomization) workflow through the bioresearch CLI.
+description: Invoke the BioResearch Agent causal (Mendelian randomization) workflow through the bioresearch CLI. Use when the user asks to test a causal effect between an exposure and an outcome (e.g., BMI → Type 2 Diabetes) using two-sample MR with IVW estimation.
 ---
 
 # BioResearch Causal Skill

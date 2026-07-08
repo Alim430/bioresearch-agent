@@ -1,6 +1,8 @@
 # BioResearch Agent Framework
 
-> Run biomedical literature review, biomarker discovery, and Mendelian randomization in one reproducible workflow.
+> **Give AI assistants real biomedical research capabilities.** Run reproducible literature analysis, biomarker discovery, and causal inference workflows through executable agent skills — not text-only summaries.
+
+CLI · Python SDK · API · Agent Skills
 
 [![CI](https://github.com/Alim430/bioresearch-agent/actions/workflows/ci.yml/badge.svg)](https://github.com/Alim430/bioresearch-agent/actions/workflows/ci.yml)
 [![Python 3.9+](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/)
@@ -35,46 +37,57 @@ One image shows the real outputs of all three workflows — understand what this
 
 ## ⚡ Quick Start
 
-### 1. Clone and install
+BioResearch Agent offers two ways to use it: **(1) as AI Agent Skills** — drop the workflows into your AI assistant so it can *run* real analyses; or **(2) as a Python framework** — call the CLI/SDK directly. Both share the same reproducible engine.
+
+### Option 1 — Install as AI Agent Skills *(Recommended)*
+
+Give your AI assistant (Claude, Cursor, Codex, and other Agent Skills–compatible clients) the ability to execute real biomedical pipelines:
+
+```bash
+git clone https://github.com/Alim430/bioresearch-agent.git
+cd bioresearch-agent
+./skills/install.sh
+```
+
+After installation, ask your assistant things like:
+
+> *"Run a literature review on microglia in Alzheimer's disease"*
+> *"Find biomarker candidates for Parkinson's disease"*
+> *"Test the causal effect of BMI on Type 2 Diabetes"*
+
+and it will dispatch to the underlying `bioresearch` workflows — producing data-derived tables and figures — instead of generating unsupported analysis claims.
+
+<details>
+<summary>Manual install / other clients</summary>
+
+```bash
+# Claude Desktop (macOS)
+cp -r skills/literature skills/biomarker skills/causal "$HOME/Library/Application Support/Claude/skills/"
+
+# Claude / generic (~/.config)
+cp -r skills/literature skills/biomarker skills/causal ~/.config/agent/skills/
+
+# Cursor
+cp -r skills/literature skills/biomarker skills/causal ~/.cursor/skills/
+```
+
+Restart the client after copying. See [Workflow Skills](#-workflow-skills).
+
+</details>
+
+### Option 2 — Use as a Python framework
+
 ```bash
 git clone https://github.com/Alim430/bioresearch-agent.git
 cd bioresearch-agent
 pip install -e .
-```
-
-### 2. Verify installation
-```bash
-bioresearch doctor
-```
-
-### 3. Run the three workflows
-```bash
+bioresearch doctor                       # verify installation
 bioresearch run literature --query "microglia Alzheimer's disease"
 bioresearch run biomarker --disease "Parkinson's disease"
 bioresearch run causal   --exposure BMI --outcome "Type 2 Diabetes"
 ```
 
-### 4. Inspect outputs
-```bash
-ls outputs/literature/ outputs/biomarker/ outputs/causal/
-```
-
-**Demos require no LLM key** — they run on public APIs + synthetic fallback data.
-
-### 5. Load into AI clients (optional)
-BioResearch Agent ships an optional client-integration package for compatible AI environments. It exposes the existing workflows through a standardized schema — it adds **no new computational methods**; all analysis runs in the framework's workflow modules.
-
-The recommended way is to run the installer (installs framework + skills + verifies):
-```bash
-./skills/install.sh
-```
-
-Or manually copy the tool specification and skill definitions:
-```bash
-cp bioresearch/toolspec.json ~/.config/bioresearch/toolspec.json
-cp -r skills/literature skills/biomarker skills/causal ~/Library/Application\ Support/Claude/skills/
-```
-Restart the client after importing. See [External Client Integration](#external-client-integration-skills--tool-interface).
+**Demos require no LLM key** — they run on public APIs + synthetic fallback data. Full command reference in [Three Commands](#-three-commands-three-workflows).
 
 ---
 
@@ -279,16 +292,37 @@ Restart the client. The pipelines then become available as reusable biomedical a
 
 ---
 
+## 🔒 Data & Network Access
+
+BioResearch Agent and its skills run analysis by invoking external biomedical resources. For transparency and safe use inside your own agent environment, here is exactly what each workflow touches:
+
+| Workflow | Network access | External resources | Local writes |
+|:---|:---|:---|:---|
+| Literature | outbound (read-only) | PubMed (NCBI E-utilities) | `outputs/literature/` |
+| Biomarker | outbound (read-only) | GEO (NCBI), KEGG, GO | `outputs/biomarker/` |
+| Causal | outbound (read-only, or simulated) | GWAS summary stats (simulated by default) | `outputs/causal/` |
+
+- **No telemetry.** The framework does not phone home or report usage.
+- **No external write access.** All network calls are read-only queries to public biomedical databases.
+- **No credentials required.** Demos run on public APIs; synthetic fallback data is used when a service is unreachable.
+- Skills are thin invocation wrappers — they contain no code that makes network calls themselves; all execution happens in the framework's workflow modules.
+
+You can audit every request the tool makes before loading it into your assistant.
+
+---
+
 ## 📂 Project Structure
 
 ```
 bioresearch-agent/
 ├── bioresearch/         # SDK + CLI package
 ├── bio-research-os/      # core framework (modules, demos, examples)
-├── skills/              # optional client-side skill definitions (Claude/Cursor)
+├── skills/              # agent skill definitions (Claude/Cursor/Codex) + skills/README.md
+├── examples/            # copy-paste agent workflow examples (AD / Parkinson / MR)
 ├── outputs/              # generated outputs (gitignored)
 ├── assets/               # documentation figures
 ├── README.md
+├── CITATION.cff          # cite this repository
 ├── RELEASE_NOTES.md      # v1.0.0 release notes
 ├── pyproject.toml
 └── Makefile
