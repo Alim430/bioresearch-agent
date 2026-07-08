@@ -32,6 +32,7 @@ Skills are organized by group. All `active` skills map to a real `bioresearch` e
 |:---|:---|:---|
 | `bioresearch-introduction` | Framework overview & capability map | "what can BioResearch Agent do" |
 | `bioresearch-environment-check` | Environment / reproducibility validation (`bioresearch doctor`) | "validate environment / troubleshoot" |
+| `bioresearch-agent-router` | Rule-based intent → workflow (deterministic, no LLM) | "classify / route a research intent" |
 
 ### `biomedical/` — research workflows
 
@@ -42,6 +43,7 @@ Skills are organized by group. All `active` skills map to a real `bioresearch` e
 | `bioresearch-differential-expression` | Differential expression (DEG) | "differential expression / volcano plot" |
 | `bioresearch-pathway-enrichment` | Pathway / GO / KEGG enrichment | "pathway / GO enrichment" |
 | `bioresearch-causal-inference` | Two-sample Mendelian randomization (IVW + sensitivity) | "causal effect / MR" |
+| `bioresearch-disease-case-study` | Real-data disease case study + blind benchmark | "case study / validation / benchmark" |
 
 > **Note on granularity:** `differential-expression` and `pathway-enrichment` are focused entry
 > points that invoke the same `biomarker` workflow (DEG is stage 1, enrichment is stage 2). There

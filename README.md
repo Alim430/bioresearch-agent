@@ -72,11 +72,13 @@ and it will dispatch to the underlying `bioresearch` workflows — producing dat
 # Claude Desktop (macOS) — copy every active skill leaf folder
 cp -r skills/core/project-introduction \
       skills/core/environment-check \
+      skills/core/agent-router \
       skills/biomedical/literature-analysis \
       skills/biomedical/biomarker-discovery \
       skills/biomedical/differential-expression \
       skills/biomedical/pathway-enrichment \
       skills/biomedical/causal-inference \
+      skills/biomedical/disease-case-study \
       "$HOME/Library/Application Support/Claude/skills/"
 
 # Cursor:  same command, target ~/.cursor/skills/
@@ -229,7 +231,12 @@ bioresearch run literature --query "microglia Alzheimer's disease"
 bioresearch run biomarker --disease "Parkinson's disease"
 bioresearch run causal   --exposure BMI --outcome "Type 2 Diabetes"
 bioresearch doctor
+bioresearch route "find biomarkers for Parkinson's disease"   # classify an intent -> workflow
 ```
+
+> **Routing is rule-based, not a model.** `bioresearch route` maps a free-text request to a
+> workflow using deterministic keyword matching — it translates intent into an executable
+> command and adds no reasoning of its own. Same input always yields the same route.
 
 ### Python SDK
 ```python
@@ -300,6 +307,8 @@ instructions and parameter schemas; all computation runs in the framework's work
 | `bioresearch-differential-expression` | Differential expression (DEG) | "differential expression / volcano plot" |
 | `bioresearch-pathway-enrichment` | Pathway / GO / KEGG enrichment | "pathway / GO enrichment" |
 | `bioresearch-causal-inference` | Mendelian randomization (IVW + sensitivity) | "causal effect / MR" |
+| `bioresearch-disease-case-study` | Real-data disease case study + blind benchmark | "case study / validation / benchmark" |
+| `bioresearch-agent-router` | Rule-based intent → workflow (no LLM, deterministic) | "classify / route a research intent" |
 
 > `differential-expression` and `pathway-enrichment` invoke the same `biomarker` workflow (DEG is
 > stage 1, enrichment is stage 2) — they are focused entry points, not separate CLI commands.

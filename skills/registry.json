@@ -66,6 +66,14 @@
       "capability": "Real-data disease case study + blind benchmark (known-gene recovery / pathway sanity / reproducibility)",
       "triggers": "disease case study / validation run / benchmark the workflows on real data",
       "status": "active"
+    },
+    {
+      "name": "bioresearch-agent-router",
+      "path": "skills/core/agent-router",
+      "group": "core",
+      "capability": "Rule-based intent classification -> workflow (literature/biomarker/causal/case-study/doctor); deterministic, no LLM",
+      "triggers": "classify / route a free-text research intent to the right workflow",
+      "status": "active"
     }
   ],
   "planned": [

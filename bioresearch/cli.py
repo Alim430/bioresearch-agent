@@ -11,6 +11,7 @@ Usage:
 
 import argparse
 import importlib
+import json
 import os
 import subprocess
 import sys
@@ -18,6 +19,7 @@ from pathlib import Path
 
 # Path resolution — single source of truth, shared with the SDK
 from .core.paths import PROJECT_ROOT, DEMO_DIR, MAIN_PY
+from .router import classify_intent, route_to_command
 
 
 # ---------------------------------------------------------------------------
@@ -299,6 +301,12 @@ Commands:
     # --- doctor command ---
     doctor_parser = subparsers.add_parser("doctor", help="Check environment health")
 
+    # --- route command (rule-based intent classification, no LLM) ---
+    route_parser = subparsers.add_parser(
+        "route", help="Classify a research intent into a workflow (rule-based, deterministic)"
+    )
+    route_parser.add_argument("intent", nargs="+", help="Free-text research intent / request")
+
     args = parser.parse_args()
 
     if args.command is None:
@@ -308,6 +316,13 @@ Commands:
     if args.command == "doctor":
         ok = run_doctor()
         sys.exit(0 if ok else 1)
+
+    if args.command == "route":
+        intent = " ".join(args.intent)
+        result = classify_intent(intent)
+        print(json.dumps(result, indent=2, ensure_ascii=False))
+        print(f"\nSuggested command: {route_to_command(result['route'])}")
+        sys.exit(0)
 
     if args.command != "run":
         parser.print_help()
