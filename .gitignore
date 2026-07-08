@@ -50,6 +50,19 @@ demo_outputs/
 *.mtx
 *.tsv.gz
 *.csv.gz
+*.txt.gz
+*.gct.gz
+
+# Raw downloaded / external data — NEVER commit.
+# Large, and may include controlled-access or individual-level sources that must not enter a public repo.
+raw/
+data/raw/
+eval/data/
+downloads/
+
+# NOTE: controlled-access / individual-level datasets (MetaBrain, UKB-PPP, ADNI, deCODE pQTL, ...)
+# are explicitly OUT OF SCOPE for this framework. See DATA_GOVERNANCE.md. They must not be added
+# to this repository under any path.
 
 # Model checkpoints (if any)
 checkpoints/

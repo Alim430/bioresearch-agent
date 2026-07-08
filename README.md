@@ -369,6 +369,14 @@ BioResearch Agent and its skills run analysis by invoking external biomedical re
 - **No credentials required.** Demos run on public APIs; synthetic fallback data is used when a service is unreachable.
 - Skills are thin invocation wrappers — they contain no code that makes network calls themselves; all execution happens in the framework's workflow modules.
 
+### Controlled-access / individual-level data is out of scope
+
+This framework processes **only public, de-identified, or summary-level** data (GEO, GTEx /
+PsychENCODE eQTL summary, GWAS Catalog / IEU / FinnGen summary, PubMed, KEGG/GO). It does
+**not** download, cache, or commit controlled-access or individual-level datasets such as
+MetaBrain, UKB-PPP, ADNI, or deCODE pQTL. See [`DATA_GOVERNANCE.md`](DATA_GOVERNANCE.md) for the
+full data-tier classification and repository-hygiene rules.
+
 You can audit every request the tool makes before loading it into your assistant.
 
 ---
