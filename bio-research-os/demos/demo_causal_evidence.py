@@ -241,7 +241,13 @@ def run_coloc(beta_expr, se_expr, beta_trait, se_trait,
     # signals, turning inf-inf into NaN). Since E1*E2 >= E4 always:
     logE12 = logE1 + logE2
     diff_log = logE4 - logE12          # <= 0
-    logE3 = logE12 + float(np.log1p(-np.exp(diff_log)))  # = log(E1*E2 - E4)
+    # E3 = E1*E2 - E4; when E4 ~= E1*E2 (strong colocalization) E3 -> 0 and
+    # log1p(-1) -> -inf is the correct limit; guard to avoid the RuntimeWarning.
+    exp_diff = float(np.exp(diff_log))  # in (0, 1]
+    if exp_diff >= 1.0 - 1e-15:
+        logE3 = -np.inf
+    else:
+        logE3 = logE12 + float(np.log1p(-exp_diff))  # = log(E1*E2 - E4)
 
     lp0 = np.log((1 - p1) * (1 - p2))
     lp1 = np.log(p1) + np.log(1 - p2)

@@ -67,7 +67,7 @@
       "name": "Causal evidence chain (GWAS -> eQTL -> coloc -> TWAS -> fine-map -> MR)",
       "disease": "general (methodology exemplar; AD loci as real-data target)",
       "workflows": ["causal-evidence"],
-      "data": "SYNTHETIC loci with ground-truth labels (colocalized / eQTL-only / GWAS-only / null); real coloc(PP.H4) + TWAS(S-PrediXcan) + fine-map(credible set) + Wald-ratio MR engine. Real-data version would use AD GWAS (IGAP) + eQTL (MetaBrain / GTEx) for TREM2/BIN1/APOE/CLU/PICALM.",
+      "data": "SYNTHETIC loci with ground-truth labels (colocalized / eQTL-only / GWAS-only / null); real coloc(PP.H4) + TWAS(S-PrediXcan) + fine-map(credible set) + Wald-ratio MR engine. Real-data version would use AD GWAS (IGAP) + eQTL (GTEx brain) for TREM2/BIN1/APOE/CLU/PICALM.",
       "benchmark_type": "ground_truth_recovery",
       "known_entities": [],
       "reference_ad_loci": ["TREM2", "BIN1", "APOE", "CLU", "PICALM"],
@@ -76,6 +76,21 @@
       "output_dir": "docs/case-study",
       "status": "implemented",
       "evidence_grade": "C (synthetic loci; causal-evidence engine validation)"
+    },
+    {
+      "id": 6,
+      "name": "Causal evidence chain on real AD GWAS + GTEx brain eQTL summary",
+      "disease": "Alzheimer's disease",
+      "workflows": ["causal-evidence"],
+      "data": "REAL public summary-level data: Jansen et al. 2019 AD GWAS (IGAP-style, ~9.6M SNPs) + GTEx v8 13 brain-region cis-eQTL. Paths are user-local; raw data NEVER enters the repo (DATA_GOVERNANCE.md). Approximate coloc/TWAS/fine-map/MR using lead-SNP summary statistics; definitive fine-mapping requires full eQTL weights + LD reference panel.",
+      "benchmark_type": "known_entity_recovery",
+      "known_entities": ["TREM2", "BIN1", "APOE", "CLU", "PICALM"],
+      "reference_ad_loci": ["TREM2", "BIN1", "APOE", "CLU", "PICALM"],
+      "pathway_sanity": ["immune/inflammatory response (microglia)", "lipid metabolism", "amyloid/tau"],
+      "script": "case_study_realdata_causal.py",
+      "output_dir": "docs/case-study",
+      "status": "implemented",
+      "evidence_grade": "B (real public summary-level data; no individual-level data; summary-statistics-only approximation)"
     }
   ]
 }

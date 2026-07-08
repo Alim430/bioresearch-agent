@@ -60,6 +60,7 @@ Each case is graded on evidence, not on a vanity metric: **A/B** = real public d
 | 3 | AD literature gap analysis | literature-analysis | **real PubMed** when reachable (grade B) / **offline** built-in corpus fallback (grade C) | ✅ implemented — `case_study_ad_literature.py` |
 | 4 | Exposure → outcome MR exemplar (BMI → T2D) | causal-inference (MR) | **synthetic** GWAS, ground-truth known | ✅ implemented (grade C) — `case_study_mr_exemplar.py` |
 | 5 | Causal evidence chain (GWAS→eQTL→coloc→TWAS→fine-map→MR) | causal-evidence | **synthetic** loci, ground-truth labels | ✅ implemented (grade C) — `case_study_causal_evidence.py` |
+| 6 | Causal evidence chain on real AD GWAS + GTEx brain eQTL | causal-evidence | **real** public summary-level data (Jansen 2019 + GTEx v8 brain) | ✅ implemented (grade B) — `case_study_realdata_causal.py` |
 
 ## Running Case 1 (Parkinson's / GSE7621)
 
@@ -93,8 +94,30 @@ python bio-research-os/eval/case_study_ad_literature.py --output-dir docs/case-s
 python bio-research-os/eval/case_study_causal_evidence.py --output-dir docs/case-study
 ```
 
-Each emits an Evidence Package JSON (`*_evidence_package.json`) with `evidence_grade: "C"`
-and an explicit `next_validation` (real GWAS / real PubMed). The MR cases include a
+## Running Case 6 (real AD GWAS + GTEx brain eQTL summary)
+
+Case 6 runs the same causal-evidence engine as Case 5, but on **real public summary-level**
+data. It requires two user-local datasets (never committed to the repo):
+
+* AD GWAS summary: Jansen et al. 2019 (`AD_sumstats_Jansenetal_2019sept.txt.gz`)
+* GTEx v8 brain eQTL directory (`GTEx_Analysis_v8_eQTL/`)
+
+Paths default to `/Users/alim/ad-vcp-data/raw/...`; override with `--gwas-path` and
+`--eqtl-dir`. Only summary statistics are used; individual-level data (MetaBrain,
+UKB-PPP, ADNI, deCODE) are out of scope per `DATA_GOVERNANCE.md`.
+
+```bash
+python bio-research-os/eval/case_study_realdata_causal.py \
+    --gwas-path  /Users/alim/ad-vcp-data/raw/gwas/JansenIE_2019/AD_sumstats_Jansenetal_2019sept.txt.gz \
+    --eqtl-dir   /Users/alim/ad-vcp-data/raw/eqtl/gtex/GTEx_Analysis_v8_eQTL \
+    --output-dir docs/case-study
+```
+
+This emits `CE_real_evidence_package.json` (grade **B**) and figures under
+`docs/case-study/CE_real_*`.
+
+Each emits an Evidence Package JSON (`*_evidence_package.json`) with `evidence_grade: "C"` (Cases 2–5)
+or `"B"` (Cases 1 & 6) and explicit limitations / `next_validation`. The MR cases include a
 ground-truth recovery sweep CSV (`*_sweep.csv`); the literature case includes a
 pipeline-sanity check in its Evidence Package.
 

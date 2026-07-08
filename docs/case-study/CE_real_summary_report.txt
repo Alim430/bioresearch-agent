@@ -1,0 +1,29 @@
+Real-Data Causal Evidence Chain (Case 6) -- Jansen AD GWAS x GTEx brain eQTL
+========================================================================
+
+EVIDENCE GRADE: B (real public summary data; lead cis-eQTL only; rsID-matched; no LD)
+
+Target genes : TREM2, BIN1, CLU, PICALM, APOE
+GWAS         : Jansen et al. 2019 (AD case/control, hg19)
+eQTL         : GTEx v8, 13 brain tissues (hg38)
+Genes w/ >=1 matched SNP : 5/5
+Genes colocalized (PP.H4>0.8): 4
+Genes w/ significant MR (p<0.05): 1
+
+Per-gene results
+------------------------------------------------------------------------
+  gene  n_eqtl_leads  n_matched                 best_tissue    PP.H4    PP.H3        PP.H1        PP.H2    twas_z   twas_p  twas_significant   mr_beta    mr_se         mr_p  mr_ci_lower  mr_ci_upper  n_credible mr_instrument
+ TREM2            12         11      Brain_Substantia_nigra 0.123060 0.001597 8.555571e-01 3.969783e-05  1.280779 0.200271             False  0.029743 0.037306 4.252993e-01    -0.043377     0.102863          11    rs71558751
+  BIN1            13         10            Brain_Cerebellum 0.991436 0.008564 1.062861e-11 3.775731e-24  0.349673 0.726584             False  0.036698 0.005990 9.005331e-10     0.024957     0.048440          10    rs62158731
+   CLU            13         12    Brain_Frontal_Cortex_BA9 0.984477 0.012024 5.742365e-16 3.498435e-03 -1.413742 0.157438             False -0.009849 0.016492 5.503657e-01    -0.042174     0.022475          12   rs138619964
+PICALM            13         10 Brain_Cerebellar_Hemisphere 0.867215 0.063177 4.436842e-02 1.491047e-02  1.530740 0.125834             False -0.008595 0.009518 3.665013e-01    -0.027250     0.010060          10     rs1517317
+  APOE            13         11 Brain_Cerebellar_Hemisphere 0.994746 0.003903 2.994078e-90 1.351498e-03 -0.445478 0.655974             False  0.000354 0.006772 9.583276e-01    -0.012920     0.013627          11   rs183685938
+
+Limitations
+------------------------------------------------------------------------
+- Lead cis-eQTL only (GTEx egenes = 1 lead SNP/gene/tissue, aggregated across 13 brain tissues); full eQTL weights (all genic SNPs) NOT used -> simplified TWAS/Multi-SNP MR.
+- SNPs within a gene locus are in LD; coloc/TWAS treat them as independent (no LD reference). Real fine-mapping needs 1000G/reference LD.
+- Matching is by dbSNP rsID (build-independent); SNPs without rsID or strand-ambiguous alleles were dropped.
+- Wald-ratio MR uses the single lead eQTL SNP as instrument (no horizontal-pleiotropy/LD adjustment).
+- GTEx eQTL are from mostly non-diseased tissue; AD GWAS is case/control. Cross-tissue cis signal aggregated as a simplification.
+- No individual-level / controlled-access data used (MetaBrain/UKB-PPP/ADNI/deCODE excluded per DATA_GOVERNANCE.md).
