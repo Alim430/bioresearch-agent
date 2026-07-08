@@ -1,3 +1,45 @@
+## BioResearch Agent v1.5.0
+
+**Real-data causal-evidence chain. Six validation cases. Data governance guardrails.**
+
+```bash
+git clone https://github.com/Alim430/bioresearch-agent.git
+cd bioresearch-agent
+pip install -e .
+bioresearch doctor
+python bio-research-os/eval/case_study_realdata_causal.py \
+    --gwas-path  /path/to/AD_sumstats_Jansenetal_2019sept.txt.gz \
+    --eqtl-dir   /path/to/GTEx_Analysis_v8_eQTL \
+    --output-dir docs/case-study
+```
+
+### What is new in v1.5.0
+
+- ✅ **Data governance policy** (`DATA_GOVERNANCE.md`) and hardened `.gitignore` distinguish public/summary data from controlled/individual-level data (MetaBrain, UKB-PPP, ADNI, deCODE are out of scope).
+- ✅ **Validation Suite expanded to 6 cases**; Case 6 is registered in `bio-research-os/eval/manifest.json` with evidence grade **B**.
+- ✅ **Causal-evidence chain on real public summary data** — Jansen 2019 AD GWAS + GTEx v8 brain eQTL for TREM2 / BIN1 / CLU / PICALM / APOE.
+  - 5/5 genes matched to brain eQTL.
+  - 4/5 genes showed strong colocalization (PP.H4 > 0.8).
+  - **BIN1** replicated with significant Wald-ratio MR (β = 0.037, SE = 0.006, p = 9.0 × 10⁻¹⁰).
+- ✅ **Honest Evidence Package** for Case 6 lists limitations: lead-eQTL-only TWAS proxy, no LD reference panel, single-SNP MR, non-diseased GTEx tissue.
+- ✅ **Case 5 vs Case 6 comparison** documented in `docs/case-study/CE_Case5_vs_Case6_comparison.md`.
+- ✅ **v1.5 manuscript** in Chinese: `docs/joss/paper-v1.5-zh.md`.
+
+### v1.5.0 evidence grades
+
+| Grade | Cases | Meaning |
+|:---|:---|:---|
+| **B** | Case 1 (PD biomarker on GEO), Case 6 (AD causal evidence on real GWAS+eQTL summary) | Real public data / summary statistics |
+| **C** | Cases 2, 4, 5 | Synthetic or methodology validation on real statistical engines |
+| **B / C** | Case 3 | Real PubMed when reachable; offline corpus fallback |
+
+### Roadmap update
+
+- v1.5 Phase 1 is complete: real-data causal-evidence chain and data governance are in place.
+- Next: integrate full eQTL weights (S-PrediXcan / FUSION) and LD reference panels (1000 Genomes) while staying within public-summary data boundaries.
+
+---
+
 ## BioResearch Agent v1.1.0
 
 **One framework. Executable workflows. Zero API keys.**
@@ -84,11 +126,11 @@ An accompanying methods/software paper is **in preparation** (target: cs.SE prim
 - ✅ CI workflow configured (Python 3.9–3.12)
 - ✅ Determinism (fixed seed-42; Evidence Packages pin provenance)
 
-### v1.5 progress (on `main`, post-v1.1.0 tag)
+### v1.5 progress (completed in v1.5.0)
 
-- ✅ **Causal-evidence chain implemented** — `demo_causal_evidence.py` (real coloc PP.H4 + TWAS S-PrediXcan + Bayesian fine-mapping + Wald-ratio MR, numerically stable log-space) + **Case 5** in the Validation Suite (synthetic loci, ground-truth recovery: coloc 1.00 / TWAS 1.00 / fine-map 1.00; sweep TWAS 0.91). Honest grade **C** (methodology validation).
+- ✅ **Causal-evidence chain implemented** — `demo_causal_evidence.py` (real coloc PP.H4 + TWAS z-score proxy + fine-mapping credible sets + Wald-ratio MR, numerically stable log-space) + **Case 5** in the Validation Suite (synthetic loci, ground-truth recovery: coloc 1.00 / TWAS 1.00 / fine-map 1.00; sweep TWAS 0.91). Honest grade **C** (methodology validation).
 - ✅ **Skill set expanded to 10 active agent skills** (added `bioresearch-causal-evidence`).
-- ⏳ **Remaining for v1.5**: real-data integration of the causal-evidence chain (AD GWAS IGAP + eQTL MetaBrain/GTEx for TREM2 / BIN1 / APOE / CLU / PICALM); grow the benchmark to ~20 tasks.
+- ✅ **Real-data integration completed**: Case 6 runs on Jansen 2019 AD GWAS + GTEx v8 brain eQTL for TREM2 / BIN1 / APOE / CLU / PICALM, achieving grade **B**.
 
 ### Roadmap (honest, near-term)
 
