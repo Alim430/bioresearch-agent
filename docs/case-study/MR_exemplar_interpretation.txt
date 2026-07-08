@@ -1,0 +1,35 @@
+Mendelian Randomization Interpretation Report
+============================================================
+
+Study Design
+------------------------------------------------------------
+Exposure: Body Mass Index (BMI)
+Outcome: Type 2 Diabetes (T2D)
+Instrument SNPs: 16
+
+Primary IVW Result
+------------------------------------------------------------
+Causal effect estimate (beta): 0.3528
+Standard error               : 0.0038
+95% Confidence interval      : [0.3454, 0.3602]
+P-value                      : 0.00e+00
+Cochran's Q                  : 599.47
+Heterogeneity p-value        : 0.000
+
+Interpretation
+------------------------------------------------------------
+The IVW estimate suggests a statistically significant causal effect of BMI on T2D risk.
+Direction: Higher genetically predicted BMI is associated with increased T2D risk.
+WARNING: Significant heterogeneity detected (Cochran's Q p < 0.05).
+This may indicate horizontal pleiotropy or that the NO ME (instrument strength independent of direct effect) assumption is violated.
+
+Leave-One-Out Sensitivity
+------------------------------------------------------------
+Range of LOO estimates: 0.0260
+Caution: Some SNPs may be influential; consider outlier removal or robust MR methods (e.g., MR-Egger, weighted median).
+
+Limitations
+------------------------------------------------------------
+- This demo uses synthetic GWAS data for illustration.
+- Real-world MR requires rigorous LD clumping, harmonization, and sensitivity analyses.
+- Population stratification, sample overlap, and weak instrument bias should be assessed.

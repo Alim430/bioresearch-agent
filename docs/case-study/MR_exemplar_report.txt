@@ -1,0 +1,35 @@
+MR Exemplar (BMI -> Type 2 Diabetes) — Methodology Case Study
+================================================================
+
+EVIDENCE GRADE: C (synthetic GWAS; validates MR engine, not a real claim)
+
+Main exemplar run
+----------------------------------------------------------------
+Exposure / Outcome      : BMI -> Type 2 Diabetes
+Ground-truth effect     : 0.350
+SNPs simulated          : 120 (18 causal in DGP)
+Instrument SNPs         : 16
+IVW beta (SE)           : 0.3528 (0.0038)
+95% CI                  : [0.3454, 0.3602]
+P-value                 : 0.00e+00
+Cochran's Q / p_het     : 599.47 / 0.000
+Sign recovered          : True
+Truth within 95% CI     : True
+
+Ground-truth recovery sweep (benchmark)
+----------------------------------------------------------------
+ true_effect  seed  n_snps_simulated  n_causal_in_dgp  n_instruments  beta_ivw   se_ivw  ci_lower  ci_upper       p_value  cochrans_q  p_het  sign_correct  significant  abs_bias  within_ci
+        0.10    42               120               18             16  0.102284 0.003773  0.094888  0.109680 8.317663e-162  580.982313    0.0          True         True  0.002284       True
+        0.35    42               120               18             16  0.352823 0.003773  0.345427  0.360219  0.000000e+00  599.472055    0.0          True         True  0.002823       True
+        0.60    42               120               18             16  0.603362 0.003773  0.595966  0.610758  0.000000e+00  623.516828    0.0          True         True  0.003362       True
+
+Sign recovery rate      : 1.00
+Significance rate       : 1.00
+Truth-in-CI rate        : 1.00
+Mean |bias| (est-truth) : 0.0028
+
+Limitations
+----------------------------------------------------------------
+- Synthetic GWAS; no real genetic instruments or population structure.
+- No LD clumping / harmonization / horizontal-pleiotropy robustness (MR-Egger, weighted median).
+- Single simulated realization per effect size (no Monte-Carlo over seeds here).

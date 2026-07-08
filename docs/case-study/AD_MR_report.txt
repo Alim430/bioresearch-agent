@@ -1,0 +1,35 @@
+AD Causal MR — Methodology Case Study (synthetic)
+================================================================
+
+EVIDENCE GRADE: C (synthetic GWAS; validates MR engine in AD context)
+
+Question : Does higher educational attainment causally reduce AD risk?
+Exposure : Educational attainment (years)
+Outcome  : Alzheimer's disease
+
+Main run
+----------------------------------------------------------------
+Ground-truth effect     : -0.300
+SNPs simulated          : 120 (18 causal in DGP)
+Instrument SNPs         : 16
+IVW beta (SE)           : -0.2986 (0.0038)
+95% CI                  : [-0.3060, -0.2912]
+P-value                 : 0.00e+00
+Sign recovered          : True
+Truth within 95% CI     : True
+
+Ground-truth recovery sweep (benchmark)
+----------------------------------------------------------------
+ true_effect  n_causal_in_dgp  n_instruments  beta_ivw   se_ivw  ci_lower  ci_upper       p_value  sign_correct  significant  abs_bias  within_ci
+        -0.1               18             16 -0.098147 0.003773 -0.105543 -0.090751 3.825681e-149          True         True  0.001853       True
+        -0.3               18             16 -0.298578 0.003773 -0.305974 -0.291182  0.000000e+00          True         True  0.001422       True
+        -0.6               18             16 -0.599225 0.003773 -0.606621 -0.591829  0.000000e+00          True         True  0.000775       True
+
+Sign recovery rate      : 1.00
+Significance rate       : 1.00
+Truth-in-CI rate        : 1.00
+Mean |bias|             : 0.0014
+
+Reference AD GWAS loci (real-data version only, NOT used here):
+  APOE, TREM2, BIN1, CLU
+Expected pathway sanity for real AD MR: lipid metabolism, immune/inflammatory response, amyloid/tau

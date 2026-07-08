@@ -1,0 +1,116 @@
+{
+  "metadata": {
+    "case_study": "MR exemplar (BMI -> Type 2 Diabetes)",
+    "workflow": "causal-inference",
+    "exposure": "BMI",
+    "outcome": "Type 2 Diabetes",
+    "date": "2026-07-08",
+    "agent_version": "bioresearch-agent v1.0.0 + case-study-mr-exemplar",
+    "mode": "synthetic GWAS (ground-truth known by construction)"
+  },
+  "provenance": {
+    "git_commit": "b179991a2e2ad59a33fe2a38339cfd982a0a8cad",
+    "python": "3.13.12",
+    "env": "managed venv (python3.13 + numpy/pandas/scipy/matplotlib)",
+    "seed": 42,
+    "seed_policy": "numpy default_rng(seed); deterministic given seed",
+    "engine": "demo_causal_inference.py (ivw_mr, leave_one_out_mr, select_instruments)"
+  },
+  "methods": [
+    "simulate_gwas_summary",
+    "select_instruments",
+    "ivw_mr",
+    "leave_one_out_mr",
+    "plot_mr_scatter",
+    "plot_funnel"
+  ],
+  "results": {
+    "n_snps_simulated": 120,
+    "n_causal_in_dgp": 18,
+    "n_instruments": 16,
+    "beta_ivw": 0.35282276209748953,
+    "se_ivw": 0.003773449995515078,
+    "ci_lower": 0.34542680010627996,
+    "ci_upper": 0.3602187240886991,
+    "p_value": 0.0,
+    "cochrans_q": 599.4720545947976,
+    "p_het": 0.0,
+    "sign_correct": true,
+    "truth_within_ci": true
+  },
+  "benchmark": {
+    "type": "ground_truth_recovery",
+    "sweep_effects": [
+      0.1,
+      0.35,
+      0.6
+    ],
+    "sign_recovery_rate": 1.0,
+    "significance_rate": 1.0,
+    "truth_in_ci_rate": 1.0,
+    "mean_abs_bias": 0.0028227620974895277,
+    "sweep_table": [
+      {
+        "true_effect": 0.1,
+        "seed": 42,
+        "n_snps_simulated": 120,
+        "n_causal_in_dgp": 18,
+        "n_instruments": 16,
+        "beta_ivw": 0.10228395341405334,
+        "se_ivw": 0.003773449995515078,
+        "ci_lower": 0.09488799142284379,
+        "ci_upper": 0.1096799154052629,
+        "p_value": 8.317663432908671e-162,
+        "cochrans_q": 580.9823128756555,
+        "p_het": 0.0,
+        "sign_correct": true,
+        "significant": true,
+        "abs_bias": 0.0022839534140533385,
+        "within_ci": true
+      },
+      {
+        "true_effect": 0.35,
+        "seed": 42,
+        "n_snps_simulated": 120,
+        "n_causal_in_dgp": 18,
+        "n_instruments": 16,
+        "beta_ivw": 0.35282276209748953,
+        "se_ivw": 0.003773449995515078,
+        "ci_lower": 0.34542680010627996,
+        "ci_upper": 0.3602187240886991,
+        "p_value": 0.0,
+        "cochrans_q": 599.4720545947976,
+        "p_het": 0.0,
+        "sign_correct": true,
+        "significant": true,
+        "abs_bias": 0.0028227620974895506,
+        "within_ci": true
+      },
+      {
+        "true_effect": 0.6,
+        "seed": 42,
+        "n_snps_simulated": 120,
+        "n_causal_in_dgp": 18,
+        "n_instruments": 16,
+        "beta_ivw": 0.6033615707809257,
+        "se_ivw": 0.003773449995515078,
+        "ci_lower": 0.5959656087897162,
+        "ci_upper": 0.6107575327721352,
+        "p_value": 0.0,
+        "cochrans_q": 623.5168283609046,
+        "p_het": 0.0,
+        "sign_correct": true,
+        "significant": true,
+        "abs_bias": 0.0033615707809256934,
+        "within_ci": true
+      }
+    ]
+  },
+  "evidence_grade": "C (synthetic GWAS; methodology validation of MR engine; not a real etiological claim)",
+  "limitations": [
+    "Synthetic GWAS; no real genetic instruments or population structure",
+    "No LD clumping / harmonization / horizontal-pleiotropy robustness (MR-Egger, weighted median)",
+    "Single simulated realization per effect size"
+  ],
+  "next_validation": "Real two-sample MR: GLGC/UKBB BMI -> DIAGRAM/UKBB T2D summary stats, with LD clumping, harmonization, and pleiotropy-robust methods"
+}

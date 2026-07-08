@@ -24,36 +24,43 @@
       "name": "Alzheimer's disease causal evidence (risk factor -> AD)",
       "disease": "Alzheimer's disease",
       "workflows": ["causal-inference"],
-      "data": "GWAS summary stats (independent cohorts, e.g. GLGC/UKBB exposure + IGAP/GR@P AD outcome)",
-      "known_entities": ["APOE", "TREM2", "BIN1", "CLU"],
+      "data": "SYNTHETIC GWAS (ground-truth effect known by construction); real IVW engine. Real-data version would use SSGAC educational attainment -> IGAP/GR@P AD.",
+      "benchmark_type": "ground_truth_recovery",
+      "known_entities": [],
+      "reference_ad_loci": ["APOE", "TREM2", "BIN1", "CLU"],
       "pathway_sanity": ["lipid metabolism", "immune/inflammatory response", "amyloid/tau"],
       "script": "case_study_ad_mr.py",
       "output_dir": "docs/case-study",
-      "status": "planned"
+      "status": "implemented",
+      "evidence_grade": "C (synthetic GWAS; MR-engine validation in AD context)"
     },
     {
       "id": 3,
       "name": "Alzheimer's disease literature gap analysis",
       "disease": "Alzheimer's disease",
       "workflows": ["literature-analysis"],
-      "data": "PubMed / OpenAlex",
+      "data": "PubMed E-utilities (REAL public data when reachable; built-in illustrative corpus fallback for offline reproducibility).",
+      "benchmark_type": "pipeline_sanity",
       "known_entities": [],
       "pathway_sanity": [],
       "script": "case_study_ad_literature.py",
       "output_dir": "docs/case-study",
-      "status": "planned"
+      "status": "implemented",
+      "evidence_grade": "B (real PubMed when reachable) / C (offline built-in corpus fallback)"
     },
     {
       "id": 4,
       "name": "Exposure -> outcome MR exemplar",
       "disease": "general (methodology exemplar)",
       "workflows": ["causal-inference"],
-      "data": "GWAS summary stats (e.g. BMI -> type 2 diabetes)",
+      "data": "SYNTHETIC GWAS (ground-truth effect known by construction); real IVW engine. Real-data version would use GLGC/UKBB BMI -> DIAGRAM/UKBB T2D.",
+      "benchmark_type": "ground_truth_recovery",
       "known_entities": [],
       "pathway_sanity": [],
       "script": "case_study_mr_exemplar.py",
       "output_dir": "docs/case-study",
-      "status": "planned"
+      "status": "implemented",
+      "evidence_grade": "C (synthetic GWAS; MR-engine validation)"
     }
   ]
 }

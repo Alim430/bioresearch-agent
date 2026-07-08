@@ -1,0 +1,6 @@
+Knowledge Gaps Identified
+==================================================
+
+1. Limited very recent (2023+) studies; emerging mechanisms may be underexplored.
+2. Sparse single-cell resolution data; cellular heterogeneity may be overlooked.
+3. Epigenetic regulation in microglia during disease progression is understudied.

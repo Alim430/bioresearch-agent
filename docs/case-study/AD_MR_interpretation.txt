@@ -1,0 +1,25 @@
+Alzheimer's Disease MR Interpretation (METHODOLOGY CASE, synthetic data)
+======================================================================
+
+Exposure : Educational attainment (years)
+Outcome  : Alzheimer's disease
+Instrument SNPs : 16
+
+Primary IVW Result
+----------------------------------------------------------------------
+Causal effect estimate (beta) : -0.2986
+Standard error                : 0.0038
+95% CI                       : [-0.3060, -0.2912]
+P-value                      : 0.00e+00
+Cochran's Q / p_het          : 562.95 / 0.000
+
+Interpretation
+----------------------------------------------------------------------
+IVW suggests a significant causal effect: higher genetically predicted educational attainment (years) is associated with reduced alzheimer's disease risk.
+WARNING: heterogeneity (Cochran's Q p<0.05) — possible pleiotropy in real data.
+
+Limitations
+----------------------------------------------------------------------
+- SYNTHETIC GWAS; no real genetic instruments (APOE/TREM2/BIN1/CLU etc.).
+- No LD clumping / harmonization / pleiotropy-robust methods (MR-Egger, weighted median).
+- This is engine validation, not a real AD etiological claim.

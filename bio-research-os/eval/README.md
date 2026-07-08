@@ -1,19 +1,36 @@
 # Biomedical Workflow Validation Suite
 
 > An honest **validation suite** (not a marketing "benchmark") that runs the BioResearch Agent
-> workflows against real public data and records a reproducible Evidence Package for each case.
-> Every case proves the framework does real work on real data — no synthetic injection, no
-> pre-known answers baked into the pipeline.
+> workflows and records a reproducible Evidence Package for each case.
+>
+> - **Case 1** runs on **real public data** (GEO:GSE7621, postmortem substantia nigra).
+> - **Cases 2 & 4** are **methodology validations** on synthetic-but-ground-truth GWAS. They validate the
+>   MR *engine's computation* (sign / magnitude-within-CI / significance recovery), not a real etiological
+>   claim, and are graded **C** with an explicit `next_validation` pointing to real GWAS.
+> - **Case 3** uses **real PubMed** when reachable (graded **B**) with a built-in corpus fallback for offline
+>   reproducibility (graded **C**). It validates the literature-analysis *pipeline* (entity extraction →
+>   co-occurrence graph → gap detection → outline).
+>
+> No synthetic numbers are injected into a "real" pipeline, and no pre-known answers are baked
+> in. Every case reports its evidence grade and limitations honestly.
 
 ## Why a "Validation Suite" and not a "Benchmark"?
 
 A benchmark implies a leaderboard and a single score to maximize. That framing invites
 gaming and overclaiming. This suite instead records, per case:
 
-1. **Known-entity recovery** — do established disease genes / pathways surface? (blind check)
-2. **Pathway / mechanistic sanity** — do disease-relevant biology pathways enrich?
-3. **Reproducibility** — commit hash, environment, and data `sha256` pinned in an Evidence
-   Package, so any reviewer can re-run and get the same numbers.
+1. **Known-entity recovery** (Case 1, real data) — do established disease genes / pathways surface? (blind check)
+2. **Ground-truth recovery** (Cases 2 & 4, synthetic GWAS) — given data generated from a *known*
+   causal effect, does the IVW estimator recover the right **sign**, **magnitude** (within CI),
+   and **significance**? A falsifiable engine-correctness test.
+3. **Pipeline sanity** (Case 3, offline) — does the literature pipeline produce a non-empty
+   summary, a non-trivial co-occurrence graph, identified gaps, and a review outline?
+4. **Reproducibility** — commit hash, environment, and (where real) data `sha256` pinned in an
+   Evidence Package, so any reviewer can re-run and get the same numbers.
+
+Each case is graded on evidence, not on a vanity metric: **A/B** = real public data;
+**C** = synthetic/offline methodology validation. Low recovery is reported honestly
+(biology is sometimes subtle in bulk tissue) and interpreted, not hidden.
 
 Each case is graded on evidence, not on a vanity metric. Low recovery is reported honestly
 (biology is sometimes subtle in bulk tissue) and interpreted, not hidden.
@@ -36,10 +53,10 @@ Each case is graded on evidence, not on a vanity metric. Low recovery is reporte
 
 | Case | Disease / Question | Workflow(s) | Data | Status |
 |------|--------------------|-------------|------|--------|
-| 1 | Parkinson's biomarker discovery | biomarker (DEG → enrichment → ranking) | GSE7621 (GPL570, 25 samples) | ✅ implemented — `case_study_pd.py` |
-| 2 | AD causal evidence (risk factor → AD) | causal-inference (MR) | GWAS summary stats (independent cohorts) | 🟡 planned |
-| 3 | AD literature gap analysis | literature-analysis | PubMed / OpenAlex | 🟡 planned |
-| 4 | Exposure → outcome MR exemplar | causal-inference (MR) | GWAS summary stats | 🟡 planned |
+| 1 | Parkinson's biomarker discovery | biomarker (DEG → enrichment → ranking) | GSE7621 (GPL570, 25 samples) — **real** | ✅ implemented (grade B) — `case_study_pd.py` |
+| 2 | AD causal evidence (educational attainment → AD) | causal-inference (MR) | **synthetic** GWAS, ground-truth known | ✅ implemented (grade C) — `case_study_ad_mr.py` |
+| 3 | AD literature gap analysis | literature-analysis | **offline** built-in corpus (PubMed unreachable) | ✅ implemented (grade C) — `case_study_ad_literature.py` |
+| 4 | Exposure → outcome MR exemplar (BMI → T2D) | causal-inference (MR) | **synthetic** GWAS, ground-truth known | ✅ implemented (grade C) — `case_study_mr_exemplar.py` |
 
 ## Running Case 1 (Parkinson's / GSE7621)
 
@@ -52,6 +69,28 @@ python bio-research-os/eval/case_study_pd.py \
 
 Outputs land in `docs/case-study/` (see `case_study_pd.py` header for the full list,
 including `GSE7621_evidence_package.json`).
+
+## Running Cases 2–4 (methodology validation)
+
+All three wrap the real framework engines (`demo_causal_inference.py`,
+`demo_literature_review.py`). They need **no network** and use a fixed seed, so they are
+fully reproducible offline.
+
+```bash
+# Case 4 — MR exemplar (BMI -> Type 2 Diabetes), synthetic GWAS
+python bio-research-os/eval/case_study_mr_exemplar.py --output-dir docs/case-study
+
+# Case 2 — AD MR methodology (educational attainment -> AD), synthetic GWAS
+python bio-research-os/eval/case_study_ad_mr.py --output-dir docs/case-study
+
+# Case 3 — AD literature gap, offline built-in corpus (PubMed unreachable here)
+python bio-research-os/eval/case_study_ad_literature.py --output-dir docs/case-study
+```
+
+Each emits an Evidence Package JSON (`*_evidence_package.json`) with `evidence_grade: "C"`
+and an explicit `next_validation` (real GWAS / real PubMed). The MR cases include a
+ground-truth recovery sweep CSV (`*_sweep.csv`); the literature case includes a
+pipeline-sanity check in its Evidence Package.
 
 ## Evidence Package schema
 

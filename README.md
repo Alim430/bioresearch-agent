@@ -202,6 +202,21 @@ Simulated GWAS summary stats &rarr; genome-wide significant SNP instruments &rar
 
 ---
 
+## ✅ Validation Suite
+
+An honest validation suite (not a leaderboard) that runs the workflows against real public data where available, and via falsifiable methodology checks otherwise. Each case emits a reproducible **Evidence Package** (commit hash + environment + data `sha256` + benchmark result). See [`bio-research-os/eval/README.md`](bio-research-os/eval/README.md) for design and run commands.
+
+| Case | Question | Data | Grade |
+|:---|:---|:---|:---|
+| 1 | Parkinson's biomarker discovery (GSE7621, SN bulk microarray) | **Real GEO** | **B** |
+| 2 | AD causal MR (educational attainment → AD) | Synthetic GWAS (ground-truth known) | C |
+| 3 | AD literature gap analysis | **Real PubMed** (built-in corpus fallback) | B / C |
+| 4 | Exposure → outcome MR exemplar (BMI → T2D) | Synthetic GWAS (ground-truth known) | C |
+
+Grades: **A/B** = real public data; **C** = synthetic/offline methodology validation. Low recovery (e.g., Mendelian PD drivers in bulk tissue) is reported honestly, not hidden.
+
+---
+
 ## 📦 Installation
 
 ```bash

@@ -1,0 +1,90 @@
+{
+  "metadata": {
+    "case_study": "AD literature gap analysis",
+    "workflow": "literature-analysis",
+    "topic": "microglia in Alzheimer's disease",
+    "date": "2026-07-08",
+    "agent_version": "bioresearch-agent v1.0.0 + case-study-ad-literature",
+    "mode": "real PubMed E-utilities"
+  },
+  "provenance": {
+    "git_commit": "b179991a2e2ad59a33fe2a38339cfd982a0a8cad",
+    "python": "3.13.12",
+    "env": "managed venv (python3.13 + numpy/pandas/matplotlib/networkx)",
+    "engine": "demo_literature_review.py (extract_entities, build_cooccurrence_graph, identify_knowledge_gaps, generate_review_outline)"
+  },
+  "methods": [
+    "fetch_pubmed_or_fallback",
+    "extract_entities",
+    "build_cooccurrence_graph",
+    "plot_knowledge_graph",
+    "identify_knowledge_gaps",
+    "generate_review_outline"
+  ],
+  "results": {
+    "n_articles": 10,
+    "n_summary_rows": 10,
+    "graph_nodes": 40,
+    "graph_edges": 632,
+    "n_knowledge_gaps": 3,
+    "outline_nonempty": true,
+    "ad_term_coverage": 0.8888888888888888,
+    "top_entities": [
+      "microglia",
+      "neuroinflammation",
+      "disease",
+      "alzheimer",
+      "x3b2",
+      "neurodegeneration",
+      "cognitive",
+      "amyloid",
+      "inflammatory",
+      "tlr4",
+      "signaling",
+      "activation",
+      "neuronal",
+      "therapeutic",
+      "mouse"
+    ]
+  },
+  "benchmark": {
+    "type": "pipeline_sanity",
+    "checks": {
+      "summary_rows_match_articles": true,
+      "graph_nodes_ge_5": true,
+      "graph_edges_ge_5": true,
+      "gaps_ge_1": true,
+      "outline_nonempty": true
+    },
+    "pipeline_ok": true,
+    "expected_ad_terms": [
+      "microglia",
+      "alzheimer",
+      "trem2",
+      "amyloid",
+      "tau",
+      "neuroinflammation",
+      "lipid",
+      "synapse",
+      "astrocyte"
+    ],
+    "ad_term_hits": [
+      "microglia",
+      "alzheimer",
+      "trem2",
+      "amyloid",
+      "tau",
+      "neuroinflammation",
+      "lipid",
+      "astrocyte"
+    ],
+    "ad_term_coverage": 0.8888888888888888
+  },
+  "evidence_grade": "B (real public data via PubMed E-utilities; literature-analysis pipeline)",
+  "limitations": [
+    "Real PubMed corpus is a single-topic top-N snapshot (no deduplication / recency ranking)",
+    "Naive entity extraction (stop-word + heuristic), not NER-model based",
+    "Knowledge-gap detection is heuristic, not expert-curated"
+  ],
+  "next_validation": "Broader PubMed/OpenAlex query with date-range + deduplication; NER-based entity extraction; comparison against a curated AD knowledge graph"
+}
