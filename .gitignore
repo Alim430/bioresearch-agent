@@ -55,5 +55,5 @@ demo_outputs/
 checkpoints/
 models/
 
-# Skill installer fallback directory
-bioresearch-skills/
+# Skill installer fallback directory (local, created when no agent dir detected)
+skills-installed/

@@ -4,6 +4,14 @@
 
 CLI · Python SDK · API · Agent Skills
 
+**What your AI assistant can do after installing the skills:**
+
+- 📚 **Literature analysis** — PubMed review + co-occurrence knowledge graph
+- 🧬 **Biomarker discovery** — DEG + pathway enrichment + candidate ranking
+- 📊 **Differential expression & pathway enrichment** — fine-grained omics queries
+- 🔗 **Mendelian randomization** — causal inference with sensitivity analysis
+- 🔬 **Reproducible execution** — validated workflows, not text-only summaries
+
 [![CI](https://github.com/Alim430/bioresearch-agent/actions/workflows/ci.yml/badge.svg)](https://github.com/Alim430/bioresearch-agent/actions/workflows/ci.yml)
 [![Python 3.9+](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
@@ -61,17 +69,22 @@ and it will dispatch to the underlying `bioresearch` workflows — producing dat
 <summary>Manual install / other clients</summary>
 
 ```bash
-# Claude Desktop (macOS)
-cp -r skills/literature skills/biomarker skills/causal "$HOME/Library/Application Support/Claude/skills/"
+# Claude Desktop (macOS) — copy every active skill leaf folder
+cp -r skills/core/project-introduction \
+      skills/core/environment-check \
+      skills/biomedical/literature-analysis \
+      skills/biomedical/biomarker-discovery \
+      skills/biomedical/differential-expression \
+      skills/biomedical/pathway-enrichment \
+      skills/biomedical/causal-inference \
+      "$HOME/Library/Application Support/Claude/skills/"
 
-# Claude / generic (~/.config)
-cp -r skills/literature skills/biomarker skills/causal ~/.config/agent/skills/
-
-# Cursor
-cp -r skills/literature skills/biomarker skills/causal ~/.cursor/skills/
+# Cursor:  same command, target ~/.cursor/skills/
+# Codex / generic:  target ~/.config/agent/skills/
 ```
 
-Restart the client after copying. See [Workflow Skills](#-workflow-skills).
+Restart the client after copying. See [Workflow Skills](#-workflow-skills) and
+[skills/README.md](skills/README.md) for the full capability map.
 
 </details>
 
@@ -270,25 +283,47 @@ These files carry invocation instructions and parameter schemas only. All comput
 
 ## 🧩 Workflow Skills
 
-BioResearch Agent ships reusable **workflow skill templates** — client-side interface definitions that let compatible AI clients (Claude Desktop, Cursor, LangChain, OpenAI-compatible) invoke the three pipelines through a standardized schema. These are *integration interfaces, not reasoning modules*: they only carry invocation instructions and parameter schemas; all computation runs in the framework's workflow modules.
+BioResearch Agent ships a **capability layer** of reusable Agent Skills — client-side interface
+definitions that let compatible AI clients (Claude Desktop, Cursor, Codex, and other
+Agent Skills–compatible systems) invoke the framework's workflows through a standardized schema.
+These are *integration interfaces, not reasoning modules*: they only carry invocation
+instructions and parameter schemas; all computation runs in the framework's workflow modules.
 
-| Skill | Pipeline | What it invokes |
+### Active skills (`core/` + `biomedical/`)
+
+| Skill | Capability | Triggers on |
 |:---|:---|:---|
-| `literature` | Literature review | PubMed retrieval + entity co-occurrence graph |
-| `biomarker` | Biomarker discovery | Differential expression + pathway enrichment |
-| `causal` | Causal inference | Mendelian randomization (IVW) |
+| `bioresearch-introduction` | Framework overview & capability map | "what can BioResearch Agent do" |
+| `bioresearch-environment-check` | Environment / reproducibility validation (`bioresearch doctor`) | "validate environment / troubleshoot" |
+| `bioresearch-literature-analysis` | Literature review + co-occurrence graph | "literature review / research gaps" |
+| `bioresearch-biomarker-discovery` | Biomarker discovery (DEG + enrichment) | "find biomarkers for a disease" |
+| `bioresearch-differential-expression` | Differential expression (DEG) | "differential expression / volcano plot" |
+| `bioresearch-pathway-enrichment` | Pathway / GO / KEGG enrichment | "pathway / GO enrichment" |
+| `bioresearch-causal-inference` | Mendelian randomization (IVW + sensitivity) | "causal effect / MR" |
+
+> `differential-expression` and `pathway-enrichment` invoke the same `biomarker` workflow (DEG is
+> stage 1, enrichment is stage 2) — they are focused entry points, not separate CLI commands.
+
+### Planned (not yet shipped as loadable skills)
+
+Workflow orchestration (lit → biomarker → causal), single-cell, spatial transcriptomics,
+protein, and clinical-data analysis. See `skills/registry.json` and
+[skills/README.md](skills/README.md#roadmap-planned--not-yet-shipped-as-loadable-skills).
 
 **Install (recommended):**
 ```bash
 ./skills/install.sh
 ```
-The installer detects your agent's skill directory, copies the three skills, and verifies the framework with `bioresearch doctor`.
+The installer auto-discovers every active skill, copies it into your agent's skill directory, and
+verifies the framework with `bioresearch doctor`.
 
-**Or copy manually:**
+**Or copy manually** (see [skills/README.md](skills/README.md) for client-specific paths):
 ```bash
-cp -r skills/literature skills/biomarker skills/causal ~/.config/agent/skills/
+cp -r skills/core/project-introduction skills/core/environment-check \
+      skills/biomedical/* ~/.config/agent/skills/
 ```
-Restart the client. The pipelines then become available as reusable biomedical analysis commands through compatible agent interfaces.
+Restart the client. The workflows then become available as reusable biomedical analysis commands
+through compatible agent interfaces.
 
 ---
 
@@ -317,7 +352,7 @@ You can audit every request the tool makes before loading it into your assistant
 bioresearch-agent/
 ├── bioresearch/         # SDK + CLI package
 ├── bio-research-os/      # core framework (modules, demos, examples)
-├── skills/              # agent skill definitions (Claude/Cursor/Codex) + skills/README.md
+├── skills/              # agent skills (core/ + biomedical/) + registry.json + skills/README.md
 ├── examples/            # copy-paste agent workflow examples (AD / Parkinson / MR)
 ├── outputs/              # generated outputs (gitignored)
 ├── assets/               # documentation figures

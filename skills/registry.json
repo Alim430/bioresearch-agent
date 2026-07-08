@@ -1,0 +1,91 @@
+{
+  "framework": "BioResearch Agent",
+  "version": "1.0.0",
+  "spec": "Agent Skills (agentskills.io open standard)",
+  "skills": [
+    {
+      "name": "bioresearch-introduction",
+      "path": "skills/core/project-introduction",
+      "group": "core",
+      "capability": "Framework overview & capability map",
+      "triggers": "what can BioResearch Agent do / which workflow to use",
+      "status": "active"
+    },
+    {
+      "name": "bioresearch-environment-check",
+      "path": "skills/core/environment-check",
+      "group": "core",
+      "capability": "Environment & reproducibility validation (bioresearch doctor)",
+      "triggers": "validate environment / troubleshoot a failed run",
+      "status": "active"
+    },
+    {
+      "name": "bioresearch-literature-analysis",
+      "path": "skills/biomedical/literature-analysis",
+      "group": "biomedical",
+      "capability": "Literature review + co-occurrence knowledge graph",
+      "triggers": "literature review / research-gap analysis / PubMed synthesis",
+      "status": "active"
+    },
+    {
+      "name": "bioresearch-biomarker-discovery",
+      "path": "skills/biomedical/biomarker-discovery",
+      "group": "biomedical",
+      "capability": "Biomarker discovery (DEG + pathway enrichment + ranking)",
+      "triggers": "find gene biomarkers / candidates for a disease",
+      "status": "active"
+    },
+    {
+      "name": "bioresearch-differential-expression",
+      "path": "skills/biomedical/differential-expression",
+      "group": "biomedical",
+      "capability": "Differential expression (DEG, t-test + Bonferroni)",
+      "triggers": "differential expression / DEG / volcano plot",
+      "status": "active"
+    },
+    {
+      "name": "bioresearch-pathway-enrichment",
+      "path": "skills/biomedical/pathway-enrichment",
+      "group": "biomedical",
+      "capability": "Pathway / GO / KEGG enrichment",
+      "triggers": "pathway / GO / KEGG enrichment",
+      "status": "active"
+    },
+    {
+      "name": "bioresearch-causal-inference",
+      "path": "skills/biomedical/causal-inference",
+      "group": "biomedical",
+      "capability": "Two-sample Mendelian randomization (IVW + sensitivity)",
+      "triggers": "causal effect / MR between exposure and outcome",
+      "status": "active"
+    }
+  ],
+  "planned": [
+    {
+      "name": "bioresearch-workflow-orchestration",
+      "capability": "Multi-workflow orchestration (literature → biomarker → causal)",
+      "status": "planned",
+      "note": "No automated orchestrator CLI yet; framework stages 9–12 are conceptual, not implemented."
+    },
+    {
+      "name": "bioresearch-single-cell-analysis",
+      "capability": "Single-cell transcriptomics",
+      "status": "planned"
+    },
+    {
+      "name": "bioresearch-spatial-transcriptomics",
+      "capability": "Spatial transcriptomics",
+      "status": "planned"
+    },
+    {
+      "name": "bioresearch-protein-analysis",
+      "capability": "Protein / structure analysis",
+      "status": "planned"
+    },
+    {
+      "name": "bioresearch-clinical-data-analysis",
+      "capability": "Clinical data analysis",
+      "status": "planned"
+    }
+  ]
+}

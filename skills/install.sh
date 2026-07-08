@@ -9,7 +9,8 @@ set -e
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROJECT_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
-SKILL_NAMES=("literature" "biomarker" "causal")
+# Discover all skill dirs (folders directly containing a SKILL.md) — works with any grouping
+mapfile -t SKILL_DIRS < <(find "$SCRIPT_DIR" -name SKILL.md -not -path '*/.*' | xargs -n1 dirname | sort)
 
 # Colors
 RED='\033[0;31m'
@@ -43,8 +44,8 @@ detect_agent_dir() {
         return
     fi
 
-    # Fallback
-    echo "./bioresearch-skills"
+    # Fallback (local, gitignored)
+    echo "./skills-installed"
 }
 
 # ──── Check if framework is installed ────
@@ -70,14 +71,14 @@ install_skills() {
 
     echo ""
     echo -e "${BLUE}▶ Installing workflow skills...${NC}"
-    for skill in "${SKILL_NAMES[@]}"; do
-        src="$SCRIPT_DIR/$skill"
+    if [ ${#SKILL_DIRS[@]} -eq 0 ]; then
+        echo -e "${YELLOW}  ⚠ No skills found under $SCRIPT_DIR${NC}"
+        return
+    fi
+    for src in "${SKILL_DIRS[@]}"; do
+        local skill
+        skill="$(basename "$src")"
         dest="$target_dir/$skill"
-
-        if [ ! -d "$src" ]; then
-            echo -e "${YELLOW}  ⚠ Skill not found: $skill${NC}"
-            continue
-        fi
 
         if [ -d "$dest" ]; then
             rm -rf "$dest"
