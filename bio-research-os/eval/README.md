@@ -10,6 +10,11 @@
 > - **Case 3** uses **real PubMed** when reachable (graded **B**) with a built-in corpus fallback for offline
 >   reproducibility (graded **C**). It validates the literature-analysis *pipeline* (entity extraction →
 >   co-occurrence graph → gap detection → outline).
+> - **Case 5** is a **methodology validation** of the causal-evidence *chain* (GWAS → eQTL →
+>   colocalization → TWAS → fine-mapping → MR) on synthetic loci with ground-truth labels. It validates
+>   the engine's computation (coloc `PP.H4` recovery, TWAS significance, credible-set containment of the
+>   true causal SNP, MR consistency), not a real etiological claim, and is graded **C** with `next_validation`
+>   pointing to real AD GWAS + eQTL (IGAP + MetaBrain/GTEx).
 >
 > No synthetic numbers are injected into a "real" pipeline, and no pre-known answers are baked
 > in. Every case reports its evidence grade and limitations honestly.
@@ -32,9 +37,6 @@ Each case is graded on evidence, not on a vanity metric: **A/B** = real public d
 **C** = synthetic/offline methodology validation. Low recovery is reported honestly
 (biology is sometimes subtle in bulk tissue) and interpreted, not hidden.
 
-Each case is graded on evidence, not on a vanity metric. Low recovery is reported honestly
-(biology is sometimes subtle in bulk tissue) and interpreted, not hidden.
-
 ### Benchmark design (Case 1, Parkinson's / GSE7621)
 
 * **Two known-gene tiers, reported separately** (honest about bulk-tissue power):
@@ -55,8 +57,9 @@ Each case is graded on evidence, not on a vanity metric. Low recovery is reporte
 |------|--------------------|-------------|------|--------|
 | 1 | Parkinson's biomarker discovery | biomarker (DEG → enrichment → ranking) | GSE7621 (GPL570, 25 samples) — **real** | ✅ implemented (grade B) — `case_study_pd.py` |
 | 2 | AD causal evidence (educational attainment → AD) | causal-inference (MR) | **synthetic** GWAS, ground-truth known | ✅ implemented (grade C) — `case_study_ad_mr.py` |
-| 3 | AD literature gap analysis | literature-analysis | **offline** built-in corpus (PubMed unreachable) | ✅ implemented (grade C) — `case_study_ad_literature.py` |
+| 3 | AD literature gap analysis | literature-analysis | **real PubMed** when reachable (grade B) / **offline** built-in corpus fallback (grade C) | ✅ implemented — `case_study_ad_literature.py` |
 | 4 | Exposure → outcome MR exemplar (BMI → T2D) | causal-inference (MR) | **synthetic** GWAS, ground-truth known | ✅ implemented (grade C) — `case_study_mr_exemplar.py` |
+| 5 | Causal evidence chain (GWAS→eQTL→coloc→TWAS→fine-map→MR) | causal-evidence | **synthetic** loci, ground-truth labels | ✅ implemented (grade C) — `case_study_causal_evidence.py` |
 
 ## Running Case 1 (Parkinson's / GSE7621)
 
@@ -83,8 +86,11 @@ python bio-research-os/eval/case_study_mr_exemplar.py --output-dir docs/case-stu
 # Case 2 — AD MR methodology (educational attainment -> AD), synthetic GWAS
 python bio-research-os/eval/case_study_ad_mr.py --output-dir docs/case-study
 
-# Case 3 — AD literature gap, offline built-in corpus (PubMed unreachable here)
+# Case 3 — AD literature gap (real PubMed when reachable; built-in corpus fallback offline)
 python bio-research-os/eval/case_study_ad_literature.py --output-dir docs/case-study
+
+# Case 5 — causal-evidence chain (GWAS -> eQTL -> coloc -> TWAS -> fine-map -> MR), synthetic loci
+python bio-research-os/eval/case_study_causal_evidence.py --output-dir docs/case-study
 ```
 
 Each emits an Evidence Package JSON (`*_evidence_package.json`) with `evidence_grade: "C"`

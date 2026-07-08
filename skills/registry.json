@@ -1,6 +1,6 @@
 {
   "framework": "BioResearch Agent",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "spec": "Agent Skills (agentskills.io open standard)",
   "skills": [
     {
@@ -65,6 +65,14 @@
       "group": "biomedical",
       "capability": "Real-data disease case study + blind benchmark (known-gene recovery / pathway sanity / reproducibility)",
       "triggers": "disease case study / validation run / benchmark the workflows on real data",
+      "status": "active"
+    },
+    {
+      "name": "bioresearch-causal-evidence",
+      "path": "skills/biomedical/causal-evidence",
+      "group": "biomedical",
+      "capability": "Causal-evidence chain (GWAS→eQTL→coloc→TWAS→fine-map→MR); synthetic-locus engine validation",
+      "triggers": "causal evidence / colocalization / TWAS / fine-mapping / which gene drives a GWAS locus",
       "status": "active"
     },
     {

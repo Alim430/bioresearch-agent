@@ -63,10 +63,10 @@ The agent routes it to `bioresearch run literature` and returns structured outpu
 
 ### Architecture
 
-- **Reproducible workflow engine** (literature / biomarker / causal-inference / case-study)
+- **Reproducible workflow engine** (literature / biomarker / causal-inference / causal-evidence / case-study)
 - **Multi-interface access**: CLI · Python SDK · API Contract / Tool Spec · Agent Skills
-- **Validation Suite**: 4 cases with Evidence Packages (`bio-research-os/eval/`)
-- **9 agent skills** in `skills/` (interface wrappers, not reasoning modules)
+- **Validation Suite**: 5 cases with Evidence Packages (`bio-research-os/eval/`)
+- **10 agent skills** in `skills/` (interface wrappers, not reasoning modules)
 
 ### Paper & preprint
 
@@ -84,9 +84,15 @@ An accompanying methods/software paper is **in preparation** (target: cs.SE prim
 - ✅ CI workflow configured (Python 3.9–3.12)
 - ✅ Determinism (fixed seed-42; Evidence Packages pin provenance)
 
+### v1.5 progress (on `main`, post-v1.1.0 tag)
+
+- ✅ **Causal-evidence chain implemented** — `demo_causal_evidence.py` (real coloc PP.H4 + TWAS S-PrediXcan + Bayesian fine-mapping + Wald-ratio MR, numerically stable log-space) + **Case 5** in the Validation Suite (synthetic loci, ground-truth recovery: coloc 1.00 / TWAS 1.00 / fine-map 1.00; sweep TWAS 0.91). Honest grade **C** (methodology validation).
+- ✅ **Skill set expanded to 10 active agent skills** (added `bioresearch-causal-evidence`).
+- ⏳ **Remaining for v1.5**: real-data integration of the causal-evidence chain (AD GWAS IGAP + eQTL MetaBrain/GTEx for TREM2 / BIN1 / APOE / CLU / PICALM); grow the benchmark to ~20 tasks.
+
 ### Roadmap (honest, near-term)
 
-- **v1.5 (Phase 1 target):** complete the causal-evidence chain (GWAS → eQTL → TWAS → coloc → MR → fine-mapping), expand to 10 skills, grow the benchmark to ~20 tasks.
+- **v1.5 (Phase 1 target):** finish real-data causal-evidence integration (above); then explore Virtual-Cell (AD-VCP) embedding as Phase 2.
 
 ### Get started in 30 seconds
 

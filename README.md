@@ -78,6 +78,7 @@ cp -r skills/core/project-introduction \
       skills/biomedical/differential-expression \
       skills/biomedical/pathway-enrichment \
       skills/biomedical/causal-inference \
+      skills/biomedical/causal-evidence \
       skills/biomedical/disease-case-study \
       "$HOME/Library/Application Support/Claude/skills/"
 
@@ -212,6 +213,7 @@ An honest validation suite (not a leaderboard) that runs the workflows against r
 | 2 | AD causal MR (educational attainment → AD) | Synthetic GWAS (ground-truth known) | C |
 | 3 | AD literature gap analysis | **Real PubMed** (built-in corpus fallback) | B / C |
 | 4 | Exposure → outcome MR exemplar (BMI → T2D) | Synthetic GWAS (ground-truth known) | C |
+| 5 | Causal evidence chain (GWAS→eQTL→coloc→TWAS→fine-map→MR) | Synthetic loci (ground-truth labels) | C |
 
 Grades: **A/B** = real public data; **C** = synthetic/offline methodology validation. Low recovery (e.g., Mendelian PD drivers in bulk tissue) is reported honestly, not hidden.
 
@@ -322,6 +324,7 @@ instructions and parameter schemas; all computation runs in the framework's work
 | `bioresearch-differential-expression` | Differential expression (DEG) | "differential expression / volcano plot" |
 | `bioresearch-pathway-enrichment` | Pathway / GO / KEGG enrichment | "pathway / GO enrichment" |
 | `bioresearch-causal-inference` | Mendelian randomization (IVW + sensitivity) | "causal effect / MR" |
+| `bioresearch-causal-evidence` | Causal-evidence chain (coloc → TWAS → fine-map → MR) | "causal evidence / colocalization / TWAS" |
 | `bioresearch-disease-case-study` | Real-data disease case study + blind benchmark | "case study / validation / benchmark" |
 | `bioresearch-agent-router` | Rule-based intent → workflow (no LLM, deterministic) | "classify / route a research intent" |
 

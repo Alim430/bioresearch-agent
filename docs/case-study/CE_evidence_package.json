@@ -1,0 +1,242 @@
+{
+  "metadata": {
+    "case_study": "Causal Evidence Chain (GWAS -> eQTL -> coloc -> TWAS -> fine-mapping -> MR)",
+    "workflow": "causal-evidence",
+    "domain": "Alzheimer's disease (methodology exemplar)",
+    "reference_loci": [
+      "APOE",
+      "TREM2",
+      "BIN1",
+      "CLU"
+    ],
+    "date": "2026-07-08",
+    "agent_version": "bioresearch-agent v1.1.0 + case-study-causal-evidence",
+    "mode": "synthetic loci (ground-truth causal structure known by construction)"
+  },
+  "provenance": {
+    "git_commit": "78461f28db65e9f280a6a5e859008d78d1578033",
+    "python": "3.13.12",
+    "env": "managed venv (python3.13 + numpy/pandas/scipy/matplotlib)",
+    "seed": 42,
+    "seed_policy": "numpy default_rng(seed); deterministic given seed",
+    "engine": "demo_causal_evidence.py (run_coloc, twas_z, fine_map_credible_set, wald_ratio_mr, causal_evidence_pipeline)"
+  },
+  "methods": [
+    "simulate_causal_chain",
+    "run_coloc",
+    "twas_z",
+    "fine_map_credible_set",
+    "wald_ratio_mr",
+    "causal_evidence_pipeline"
+  ],
+  "results": {
+    "n_genes": 8,
+    "n_colocalized": 2,
+    "coloc_recovered_rate": 1.0,
+    "twas_recovered_rate": 1.0,
+    "finemap_true_in_cs_rate": 1.0,
+    "per_gene": [
+      {
+        "gene": "GENE00",
+        "truth_class": "gwas_only",
+        "PP.H4": 0.09090403780791406,
+        "PP.H3": 0.0012200732624913122,
+        "twas_z": 1.1039185754303762,
+        "twas_p": 0.26962846027814613,
+        "twas_significant": false,
+        "mr_beta": -0.489797771740231,
+        "mr_p": 0.6547290245241297,
+        "n_credible": 12
+      },
+      {
+        "gene": "GENE01",
+        "truth_class": "null",
+        "PP.H4": 0.0002630218641151966,
+        "PP.H3": 2.8396880116505458e-06,
+        "twas_z": 0.7336671803936008,
+        "twas_p": 0.46315160565250535,
+        "twas_significant": false,
+        "mr_beta": -0.46946270321509725,
+        "mr_p": 0.7812044027714548,
+        "n_credible": 12
+      },
+      {
+        "gene": "GENE02",
+        "truth_class": "eqtl_only",
+        "PP.H4": 0.09562603879667578,
+        "PP.H3": 0.0016056858227420827,
+        "twas_z": 0.42312798466516627,
+        "twas_p": 0.672201885695369,
+        "twas_significant": false,
+        "mr_beta": 0.004979606055312583,
+        "mr_p": 0.7346164727878246,
+        "n_credible": 12
+      },
+      {
+        "gene": "GENE03",
+        "truth_class": "null",
+        "PP.H4": 0.0015447339023849458,
+        "PP.H3": 1.5881719373347213e-05,
+        "twas_z": -0.6441820576203381,
+        "twas_p": 0.519457384348859,
+        "twas_significant": false,
+        "mr_beta": 0.13160264820473316,
+        "mr_p": 0.5719967665869226,
+        "n_credible": 12
+      },
+      {
+        "gene": "GENE04",
+        "truth_class": "null",
+        "PP.H4": 0.00037498381561942905,
+        "PP.H3": 4.07222305274659e-06,
+        "twas_z": -1.689359474777478,
+        "twas_p": 0.0911505621646049,
+        "twas_significant": false,
+        "mr_beta": -0.045341664494750855,
+        "mr_p": 0.8560697378053067,
+        "n_credible": 12
+      },
+      {
+        "gene": "GENE05",
+        "truth_class": "colocalized",
+        "PP.H4": 1.0,
+        "PP.H3": 0.0,
+        "twas_z": 25.236572171169374,
+        "twas_p": 1.5903847133893268e-140,
+        "twas_significant": true,
+        "mr_beta": 0.3606600897207386,
+        "mr_p": 1.6609779667695904e-62,
+        "n_credible": 12
+      },
+      {
+        "gene": "GENE06",
+        "truth_class": "null",
+        "PP.H4": 0.0011853311051392259,
+        "PP.H3": 1.729860317274542e-05,
+        "twas_z": -0.8021048026402591,
+        "twas_p": 0.42249233711168543,
+        "twas_significant": false,
+        "mr_beta": -0.16755838028256273,
+        "mr_p": 0.4921631019926108,
+        "n_credible": 12
+      },
+      {
+        "gene": "GENE07",
+        "truth_class": "colocalized",
+        "PP.H4": 1.0,
+        "PP.H3": 0.0,
+        "twas_z": 29.231888268882933,
+        "twas_p": 7.630346097215758e-188,
+        "twas_significant": true,
+        "mr_beta": 0.3678123127409883,
+        "mr_p": 2.2153169235965214e-81,
+        "n_credible": 12
+      }
+    ]
+  },
+  "benchmark": {
+    "type": "ground_truth_recovery",
+    "coloc_recovered_rate": 1.0,
+    "twas_recovered_rate": 1.0,
+    "finemap_true_in_cs_rate": 1.0,
+    "sweep_means": {
+      "coloc_rate": 1.0,
+      "twas_rate": 0.90625,
+      "finemap_rate": 1.0
+    },
+    "sweep_table": [
+      {
+        "true_effect": 0.2,
+        "seed": 1,
+        "coloc_rate": 1.0,
+        "twas_rate": 0.875,
+        "finemap_rate": 1.0
+      },
+      {
+        "true_effect": 0.2,
+        "seed": 2,
+        "coloc_rate": 1.0,
+        "twas_rate": 0.875,
+        "finemap_rate": 1.0
+      },
+      {
+        "true_effect": 0.2,
+        "seed": 3,
+        "coloc_rate": 1.0,
+        "twas_rate": 0.875,
+        "finemap_rate": 1.0
+      },
+      {
+        "true_effect": 0.2,
+        "seed": 42,
+        "coloc_rate": 1.0,
+        "twas_rate": 1.0,
+        "finemap_rate": 1.0
+      },
+      {
+        "true_effect": 0.35,
+        "seed": 1,
+        "coloc_rate": 1.0,
+        "twas_rate": 0.875,
+        "finemap_rate": 1.0
+      },
+      {
+        "true_effect": 0.35,
+        "seed": 2,
+        "coloc_rate": 1.0,
+        "twas_rate": 0.875,
+        "finemap_rate": 1.0
+      },
+      {
+        "true_effect": 0.35,
+        "seed": 3,
+        "coloc_rate": 1.0,
+        "twas_rate": 0.875,
+        "finemap_rate": 1.0
+      },
+      {
+        "true_effect": 0.35,
+        "seed": 42,
+        "coloc_rate": 1.0,
+        "twas_rate": 1.0,
+        "finemap_rate": 1.0
+      },
+      {
+        "true_effect": 0.5,
+        "seed": 1,
+        "coloc_rate": 1.0,
+        "twas_rate": 0.875,
+        "finemap_rate": 1.0
+      },
+      {
+        "true_effect": 0.5,
+        "seed": 2,
+        "coloc_rate": 1.0,
+        "twas_rate": 0.875,
+        "finemap_rate": 1.0
+      },
+      {
+        "true_effect": 0.5,
+        "seed": 3,
+        "coloc_rate": 1.0,
+        "twas_rate": 0.875,
+        "finemap_rate": 1.0
+      },
+      {
+        "true_effect": 0.5,
+        "seed": 42,
+        "coloc_rate": 1.0,
+        "twas_rate": 1.0,
+        "finemap_rate": 1.0
+      }
+    ]
+  },
+  "evidence_grade": "C (synthetic loci; methodology validation of causal-evidence engine; not a real etiological claim)",
+  "limitations": [
+    "Synthetic loci; no real GWAS/eQTL summary statistics or population structure",
+    "No LD structure modelled (SNPs treated independent); real fine-mapping needs LD reference panels",
+    "One causal variant per trait assumed (standard coloc model)",
+    "Single simulated realization per (effect, seed)"
+  ],
+  "next_validation": "Real causal-evidence chain: IEU OpenGWAS (trait) + eQTLGen/GTEx (expression weights) + LD reference, for AD loci (APOE/TREM2/BIN1/CLU)"
+}

@@ -43,6 +43,7 @@ Skills are organized by group. All `active` skills map to a real `bioresearch` e
 | `bioresearch-differential-expression` | Differential expression (DEG) | "differential expression / volcano plot" |
 | `bioresearch-pathway-enrichment` | Pathway / GO / KEGG enrichment | "pathway / GO enrichment" |
 | `bioresearch-causal-inference` | Two-sample Mendelian randomization (IVW + sensitivity) | "causal effect / MR" |
+| `bioresearch-causal-evidence` | Causal-evidence chain (coloc → TWAS → fine-map → MR) | "causal evidence / colocalization / TWAS" |
 | `bioresearch-disease-case-study` | Real-data disease case study + blind benchmark | "case study / validation / benchmark" |
 
 > **Note on granularity:** `differential-expression` and `pathway-enrichment` are focused entry
@@ -73,6 +74,7 @@ cp -r skills/core/project-introduction \
       skills/biomedical/differential-expression \
       skills/biomedical/pathway-enrichment \
       skills/biomedical/causal-inference \
+      skills/biomedical/causal-evidence \
       "$HOME/Library/Application Support/Claude/skills/"
 ```
 

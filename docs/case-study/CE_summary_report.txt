@@ -1,0 +1,39 @@
+Causal Evidence Chain — Methodology Case Study (Case 5)
+================================================================
+
+EVIDENCE GRADE: C (synthetic loci; validates causal-evidence engine, not a real claim)
+
+Domain (exemplar)   : Alzheimer's disease (methodology exemplar)
+Genes simulated     : 8 (2 colocalized)
+Reference loci (AD) : APOE, TREM2, BIN1, CLU
+
+Per-gene results
+----------------------------------------------------------------
+  gene truth_class    PP.H4    PP.H3    twas_z        twas_p  twas_significant   mr_beta         mr_p  n_credible
+GENE00   gwas_only 0.090904 0.001220  1.103919  2.696285e-01             False -0.489798 6.547290e-01          12
+GENE01        null 0.000263 0.000003  0.733667  4.631516e-01             False -0.469463 7.812044e-01          12
+GENE02   eqtl_only 0.095626 0.001606  0.423128  6.722019e-01             False  0.004980 7.346165e-01          12
+GENE03        null 0.001545 0.000016 -0.644182  5.194574e-01             False  0.131603 5.719968e-01          12
+GENE04        null 0.000375 0.000004 -1.689359  9.115056e-02             False -0.045342 8.560697e-01          12
+GENE05 colocalized 1.000000 0.000000 25.236572 1.590385e-140              True  0.360660 1.660978e-62          12
+GENE06        null 0.001185 0.000017 -0.802105  4.224923e-01             False -0.167558 4.921631e-01          12
+GENE07 colocalized 1.000000 0.000000 29.231888 7.630346e-188              True  0.367812 2.215317e-81          12
+
+Ground-truth recovery (main run)
+----------------------------------------------------------------
+Coloc recovery  (PP.H4 correctly called) : 1.00
+TWAS recovery   (sig for colocalized)     : 1.00
+Fine-map recovery (true SNP in 95% CS)    : 1.00
+
+Sweep means (effects 0.2/0.35/0.5 x seeds 1/2/3/42)
+----------------------------------------------------------------
+Coloc  : 1.00
+TWAS   : 0.91
+Fine-map: 1.00
+
+Limitations
+----------------------------------------------------------------
+- Synthetic loci; no real GWAS/eQTL summary statistics or population structure.
+- No LD structure modelled (SNPs treated independent); real fine-mapping needs LD.
+- One causal variant per trait assumed (standard coloc model).
+- Single simulated realization per (effect, seed) in the sweep.
