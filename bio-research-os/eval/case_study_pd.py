@@ -39,8 +39,8 @@ Outputs (--output-dir, default github/docs/case-study/):
 
 Usage:
   python case_study_pd.py \
-      --matrix-path /tmp/gse7621_matrix.txt.gz \
-      --annot-path  /tmp/gpl570.annot.gz \
+      --matrix-path downloads/gse7621_matrix.txt.gz \
+      --annot-path  downloads/gpl570.annot.gz \
       --output-dir  ../docs/case-study
   # or auto-download:
   python case_study_pd.py --output-dir ../docs/case-study
@@ -61,7 +61,7 @@ DEMOS = os.path.join(HERE, "..", "demos")
 sys.path.insert(0, os.path.abspath(DEMOS))
 import demo_biomarker_discovery as engine  # noqa: E402
 
-MPLCONFIGDIR = "/tmp/matplotlib"
+MPLCONFIGDIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), ".matplotlib_cache")
 os.makedirs(MPLCONFIGDIR, exist_ok=True)
 os.environ["MPLCONFIGDIR"] = MPLCONFIGDIR
 import matplotlib  # noqa: E402

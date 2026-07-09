@@ -55,7 +55,7 @@ DEMOS = os.path.join(HERE, "..", "demos")
 sys.path.insert(0, os.path.abspath(DEMOS))
 
 # Configure matplotlib before engine import.
-MPLCONFIGDIR = "/tmp/matplotlib_ce"
+MPLCONFIGDIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), ".matplotlib_cache")
 os.makedirs(MPLCONFIGDIR, exist_ok=True)
 os.environ["MPLCONFIGDIR"] = MPLCONFIGDIR
 import matplotlib  # noqa: E402

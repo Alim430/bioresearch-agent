@@ -38,6 +38,7 @@ Thumbs.db
 # Project outputs
 outputs/
 demo_outputs/
+.matplotlib_cache/
 *.log
 
 # Jupyter

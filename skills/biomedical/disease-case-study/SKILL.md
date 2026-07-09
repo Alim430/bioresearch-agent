@@ -26,8 +26,8 @@ See `bio-research-os/eval/case_study_pd.py` and the Biomedical Workflow Validati
 
 ```bash
 python bio-research-os/eval/case_study_pd.py \
-    --matrix-path /tmp/gse7621_matrix.txt.gz \
-    --annot-path  /tmp/gpl570.annot.gz \
+    --matrix-path downloads/gse7621_matrix.txt.gz \
+    --annot-path  downloads/gpl570.annot.gz \
     --output-dir  docs/case-study
 ```
 

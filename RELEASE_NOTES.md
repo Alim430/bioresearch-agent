@@ -94,8 +94,8 @@ Evidence grade: **B** (mock mode validates pipeline; real model benchmarks requi
 
 ### Documentation
 
-- **v1.6 manuscript** (Chinese): `docs/joss/paper-v1.6-zh.md` — extends v1.5 manuscript with foundation model embeddings skill, Mock-to-Live architecture, Case 7 results, 21-task benchmark, 11-skill registry, and Phase 3 roadmap preview.
-- **v1.6 manuscript** (English): `docs/joss/paper-v1.6-en.md` — English translation of the v1.6 manuscript, combining v1.0 English paper positioning with full v1.6 technical content (12 sections, 15 references).
+- **v1.8 manuscript** (Chinese): `docs/joss/paper-v1.8-zh.md` — extends v1.6 manuscript with cross-ancestry MR skills (LD reference / GWAS harmonization / ancestry-aware MR), Cases 8–9, 23-task benchmark, 14-skill registry, and updated roadmap (v1.9 multimodal → v2.0 virtual cell).
+- **v1.8 manuscript** (English): `docs/joss/paper-v1.8-en.md` — English version of the v1.8 manuscript, combining v1.0 English paper positioning with full v1.8 technical content.
 - **Phase 3 roadmap**: `docs/roadmap/phase3-roadmap.md` — comprehensive planning document covering three directions (cross-ancestry MR, multimodal integration, Virtual Cell), with skill extension plans (11→21 skills), validation case planning (7→13 cases), timeline, version planning (v1.6→v2.0), and risk matrix.
 
 ### Roadmap update

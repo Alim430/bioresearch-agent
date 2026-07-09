@@ -40,7 +40,7 @@ import numpy as np
 import pandas as pd
 
 # Configure matplotlib before any plotting import.
-MPLCONFIGDIR = "/tmp/matplotlib_realdata"
+MPLCONFIGDIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), ".matplotlib_cache")
 os.makedirs(MPLCONFIGDIR, exist_ok=True)
 os.environ["MPLCONFIGDIR"] = MPLCONFIGDIR
 import matplotlib  # noqa: E402
