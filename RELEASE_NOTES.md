@@ -36,10 +36,16 @@ Cross-model kNN overlap: 0.09–0.10 (low overlap expected — different dimensi
 
 Evidence grade: **B** (mock mode validates pipeline; real model benchmarks require GPU + checkpoints).
 
+### Documentation
+
+- **v1.6 manuscript** (Chinese): `docs/joss/paper-v1.6-zh.md` — extends v1.5 manuscript with foundation model embeddings skill, Mock-to-Live architecture, Case 7 results, 21-task benchmark, 11-skill registry, and Phase 3 roadmap preview.
+- **Phase 3 roadmap**: `docs/roadmap/phase3-roadmap.md` — comprehensive planning document covering three directions (cross-ancestry MR, multimodal integration, Virtual Cell), with skill extension plans (11→21 skills), validation case planning (7→13 cases), timeline, version planning (v1.6→v2.0), and risk matrix.
+
 ### Roadmap update
 
 - v1.6 Phase 2 (foundation model embeddings) is **complete in mock mode**: pipeline architecture, evaluation metrics, cross-model comparison, and robustness sweep all validated.
-- Next: deploy live mode with real model checkpoints (scGPT via pip install, UCE/scFoundation via git clone + GPU), then proceed to Phase 3 (Virtual Cell / multimodal / cross-ancestry MR).
+- **Phase 3 roadmap published**: three directions planned — 3a (cross-ancestry MR, CPU, priority 1), 3b (multimodal integration, GPU, priority 2), 3c (Virtual Cell, GPU+memory, priority 3). See `docs/roadmap/phase3-roadmap.md` for details.
+- Next: deploy live mode with real model checkpoints (scGPT via pip install, UCE/scFoundation via git clone + GPU), then proceed to Phase 3a (cross-ancestry MR — highest governance fit, CPU-only).
 
 ---
 
