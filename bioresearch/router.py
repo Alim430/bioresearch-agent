@@ -39,6 +39,9 @@ ROUTE_KEYWORDS: Dict[str, List[str]] = {
         "mendelian randomization", "two-sample mr", "mr ", "causal", "causality",
         "instrumental variable", "genetic instrument", "exposure", "outcome", "ivw",
         "cause and effect", "causal effect",
+        "cross-ancestry", "cross ancestry", "cause", "mrmix", "pleiotropy",
+        "ld reference", "ld clumping", "gwas harmonization", "allele alignment",
+        "palindromic", "portability", "ancestry transfer",
     ],
     "biomarker": [
         "biomarker", "biomarkers", "differential expression", "deg", "gene expression",

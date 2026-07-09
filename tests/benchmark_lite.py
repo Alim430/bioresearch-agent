@@ -1,4 +1,4 @@
-"""Benchmark-Lite: 21-task regression suite for BioResearch Agent v1.6.
+"""Benchmark-Lite: 23-task regression suite for BioResearch Agent v1.8.
 
 Runs without pytest, without network, without external data. Every task is a
 self-contained assertion that a core framework contract still holds after
@@ -7,7 +7,7 @@ code changes. Designed to be run as:
     python tests/benchmark_lite.py          # standalone
     pytest tests/benchmark_lite.py -v       # pytest-compatible
 
-The 21 tasks are grouped into seven domains:
+The 23 tasks are grouped into eight domains:
 
     A. Router (8)       — intent classification & command mapping
     B. Core State (3)   — Stage, EvidenceGrade, ResearchState
@@ -16,6 +16,7 @@ The 21 tasks are grouped into seven domains:
     E. Registry (1)     — skills/registry.json structural integrity
     F. Manifest+Gov (1) — eval/manifest.json + .gitignore governance
     G. Foundation (1)   — foundation-embeddings mock pipeline validation
+    H. Cross-Anc MR (2) — LD reference + ancestry-aware MR pipeline validation
 """
 from __future__ import annotations
 
@@ -325,7 +326,7 @@ def task_18_full_pipeline():
 # =============================================================================
 
 def task_19_skills_registry():
-    """skills/registry.json has 11 active skills with correct structure."""
+    """skills/registry.json has 14 active skills with correct structure."""
     reg_path = ROOT / "skills" / "registry.json"
     with open(reg_path) as f:
         reg = json.load(f)
@@ -335,7 +336,7 @@ def task_19_skills_registry():
     assert "spec" in reg
 
     active = [s for s in reg["skills"] if s.get("status") == "active"]
-    assert len(active) == 11, f"Expected 11 active skills, got {len(active)}"
+    assert len(active) == 14, f"Expected 14 active skills, got {len(active)}"
 
     required_keys = {"name", "path", "group", "capability", "triggers", "status"}
     for skill in reg["skills"]:
@@ -355,6 +356,9 @@ def task_19_skills_registry():
         "bioresearch-causal-evidence",
         "bioresearch-agent-router",
         "bioresearch-foundation-embeddings",
+        "bioresearch-ld-reference-management",
+        "bioresearch-gwas-harmonization",
+        "bioresearch-ancestry-aware-mr",
     }
     assert set(skill_names) == expected_skills, (
         f"Skill name mismatch. Got: {set(skill_names)}"
@@ -366,7 +370,7 @@ def task_19_skills_registry():
 # =============================================================================
 
 def task_20_manifest_and_governance():
-    """eval/manifest.json has 7 implemented cases; .gitignore excludes raw data."""
+    """eval/manifest.json has 9 implemented cases; .gitignore excludes raw data."""
     # --- manifest ---
     manifest_path = ROOT / "bio-research-os" / "eval" / "manifest.json"
     with open(manifest_path) as f:
@@ -374,8 +378,8 @@ def task_20_manifest_and_governance():
 
     assert manifest["suite"] == "Biomedical Workflow Validation Suite"
     assert "framework_version" in manifest
-    assert len(manifest["cases"]) == 7, (
-        f"Expected 7 cases, got {len(manifest['cases'])}"
+    assert len(manifest["cases"]) == 9, (
+        f"Expected 9 cases, got {len(manifest['cases'])}"
     )
 
     for case in manifest["cases"]:
@@ -446,6 +450,99 @@ def task_21_foundation_embeddings():
 
 
 # =============================================================================
+#  Group H — Cross-Ancestry MR (Tasks 22-23)
+# =============================================================================
+
+def task_22_ld_reference():
+    """LD reference panel simulation + clumping produces valid per-ancestry results."""
+    demo_path = ROOT / "bio-research-os" / "demos" / "demo_ld_reference.py"
+    assert demo_path.exists(), "demo_ld_reference.py not found"
+
+    import importlib.util
+    spec = importlib.util.spec_from_file_location("demo_ld", str(demo_path))
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+
+    result = mod.ld_reference_pipeline(
+        n_snps=100, n_blocks=5, seed=42
+    )
+
+    # panel_summary: DataFrame with per-ancestry LD block stats
+    panel_df = result["panel_summary"]
+    assert len(panel_df) >= 3, f"Expected >=3 ancestries, got {len(panel_df)}"
+
+    # clumping_results: DataFrame with index SNPs + clumps per ancestry
+    clump_df = result["clumping_results"]
+    assert len(clump_df) > 0, "Clumping results should not be empty"
+    required_cols = {"ancestry", "index_snp", "clump_size"}
+    assert required_cols.issubset(set(clump_df.columns)), (
+        f"Missing clumping columns: {required_cols - set(clump_df.columns)}"
+    )
+
+    # cross_ancestry: grouped comparison
+    cross_df = result["cross_ancestry"]
+    assert len(cross_df) >= 3, f"Expected >=3 ancestries in cross-ancestry, got {len(cross_df)}"
+
+    # ld_scores: DataFrame with per-SNP LD scores
+    ld_scores_df = result["ld_scores"]
+    assert len(ld_scores_df) > 0, "LD scores should not be empty"
+    assert "ld_score" in ld_scores_df.columns, "ld_scores missing 'ld_score' column"
+
+    # evidence_package
+    ev = result["evidence_package"]
+    assert "evidence_grade" in ev, "evidence_package missing evidence_grade"
+
+
+def task_23_ancestry_aware_mr():
+    """Ancestry-aware MR pipeline produces valid per-ancestry + meta + pleiotropy results."""
+    demo_path = ROOT / "bio-research-os" / "demos" / "demo_ancestry_aware_mr.py"
+    assert demo_path.exists(), "demo_ancestry_aware_mr.py not found"
+
+    import importlib.util
+    spec = importlib.util.spec_from_file_location("demo_amr", str(demo_path))
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+
+    result = mod.ancestry_aware_mr_pipeline(
+        n_snps=100, n_instruments=20, true_effect=0.30, seed=42
+    )
+
+    # per_ancestry_results: DataFrame
+    per_anc = result["per_ancestry_results"]
+    assert len(per_anc) >= 3, f"Expected >=3 ancestries, got {len(per_anc)}"
+    for col in ["beta_ivw", "se_ivw", "p_value"]:
+        assert col in per_anc.columns, f"per_ancestry_results missing column: {col}"
+
+    # meta_result: Dict with FE + RE estimates
+    meta = result["meta_result"]
+    assert meta["method"] == "cross-ancestry-meta-ivw"
+    assert "beta_fe" in meta and "p_fe" in meta
+    assert "beta_re" in meta and "p_re" in meta
+    assert "cochrans_q" in meta and "i_squared" in meta
+
+    # cause_result: Dict with CAUSE-like LRT
+    cause = result["cause_result"]
+    assert cause["method"] == "CAUSE-like"
+    assert "theta_h1" in cause and "p_lrt" in cause
+
+    # mrmix_result: Dict with mixture proportions
+    mrmix = result["mrmix_result"]
+    assert mrmix["method"] == "MRMix-like"
+    assert "pi_causal" in mrmix and "pi_pleiotropic" in mrmix and "pi_null" in mrmix
+    assert "theta" in mrmix and "p_value" in mrmix
+
+    # portability: Dict with transferability assessment
+    port = result["portability"]
+    assert "transferability_score" in port
+    assert 0.0 <= port["transferability_score"] <= 1.0
+    assert "direction_consistency" in port
+
+    # evidence_package
+    ev = result["evidence_package"]
+    assert "evidence_grade" in ev, "evidence_package missing evidence_grade"
+
+
+# =============================================================================
 #  Runner
 # =============================================================================
 
@@ -471,6 +568,8 @@ TASKS = [
     task_19_skills_registry,
     task_20_manifest_and_governance,
     task_21_foundation_embeddings,
+    task_22_ld_reference,
+    task_23_ancestry_aware_mr,
 ]
 
 GROUPS = {
@@ -481,17 +580,18 @@ GROUPS = {
     "E": "Registry",
     "F": "Manifest+Governance",
     "G": "Foundation",
+    "H": "Cross-Ancestry MR",
 }
 
 
 def run_all() -> int:
-    """Run all 21 tasks and print a summary. Returns exit code 0/1."""
+    """Run all 23 tasks and print a summary. Returns exit code 0/1."""
     passed = 0
     failed = 0
     errors = []
 
     print("=" * 70)
-    print("  BioResearch Agent — Benchmark-Lite (21 tasks)")
+    print("  BioResearch Agent — Benchmark-Lite (23 tasks)")
     print("=" * 70)
 
     for i, task in enumerate(TASKS, 1):
@@ -509,8 +609,10 @@ def run_all() -> int:
             group = "E"
         elif i == 20:
             group = "F"
-        else:
+        elif i == 21:
             group = "G"
+        else:
+            group = "H"
 
         try:
             task()

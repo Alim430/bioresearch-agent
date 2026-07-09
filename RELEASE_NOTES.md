@@ -1,3 +1,59 @@
+## BioResearch Agent v1.8.0
+
+**Phase 3a: Cross-ancestry Mendelian Randomization (mock mode). 14 skills, 9 validation cases, 23 benchmark tasks.**
+
+```bash
+git clone https://github.com/Alim430/bioresearch-agent.git
+cd bioresearch-agent
+pip install -e .
+python bio-research-os/demos/demo_ld_reference.py \
+    --n-snps 200 --n-blocks 10 --seed 42 \
+    --output-dir outputs/ld-reference
+python bio-research-os/demos/demo_gwas_harmonization.py \
+    --n-snps 500 --seed 42 \
+    --output-dir outputs/gwas-harmonization
+python bio-research-os/demos/demo_ancestry_aware_mr.py \
+    --n-snps 200 --n-instruments 40 --true-effect 0.30 --seed 42 \
+    --output-dir outputs/ancestry-aware-mr
+```
+
+### What is new in v1.8.0
+
+- **Three new skills** registered in `skills/registry.json` (11 → 14 active skills):
+  - `bioresearch-ld-reference-management` — per-ancestry LD block simulation, greedy clumping (PLINK --clump style), LD score computation.
+  - `bioresearch-gwas-harmonization` — allele alignment, strand flipping, effect-allele standardisation, palindromic SNP removal, GWAS-SSF schema.
+  - `bioresearch-ancestry-aware-mr` — cross-ancestry IVW meta-analysis, CAUSE-like EM (correlated + uncorrelated pleiotropy), MRMix-like mixture model, portability assessment.
+- **Three demo scripts** (self-contained, CPU-only, synthetic data with known ground-truth):
+  - `bio-research-os/demos/demo_ld_reference.py` (567 lines) — 5 super-populations (AFR/AMR/EAS/SAS/EUR), LD matrix simulation, clumping, LD scores, cross-ancestry comparison.
+  - `bio-research-os/demos/demo_gwas_harmonization.py` (847 lines) — cross-ancestry GWAS simulation, allele harmonization, strand resolution, AF difference QC, genome-wide signal extraction.
+  - `bio-research-os/demos/demo_ancestry_aware_mr.py` (970 lines) — multi-ancestry MR simulation, per-ancestry IVW, cross-ancestry meta (FE+RE), CAUSE-like LRT, MRMix-like EM, portability metrics.
+- **Validation Cases 8 & 9** registered in `eval/manifest.json` (7 → 9 cases): LD reference panel management (Case 8, grade C) and ancestry-aware MR pipeline (Case 9, grade C). Both use synthetic data with planted ground-truth to validate computation correctness.
+- **Benchmark-Lite expanded to 23 tasks** — new Group H (Cross-Ancestry MR) with 2 tasks validating LD reference and ancestry-aware MR pipeline outputs. 23/23 passing.
+- **Router updated** — 12 new keywords added to `causal` route for cross-ancestry MR intent classification (cross-ancestry, CAUSE, MRMix, pleiotropy, LD reference, GWAS harmonization, portability, etc.).
+- **Framework version bumped to 1.8.0** in `skills/registry.json` and `eval/manifest.json`.
+
+### v1.8.0 mock-mode results (seed=42)
+
+**LD Reference Panel** (n_snps=100, n_blocks=5, 3 ancestries):
+- EUR: 72 index SNPs (72.0% clumping ratio)
+- AFR: 68 index SNPs (68.0%)
+- EAS: 69 index SNPs (69.0%)
+
+**Ancestry-Aware MR** (n_snps=100, n_instruments=20, true_effect=0.30):
+- Per-ancestry IVW estimates: EUR=0.291, EAS=0.283, SAS=0.301, AFR=0.359, AMR=0.335
+- Cross-ancestry meta (FE): β=0.296, p≈0; I²=30.6%, Q p=0.218
+- CAUSE-like LRT: theta_h1 recovered; MRMix-like: pi_causal > 0
+
+Evidence grade: **C** (synthetic data validates computation correctness; real deployment requires harmonized GWAS from IEU OpenGWAS / BBJ / FinnGen / TPMI).
+
+### Phase 3a implementation notes
+
+- **Mock-to-Live architecture**: All three pipelines run on synthetic data with known ground-truth. The MR math (IVW, CAUSE-like EM, MRMix-like mixture, cross-ancestry meta) is real — only the input data is simulated.
+- **Live mode deployment**: Replace `simulate_multi_ancestry_mr` with harmonized GWAS from IEU OpenGWAS (EUR), BBJ (EAS), FinnGen (EUR), TPMI (SAS). Use 1000G LD panels for ancestry-specific LD reference. See SKILL.md files for deployment guides.
+- **Honesty**: Every evidence package includes `data_type: "synthetic"`, `evidence_grade: "C"`, and `limitations` documenting that results validate computation, not etiology.
+
+---
+
 ## BioResearch Agent v1.6.0
 
 **Foundation model embeddings (scGPT / UCE / scFoundation). Mock-to-Live pipeline validation. 11 skills, 7 validation cases, 21 benchmark tasks.**

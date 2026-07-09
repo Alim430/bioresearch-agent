@@ -1,7 +1,7 @@
 {
   "suite": "Biomedical Workflow Validation Suite",
   "description": "Real-public-data validation of BioResearch Agent workflows (honest, reproducible, evidence-graded). Not a leaderboard benchmark.",
-  "framework_version": "1.6.0",
+  "framework_version": "1.8.0",
   "cases": [
     {
       "id": 1,
@@ -106,6 +106,36 @@
       "output_dir": "bio-research-os/demos/demo_outputs/foundation-embeddings",
       "status": "implemented",
       "evidence_grade": "B (mock mode validates evaluation pipeline; real model benchmarks require GPU)"
+    },
+    {
+      "id": 8,
+      "name": "Cross-ancestry GWAS harmonization pipeline validation",
+      "disease": "general (methodology exemplar; cross-ancestry MR prerequisite)",
+      "workflows": ["gwas-harmonization"],
+      "data": "SYNTHETIC cross-ancestry GWAS (500 SNPs, 5 ancestries: EUR/EAS/SAS/AFR/AMR) with planted allele-frequency drift, effect-size heterogeneity, and injected data-quality issues (allele swaps, strand confusion, palindromic SNPs). Real harmonization engine (allele alignment, strand flipping, palindromic removal, Fst-like AF divergence). Real-data version would use IEU OpenGWAS / GWAS Catalog summary statistics with GWAS-SSF schema.",
+      "benchmark_type": "ground_truth_recovery",
+      "known_entities": [],
+      "reference_ad_loci": [],
+      "pathway_sanity": [],
+      "script": "demo_gwas_harmonization.py",
+      "output_dir": "bio-research-os/demos/demo_outputs/gwas-harmonization",
+      "status": "implemented",
+      "evidence_grade": "C (synthetic cross-ancestry GWAS; harmonization-engine validation)"
+    },
+    {
+      "id": 9,
+      "name": "Cross-ancestry MR with CAUSE/MRMix pleiotropy modeling + portability assessment",
+      "disease": "general (methodology exemplar; cross-ancestry MR)",
+      "workflows": ["ancestry-aware-mr"],
+      "data": "SYNTHETIC multi-ancestry GWAS (200 SNPs, 40 instruments, 5 ancestries: EUR/EAS/SAS/AFR/AMR) with known true causal effect (0.30), controlled pleiotropy rates (per-ancestry uncorrelated + correlated), and ancestry-specific instrument strength. Real MR engine (per-ancestry IVW, cross-ancestry FE/RE meta-analysis, CAUSE-like EM with LRT, MRMix-like 3-component mixture, portability assessment). Real-data version would use BBJ (EAS), FinnGen (EUR), TPMI (SAS), All of Us (AMR/AFR) summary statistics with ancestry-matched LD panels.",
+      "benchmark_type": "ground_truth_recovery",
+      "known_entities": [],
+      "reference_ad_loci": [],
+      "pathway_sanity": [],
+      "script": "demo_ancestry_aware_mr.py",
+      "output_dir": "bio-research-os/demos/demo_outputs/ancestry-aware-mr",
+      "status": "implemented",
+      "evidence_grade": "C (synthetic multi-ancestry GWAS; MR + pleiotropy engine validation)"
     }
   ]
 }

@@ -1,6 +1,6 @@
 {
   "framework": "BioResearch Agent",
-  "version": "1.6.0",
+  "version": "1.8.0",
   "spec": "Agent Skills (agentskills.io open standard)",
   "skills": [
     {
@@ -89,6 +89,30 @@
       "group": "biomedical",
       "capability": "Single-cell foundation model embeddings (scGPT/UCE/scFoundation) with mock-mode pipeline validation + live mode API stubs",
       "triggers": "foundation model / scGPT / UCE / scFoundation / cell embedding / benchmark cell-type recovery",
+      "status": "active"
+    },
+    {
+      "name": "bioresearch-ld-reference-management",
+      "path": "skills/biomedical/ld-reference-management",
+      "group": "biomedical",
+      "capability": "Ancestry-specific LD reference panel management + greedy LD clumping (PLINK --clump style) + LD score computation",
+      "triggers": "LD reference / clumping / ancestry-specific LD / LD score / instrument independence",
+      "status": "active"
+    },
+    {
+      "name": "bioresearch-gwas-harmonization",
+      "path": "skills/biomedical/gwas-harmonization",
+      "group": "biomedical",
+      "capability": "Cross-ancestry GWAS summary-statistics harmonization (allele alignment, strand flipping, palindromic removal, AF divergence, signal overlap)",
+      "triggers": "GWAS harmonization / allele alignment / strand flip / palindromic SNP / cross-ancestry GWAS",
+      "status": "active"
+    },
+    {
+      "name": "bioresearch-ancestry-aware-mr",
+      "path": "skills/biomedical/ancestry-aware-mr",
+      "group": "biomedical",
+      "capability": "Cross-ancestry MR with CAUSE-like correlated pleiotropy + MRMix-like mixture model + per-ancestry IVW + cross-ancestry meta-analysis + portability assessment",
+      "triggers": "cross-ancestry MR / CAUSE / MRMix / correlated pleiotropy / portability / ancestry transfer",
       "status": "active"
     }
   ],
