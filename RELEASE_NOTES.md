@@ -24,6 +24,8 @@ python bio-research-os/eval/case_study_realdata_causal.py \
 - ✅ **Honest Evidence Package** for Case 6 lists limitations: lead-eQTL-only TWAS proxy, no LD reference panel, single-SNP MR, non-diseased GTEx tissue.
 - ✅ **Case 5 vs Case 6 comparison** documented in `docs/case-study/CE_Case5_vs_Case6_comparison.md`.
 - ✅ **v1.5 manuscript** in Chinese: `docs/joss/paper-v1.5-zh.md`.
+- ✅ **Benchmark-Lite: 20-task regression suite** (`tests/benchmark_lite.py`) — covers router (8), core state (3), all 6 engines (6), full pipeline (1), skills registry (1), manifest + governance (1). Runs without network or pytest. 20/20 passing.
+- ✅ **Framework version bumped to 1.5.0** in `skills/registry.json` and `eval/manifest.json`.
 
 ### v1.5.0 evidence grades
 
@@ -35,7 +37,7 @@ python bio-research-os/eval/case_study_realdata_causal.py \
 
 ### Roadmap update
 
-- v1.5 Phase 1 is complete: real-data causal-evidence chain and data governance are in place.
+- v1.5 Phase 1 is **fully complete**: Agent Router, Causal Evidence chain (real data), 10 skills, Benchmark-Lite (20 tasks), data governance, and version bump to 1.5.0.
 - Next: integrate full eQTL weights (S-PrediXcan / FUSION) and LD reference panels (1000 Genomes) while staying within public-summary data boundaries.
 
 ---
@@ -131,10 +133,14 @@ An accompanying methods/software paper is **in preparation** (target: cs.SE prim
 - ✅ **Causal-evidence chain implemented** — `demo_causal_evidence.py` (real coloc PP.H4 + TWAS z-score proxy + fine-mapping credible sets + Wald-ratio MR, numerically stable log-space) + **Case 5** in the Validation Suite (synthetic loci, ground-truth recovery: coloc 1.00 / TWAS 1.00 / fine-map 1.00; sweep TWAS 0.91). Honest grade **C** (methodology validation).
 - ✅ **Skill set expanded to 10 active agent skills** (added `bioresearch-causal-evidence`).
 - ✅ **Real-data integration completed**: Case 6 runs on Jansen 2019 AD GWAS + GTEx v8 brain eQTL for TREM2 / BIN1 / APOE / CLU / PICALM, achieving grade **B**.
+- ✅ **Benchmark-Lite**: 20-task regression suite (`tests/benchmark_lite.py`), 20/20 passing.
+- ✅ **Framework version bumped to 1.5.0** across registry and manifest.
 
 ### Roadmap (honest, near-term)
 
-- **v1.5 (Phase 1 target):** finish real-data causal-evidence integration (above); then explore Virtual-Cell (AD-VCP) embedding as Phase 2.
+- **v1.5 Phase 1 — COMPLETE.** All four roadmap items delivered: Agent Router, Causal Evidence hardening (Case 6 real data), Skills expanded to 10, Benchmark-Lite (20 tasks).
+- **Phase 2**: Foundation-model embeddings (scGPT / UCE / scFoundation) — deferred from Phase 1.
+- **Phase 3**: Virtual Cell / multimodal / cross-ancestry MR, converging with AD-VCP.
 
 ### Get started in 30 seconds
 
