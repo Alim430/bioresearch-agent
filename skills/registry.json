@@ -1,6 +1,6 @@
 {
   "framework": "BioResearch Agent",
-  "version": "1.5.0",
+  "version": "1.6.0",
   "spec": "Agent Skills (agentskills.io open standard)",
   "skills": [
     {
@@ -82,6 +82,14 @@
       "capability": "Rule-based intent classification -> workflow (literature/biomarker/causal/case-study/doctor); deterministic, no LLM",
       "triggers": "classify / route a free-text research intent to the right workflow",
       "status": "active"
+    },
+    {
+      "name": "bioresearch-foundation-embeddings",
+      "path": "skills/biomedical/foundation-embeddings",
+      "group": "biomedical",
+      "capability": "Single-cell foundation model embeddings (scGPT/UCE/scFoundation) with mock-mode pipeline validation + live mode API stubs",
+      "triggers": "foundation model / scGPT / UCE / scFoundation / cell embedding / benchmark cell-type recovery",
+      "status": "active"
     }
   ],
   "planned": [
@@ -93,8 +101,9 @@
     },
     {
       "name": "bioresearch-single-cell-analysis",
-      "capability": "Single-cell transcriptomics",
-      "status": "planned"
+      "capability": "Single-cell transcriptomics (clustering, trajectory, cell-cell communication)",
+      "status": "planned",
+      "note": "Foundation model embeddings skill (bioresearch-foundation-embeddings) now active; full scRNA-seq pipeline pending."
     },
     {
       "name": "bioresearch-spatial-transcriptomics",

@@ -1,4 +1,4 @@
-"""Benchmark-Lite: 20-task regression suite for BioResearch Agent v1.5.
+"""Benchmark-Lite: 21-task regression suite for BioResearch Agent v1.6.
 
 Runs without pytest, without network, without external data. Every task is a
 self-contained assertion that a core framework contract still holds after
@@ -7,7 +7,7 @@ code changes. Designed to be run as:
     python tests/benchmark_lite.py          # standalone
     pytest tests/benchmark_lite.py -v       # pytest-compatible
 
-The 20 tasks are grouped into six domains:
+The 21 tasks are grouped into seven domains:
 
     A. Router (8)       — intent classification & command mapping
     B. Core State (3)   — Stage, EvidenceGrade, ResearchState
@@ -15,6 +15,7 @@ The 20 tasks are grouped into six domains:
     D. Pipeline (1)     — full 6-engine chain, IDEATION -> PUBLICATION
     E. Registry (1)     — skills/registry.json structural integrity
     F. Manifest+Gov (1) — eval/manifest.json + .gitignore governance
+    G. Foundation (1)   — foundation-embeddings mock pipeline validation
 """
 from __future__ import annotations
 
@@ -324,7 +325,7 @@ def task_18_full_pipeline():
 # =============================================================================
 
 def task_19_skills_registry():
-    """skills/registry.json has 10 active skills with correct structure."""
+    """skills/registry.json has 11 active skills with correct structure."""
     reg_path = ROOT / "skills" / "registry.json"
     with open(reg_path) as f:
         reg = json.load(f)
@@ -334,7 +335,7 @@ def task_19_skills_registry():
     assert "spec" in reg
 
     active = [s for s in reg["skills"] if s.get("status") == "active"]
-    assert len(active) == 10, f"Expected 10 active skills, got {len(active)}"
+    assert len(active) == 11, f"Expected 11 active skills, got {len(active)}"
 
     required_keys = {"name", "path", "group", "capability", "triggers", "status"}
     for skill in reg["skills"]:
@@ -353,6 +354,7 @@ def task_19_skills_registry():
         "bioresearch-disease-case-study",
         "bioresearch-causal-evidence",
         "bioresearch-agent-router",
+        "bioresearch-foundation-embeddings",
     }
     assert set(skill_names) == expected_skills, (
         f"Skill name mismatch. Got: {set(skill_names)}"
@@ -364,7 +366,7 @@ def task_19_skills_registry():
 # =============================================================================
 
 def task_20_manifest_and_governance():
-    """eval/manifest.json has 6 implemented cases; .gitignore excludes raw data."""
+    """eval/manifest.json has 7 implemented cases; .gitignore excludes raw data."""
     # --- manifest ---
     manifest_path = ROOT / "bio-research-os" / "eval" / "manifest.json"
     with open(manifest_path) as f:
@@ -372,8 +374,8 @@ def task_20_manifest_and_governance():
 
     assert manifest["suite"] == "Biomedical Workflow Validation Suite"
     assert "framework_version" in manifest
-    assert len(manifest["cases"]) == 6, (
-        f"Expected 6 cases, got {len(manifest['cases'])}"
+    assert len(manifest["cases"]) == 7, (
+        f"Expected 7 cases, got {len(manifest['cases'])}"
     )
 
     for case in manifest["cases"]:
@@ -392,6 +394,55 @@ def task_20_manifest_and_governance():
     assert "*.txt.gz" in gi, ".gitignore missing *.txt.gz exclusion"
     assert "*.gct.gz" in gi, ".gitignore missing *.gct.gz exclusion"
     assert "raw/" in gi, ".gitignore missing raw/ exclusion"
+
+
+def task_21_foundation_embeddings():
+    """Foundation-embeddings mock pipeline produces valid metrics for all 3 models."""
+    demo_path = ROOT / "bio-research-os" / "demos" / "demo_foundation_embeddings.py"
+    assert demo_path.exists(), "demo_foundation_embeddings.py not found"
+
+    # Import and run the pipeline in-process (fast: 500 cells x 1000 genes)
+    import importlib.util
+    spec = importlib.util.spec_from_file_location("demo_fe", str(demo_path))
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+
+    result = mod.foundation_embedding_pipeline(
+        n_cells=500, n_genes=1000, seed=42, noise_level=0.3
+    )
+
+    # Per-model metrics (result["metrics"] is a DataFrame)
+    metrics_df = result["metrics"]
+    assert len(metrics_df) == 3, f"Expected 3 models, got {len(metrics_df)}"
+    model_names = set(metrics_df["model"].tolist())
+    assert model_names == {"scGPT", "UCE", "scFoundation"}, (
+        f"Unexpected models: {model_names}"
+    )
+
+    for _, row in metrics_df.iterrows():
+        assert 0 <= row["silhouette"] <= 1, (
+            f"Invalid silhouette for {row['model']}: {row['silhouette']}"
+        )
+        assert 0 <= row["ari"] <= 1, (
+            f"Invalid ARI for {row['model']}: {row['ari']}"
+        )
+        assert 0 <= row["nmi"] <= 1, (
+            f"Invalid NMI for {row['model']}: {row['nmi']}"
+        )
+
+    # Cross-model consistency (result["consistency"] is a DataFrame)
+    consistency_df = result["consistency"]
+    assert len(consistency_df) == 3, "Expected 3 pairwise comparisons"
+    for _, row in consistency_df.iterrows():
+        assert 0 <= row["knn_overlap"] <= 1, (
+            f"Invalid kNN overlap: {row['knn_overlap']}"
+        )
+
+    # Model specs sanity
+    specs = mod.MODEL_SPECS
+    assert specs["scGPT"]["embedding_dim"] == 512
+    assert specs["UCE"]["embedding_dim"] == 1280
+    assert specs["scFoundation"]["embedding_dim"] == 512
 
 
 # =============================================================================
@@ -419,6 +470,7 @@ TASKS = [
     task_18_full_pipeline,
     task_19_skills_registry,
     task_20_manifest_and_governance,
+    task_21_foundation_embeddings,
 ]
 
 GROUPS = {
@@ -428,17 +480,18 @@ GROUPS = {
     "D": "Pipeline",
     "E": "Registry",
     "F": "Manifest+Governance",
+    "G": "Foundation",
 }
 
 
 def run_all() -> int:
-    """Run all 20 tasks and print a summary. Returns exit code 0/1."""
+    """Run all 21 tasks and print a summary. Returns exit code 0/1."""
     passed = 0
     failed = 0
     errors = []
 
     print("=" * 70)
-    print("  BioResearch Agent — Benchmark-Lite (20 tasks)")
+    print("  BioResearch Agent — Benchmark-Lite (21 tasks)")
     print("=" * 70)
 
     for i, task in enumerate(TASKS, 1):
@@ -454,8 +507,10 @@ def run_all() -> int:
             group = "D"
         elif i == 19:
             group = "E"
-        else:
+        elif i == 20:
             group = "F"
+        else:
+            group = "G"
 
         try:
             task()

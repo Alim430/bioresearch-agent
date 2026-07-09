@@ -1,3 +1,48 @@
+## BioResearch Agent v1.6.0
+
+**Foundation model embeddings (scGPT / UCE / scFoundation). Mock-to-Live pipeline validation. 11 skills, 7 validation cases, 21 benchmark tasks.**
+
+```bash
+git clone https://github.com/Alim430/bioresearch-agent.git
+cd bioresearch-agent
+pip install -e .
+python bio-research-os/demos/demo_foundation_embeddings.py \
+    --n-cells 1000 --n-genes 2000 --seed 42 \
+    --output-dir outputs/foundation-embeddings
+```
+
+### What is new in v1.6.0
+
+- **Foundation model embeddings skill** (`bioresearch-foundation-embeddings`) — 11th active skill, registered in `skills/registry.json`.
+- **Mock-to-Live architecture** for scGPT (512-dim), UCE (1280-dim), scFoundation (512-dim):
+  - Mock mode: simulated embeddings via cluster centroids + Gaussian noise + L2 normalization, matching each model's output dimensionality. Validates the full evaluation pipeline (silhouette, ARI, NMI, kNN overlap, robustness sweep).
+  - Live mode: API stubs documented in each mock function's docstring — `scgpt.tasks.embed_data()` (PyPI, CPU), `AnndataProcessor` from UCE (GPU), `get_embedding.py` from scFoundation (GPU + gene alignment).
+- **Custom metric implementations** — silhouette score, k-means++ clustering, adjusted Rand index (ARI), normalized mutual information (NMI) — all without sklearn dependency for core metrics.
+- **Validation Case 7** registered in `eval/manifest.json`: synthetic single-cell data (1000 cells x 2000 genes, 5 cell types, 2 batches), evidence grade **B** (mock mode validates pipeline correctness).
+- **Demo script**: `bio-research-os/demos/demo_foundation_embeddings.py` (951 lines) — self-contained, produces 7 output files (3 CSVs, 2 PNGs, 1 TXT report, 1 JSON evidence package).
+- **SKILL.md**: `skills/biomedical/foundation-embeddings/SKILL.md` with live mode deployment instructions.
+- **Benchmark-Lite expanded to 21 tasks** — new Group G (Foundation) validates mock pipeline output structure, metric ranges, and model spec dimensions. 21/21 passing.
+- **Framework version bumped to 1.6.0** in `skills/registry.json` and `eval/manifest.json`.
+
+### v1.6.0 mock-mode results (seed=42, n_cells=1000)
+
+| Model | Silhouette | ARI | NMI |
+|:---|:---|:---|:---|
+| scGPT | 0.847 | 1.000 | 1.000 |
+| UCE | 0.883 | 0.780 | 0.910 |
+| scFoundation | 0.810 | 1.000 | 1.000 |
+
+Cross-model kNN overlap: 0.09–0.10 (low overlap expected — different dimensionality and noise profiles simulate model-specific embedding geometries).
+
+Evidence grade: **B** (mock mode validates pipeline; real model benchmarks require GPU + checkpoints).
+
+### Roadmap update
+
+- v1.6 Phase 2 (foundation model embeddings) is **complete in mock mode**: pipeline architecture, evaluation metrics, cross-model comparison, and robustness sweep all validated.
+- Next: deploy live mode with real model checkpoints (scGPT via pip install, UCE/scFoundation via git clone + GPU), then proceed to Phase 3 (Virtual Cell / multimodal / cross-ancestry MR).
+
+---
+
 ## BioResearch Agent v1.5.0
 
 **Real-data causal-evidence chain. Six validation cases. Data governance guardrails.**

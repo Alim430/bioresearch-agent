@@ -1,7 +1,7 @@
 {
   "suite": "Biomedical Workflow Validation Suite",
   "description": "Real-public-data validation of BioResearch Agent workflows (honest, reproducible, evidence-graded). Not a leaderboard benchmark.",
-  "framework_version": "1.5.0",
+  "framework_version": "1.6.0",
   "cases": [
     {
       "id": 1,
@@ -91,6 +91,21 @@
       "output_dir": "docs/case-study",
       "status": "implemented",
       "evidence_grade": "B (real public summary-level data; no individual-level data; summary-statistics-only approximation)"
+    },
+    {
+      "id": 7,
+      "name": "Foundation model embeddings pipeline validation (scGPT / UCE / scFoundation)",
+      "disease": "general (methodology exemplar; single-cell foundation models)",
+      "workflows": ["foundation-embeddings"],
+      "data": "SYNTHETIC single-cell data (1000 cells x 2000 genes, 5 cell types, 2 batches) with planted cluster structure. Mock embeddings simulate each model's output dimensionality (scGPT 512-dim, UCE 1280-dim, scFoundation 512-dim) via cluster centroids + Gaussian noise + L2 normalization. Real model inference requires GPU + model checkpoints (scGPT via pip, UCE/scFoundation via git clone).",
+      "benchmark_type": "ground_truth_recovery",
+      "known_entities": [],
+      "reference_ad_loci": [],
+      "pathway_sanity": [],
+      "script": "demo_foundation_embeddings.py",
+      "output_dir": "bio-research-os/demos/demo_outputs/foundation-embeddings",
+      "status": "implemented",
+      "evidence_grade": "B (mock mode validates evaluation pipeline; real model benchmarks require GPU)"
     }
   ]
 }
