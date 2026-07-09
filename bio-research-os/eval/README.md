@@ -102,14 +102,16 @@ data. It requires two user-local datasets (never committed to the repo):
 * AD GWAS summary: Jansen et al. 2019 (`AD_sumstats_Jansenetal_2019sept.txt.gz`)
 * GTEx v8 brain eQTL directory (`GTEx_Analysis_v8_eQTL/`)
 
-Paths default to `/Users/alim/ad-vcp-data/raw/...`; override with `--gwas-path` and
-`--eqtl-dir`. Only summary statistics are used; individual-level data (MetaBrain,
-UKB-PPP, ADNI, deCODE) are out of scope per `DATA_GOVERNANCE.md`.
+Paths default to `$BIORESEARCH_PUBLIC_DATA/raw/...` (set that env var to your local
+raw-data root); override explicitly with `--gwas-path` and `--eqtl-dir`. Only summary
+statistics are used; individual-level data (MetaBrain, UKB-PPP, ADNI, deCODE) are out of
+scope per `DATA_GOVERNANCE.md`.
 
 ```bash
+export BIORESEARCH_PUBLIC_DATA=/path/to/your/local/raw-data   # contains raw/gwas/..., raw/eqtl/...
 python bio-research-os/eval/case_study_realdata_causal.py \
-    --gwas-path  /Users/alim/ad-vcp-data/raw/gwas/JansenIE_2019/AD_sumstats_Jansenetal_2019sept.txt.gz \
-    --eqtl-dir   /Users/alim/ad-vcp-data/raw/eqtl/gtex/GTEx_Analysis_v8_eQTL \
+    --gwas-path  $BIORESEARCH_PUBLIC_DATA/raw/gwas/JansenIE_2019/AD_sumstats_Jansenetal_2019sept.txt.gz \
+    --eqtl-dir   $BIORESEARCH_PUBLIC_DATA/raw/eqtl/gtex/GTEx_Analysis_v8_eQTL \
     --output-dir docs/case-study
 ```
 

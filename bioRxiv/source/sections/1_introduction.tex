@@ -1,9 +1,0 @@
-Biomedical research increasingly relies on fragmented computational tools spanning literature mining~\cite{sayers2021ncbi}, omics analysis~\cite{ritchie2015limma,subramanian2005gsea}, and statistical genetics~\cite{hemani2018mrbase,hartwig2017mr}. While large language models can assist in tool use and reasoning, they typically lack reproducible, structured execution pipelines with consistent output contracts.
-
-We present BioResearch Agent, a tool-first framework that prioritizes reproducible execution and standardized interfaces. The system is positioned as a reusable workflow infrastructure: given controlled inputs, it yields consistent structured outputs across runs and environments.
-
-The framework integrates three core biomedical analysis workflows---literature review, biomarker discovery, and causal inference---behind a single reproducible workflow runner, exposed through a command-line interface, a Python software development kit, and an API invocation contract for external systems.
-
-This work does not introduce new statistical or machine learning methods. Instead, it focuses on system-level reproducibility, interface standardization, and execution of existing biomedical analysis tools. All computational components are delegated to established external libraries such as \texttt{limma}~\cite{ritchie2015limma}, GSEA~\cite{subramanian2005gsea}, and the MR-Base platform~\cite{hemani2018mrbase}.
-
-We emphasize that the primary contribution of this work is not algorithmic novelty, but the design of a reproducible execution contract that standardizes how existing biomedical analysis tools are invoked, composed, and validated across heterogeneous environments.

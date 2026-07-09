@@ -70,3 +70,15 @@ models/
 
 # Skill installer fallback directory (local, created when no agent dir detected)
 skills-installed/
+
+# ---------------------------------------------------------------------------
+# Submission-prep & stale docs — kept LOCAL only, never on the public repo.
+# These present as a ready-to-submit package (cover letter, submission guide,
+# manuscript.pdf) although no submission exists yet, and would mislead visitors.
+# Maintain them on your machine; add to the repo only once a real preprint/paper
+# ID exists. See also RELEASE_NOTES.md "Paper & preprint" (honest, no-ID policy).
+# ---------------------------------------------------------------------------
+bioRxiv/
+arxiv-abstract.md
+docs/publication/
+framework/

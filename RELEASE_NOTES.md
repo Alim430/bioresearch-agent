@@ -217,8 +217,8 @@ The agent routes it to `bioresearch run literature` and returns structured outpu
 
 - **Reproducible workflow engine** (literature / biomarker / causal-inference / causal-evidence / case-study)
 - **Multi-interface access**: CLI · Python SDK · API Contract / Tool Spec · Agent Skills
-- **Validation Suite**: 5 cases with Evidence Packages (`bio-research-os/eval/`)
-- **10 agent skills** in `skills/` (interface wrappers, not reasoning modules)
+- **Validation Suite**: 9 cases with Evidence Packages (`bio-research-os/eval/`)
+- **14 agent skills** in `skills/` (interface wrappers, not reasoning modules)
 
 ### Paper & preprint
 

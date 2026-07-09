@@ -6,16 +6,18 @@ CLI · Python SDK · API · Agent Skills
 
 **What your AI assistant can do after installing the skills:**
 
-- 📚 **Literature analysis** — PubMed review + co-occurrence knowledge graph
-- 🧬 **Biomarker discovery** — DEG + pathway enrichment + candidate ranking
-- 📊 **Differential expression & pathway enrichment** — fine-grained omics queries
-- 🔗 **Mendelian randomization** — causal inference with sensitivity analysis
-- 🔬 **Reproducible execution** — validated workflows, not text-only summaries
+- 📚 **Literature analysis** — PubMed retrieval + entity co-occurrence knowledge graph → structured review & research-gap outline
+- 🧬 **Biomarker discovery** — DEG + GO/KEGG enrichment + candidate ranking, validated on real GEO data (e.g. GSE7621 PD)
+- 🔗 **Causal-evidence chain** — full GWAS → eQTL → colocalization → TWAS → fine-mapping → MR (goes far beyond plain MR)
+- 🌍 **Cross-ancestry MR** — CAUSE/MRMix pleiotropy modeling + portability across EUR/EAS/SAS/AFR/AMR
+- 🧫 **Single-cell foundation embeddings** — scGPT / UCE / scFoundation cell-type recovery (mock-validated; live mode on GPU)
+- 🧭 **Deterministic Agent Router** — rule-based intent → workflow mapping (no LLM; identical input → identical route)
+- 🔬 **Reproducible & honestly graded** — 9-case validation suite on real public data, evidence graded A/B/C; controlled-access data excluded by design
 
 [![CI](https://github.com/Alim430/bioresearch-agent/actions/workflows/ci.yml/badge.svg)](https://github.com/Alim430/bioresearch-agent/actions/workflows/ci.yml)
 [![Python 3.9+](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![v1.1.0](https://img.shields.io/badge/release-v1.1.0-green.svg)](https://github.com/Alim430/bioresearch-agent/releases/tag/v1.1.0)
+[![v1.8.0](https://img.shields.io/badge/release-v1.8.0-green.svg)](https://github.com/Alim430/bioresearch-agent/releases/tag/v1.8.0)
 
 ---
 
@@ -69,7 +71,7 @@ and it will dispatch to the underlying `bioresearch` workflows — producing dat
 <summary>Manual install / other clients</summary>
 
 ```bash
-# Claude Desktop (macOS) — copy every active skill leaf folder
+# Claude Desktop (macOS) — copy every active skill leaf folder (14 skills)
 cp -r skills/core/project-introduction \
       skills/core/environment-check \
       skills/core/agent-router \
@@ -80,6 +82,10 @@ cp -r skills/core/project-introduction \
       skills/biomedical/causal-inference \
       skills/biomedical/causal-evidence \
       skills/biomedical/disease-case-study \
+      skills/biomedical/foundation-embeddings \
+      skills/biomedical/ld-reference-management \
+      skills/biomedical/gwas-harmonization \
+      skills/biomedical/ancestry-aware-mr \
       "$HOME/Library/Application Support/Claude/skills/"
 
 # Cursor:  same command, target ~/.cursor/skills/
@@ -214,6 +220,10 @@ An honest validation suite (not a leaderboard) that runs the workflows against r
 | 3 | AD literature gap analysis | **Real PubMed** (built-in corpus fallback) | B / C |
 | 4 | Exposure → outcome MR exemplar (BMI → T2D) | Synthetic GWAS (ground-truth known) | C |
 | 5 | Causal evidence chain (GWAS→eQTL→coloc→TWAS→fine-map→MR) | Synthetic loci (ground-truth labels) | C |
+| 6 | Real-data causal-evidence chain (Jansen 2019 AD GWAS → GTEx v8 brain eQTL, 5 AD genes) | **Real public summary data** | **B** |
+| 7 | Foundation-model embeddings (scGPT / UCE / scFoundation cell-type recovery) | Synthetic + mock embeddings (methodology) | C |
+| 8 | Cross-ancestry MR — CAUSE/MRMix pleiotropy + portability | Synthetic cross-ancestry GWAS | C |
+| 9 | Cross-ancestry GWAS harmonization + LD clumping | Synthetic multi-ancestry panels | C |
 
 Grades: **A/B** = real public data; **C** = synthetic/offline methodology validation. Low recovery (e.g., Mendelian PD drivers in bulk tissue) is reported honestly, not hidden.
 
@@ -327,6 +337,10 @@ instructions and parameter schemas; all computation runs in the framework's work
 | `bioresearch-causal-evidence` | Causal-evidence chain (coloc → TWAS → fine-map → MR) | "causal evidence / colocalization / TWAS" |
 | `bioresearch-disease-case-study` | Real-data disease case study + blind benchmark | "case study / validation / benchmark" |
 | `bioresearch-agent-router` | Rule-based intent → workflow (no LLM, deterministic) | "classify / route a research intent" |
+| `bioresearch-foundation-embeddings` | Single-cell foundation-model embeddings (scGPT / UCE / scFoundation) | "foundation model / scGPT / cell embedding" |
+| `bioresearch-ld-reference-management` | Ancestry-specific LD panel + greedy clumping + LD score | "LD reference / clumping / LD score" |
+| `bioresearch-gwas-harmonization` | Cross-ancestry GWAS alignment (allele / strand / palindromic / AF) | "GWAS harmonization / allele alignment" |
+| `bioresearch-ancestry-aware-mr` | Cross-ancestry MR (CAUSE / MRMix + portability) | "cross-ancestry MR / CAUSE / portability" |
 
 > `differential-expression` and `pathway-enrichment` invoke the same `biomarker` workflow (DEG is
 > stage 1, enrichment is stage 2) — they are focused entry points, not separate CLI commands.
@@ -389,25 +403,31 @@ bioresearch-agent/
 ├── bio-research-os/      # core framework (modules, demos, examples)
 ├── skills/              # agent skills (core/ + biomedical/) + registry.json + skills/README.md
 ├── examples/            # copy-paste agent workflow examples (AD / Parkinson / MR)
+├── docs/                # versioned manuscripts (docs/joss) + case-study evidence packages
 ├── outputs/              # generated outputs (gitignored)
 ├── assets/               # documentation figures
 ├── README.md
 ├── CITATION.cff          # cite this repository
-├── RELEASE_NOTES.md      # v1.1.0 release notes
+├── RELEASE_NOTES.md      # v1.8.0 release notes
+├── DATA_GOVERNANCE.md    # data-tier classification & repo-hygiene rules
 ├── pyproject.toml
 └── Makefile
 ```
 
 ---
 
-## 🛣️ Roadmap
+## 🛣️ Roadmap (shipped → planned)
 
-### Planned
+**Shipped**
+- ✅ v1.5 — Causal-evidence chain (coloc → TWAS → fine-mapping → MR) + **real-data Case 6** (Jansen 2019 AD GWAS → GTEx v8 brain eQTL)
+- ✅ v1.6 — Single-cell foundation-model embeddings (scGPT / UCE / scFoundation, mock-validated)
+- ✅ v1.8 — Cross-ancestry MR (LD reference + GWAS harmonization + CAUSE/MRMix + portability)
 
-- Declarative workflow configuration
-- Pluggable model-agnostic backend interface
-- Additional research workflows
-- Expanded data source integrations
+**Planned**
+- 🔲 Real-data live modes (1000G LD panels, IEU / BBJ / FinnGen GWAS) — CPU
+- 🔲 Multimodal integration (totalVI / MultiVI / MOFA+) — GPU
+- 🔲 Virtual Cell (CZ CELLxGENE Census / Arc VCC) — GPU + memory
+- Declarative workflow configuration & pluggable model-agnostic backend interface
 
 ---
 

@@ -52,9 +52,14 @@ sys.path.insert(0, HERE)
 import demo_causal_evidence as ce  # noqa: E402
 
 # User-local PUBLIC summary-file defaults (supply via --gwas-path / --eqtl-dir).
-# These paths point at already-downloaded PUBLIC data; they are NOT in the repo.
-DEFAULT_GWAS = "/Users/alim/ad-vcp-data/raw/gwas/JansenIE_2019/AD_sumstats_Jansenetal_2019sept.txt.gz"
-DEFAULT_EQTL_DIR = "/Users/alim/ad-vcp-data/raw/eqtl/gtex/GTEx_Analysis_v8_eQTL"
+# These point at already-downloaded PUBLIC data on YOUR machine; they are NOT in
+# the repo. Set BIORESEARCH_PUBLIC_DATA to your local raw-data root (the dir that
+# contains raw/gwas/... and raw/eqtl/...), or pass the explicit --gwas-path /
+# --eqtl-dir flags. Left empty when the env var is unset so the CLI fails loudly
+# with a clear hint instead of shipping a developer-specific absolute path.
+_DATA_ROOT = os.environ.get("BIORESEARCH_PUBLIC_DATA", "")
+DEFAULT_GWAS = os.path.join(_DATA_ROOT, "raw/gwas/JansenIE_2019/AD_sumstats_Jansenetal_2019sept.txt.gz") if _DATA_ROOT else ""
+DEFAULT_EQTL_DIR = os.path.join(_DATA_ROOT, "raw/eqtl/gtex/GTEx_Analysis_v8_eQTL") if _DATA_ROOT else ""
 
 BRAIN_TISSUES = [
     "Brain_Amygdala", "Brain_Anterior_cingulate_cortex_BA24", "Brain_Caudate_basal_ganglia",
@@ -395,11 +400,13 @@ def main():
 
     genes = [g.strip() for g in args.genes.split(",") if g.strip()]
     if not os.path.exists(args.gwas_path):
-        sys.exit(f"[ERROR] GWAS file not found: {args.gwas_path}\n"
-                 f"        Download Jansen 2019 AD sumstats (public) and pass --gwas-path.")
+        sys.exit(f"[ERROR] GWAS file not found: {args.gwas_path!r}\n"
+                 f"        Set BIORESEARCH_PUBLIC_DATA to your local raw-data root, or pass\n"
+                 f"        --gwas-path <path> (Jansen 2019 AD sumstats .txt.gz, public).")
     if not os.path.isdir(args.eqtl_dir):
-        sys.exit(f"[ERROR] eQTL dir not found: {args.eqtl_dir}\n"
-                 f"        Download GTEx v8 brain eQTL and pass --eqtl-dir.")
+        sys.exit(f"[ERROR] eQTL dir not found: {args.eqtl_dir!r}\n"
+                 f"        Set BIORESEARCH_PUBLIC_DATA to your local raw-data root, or pass\n"
+                 f"        --eqtl-dir <dir> (GTEx v8 *.v8.egenes.txt.gz, public).")
     run_real_causal_chain(args.gwas_path, args.eqtl_dir, genes=genes,
                           outdir=args.output_dir)
 
