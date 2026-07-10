@@ -83,3 +83,7 @@ bioRxiv/
 arxiv-abstract.md
 docs/publication/
 framework/
+
+# Local-only planning & submission drafts (not for public repo)
+docs/roadmap/
+docs/joss/paper.md
