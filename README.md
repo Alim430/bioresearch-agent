@@ -172,6 +172,63 @@ Stages 1&ndash;8 (Question &rarr; Hypothesis &rarr; Literature &rarr; Design &ra
 
 ---
 
+## 🧮 Evidence Scoring & Hard Quality Control
+
+BioResearch Agent ships a small, **deterministic** evidence-scoring contract and a hard
+quality-control layer. These are *framework utilities*, not autonomous reasoning: every
+computation is a fixed numerical aggregation with no LLM involvement.
+
+### Scorer plugin interface
+
+The public framework exposes one abstract contract — `EvidenceScorer` — plus a default
+implementation (`DefaultMultiModalScorer`) and an in-memory registry (`PluginRegistry`).
+Domain-specific scorers (e.g. a private AD-VCP candidate-ranking system) plug in via this
+interface and are **not** distributed with the public repository.
+
+```python
+from bioresearch.scorer import EvidenceScorer, EvidenceLayer, PluginRegistry
+
+class MyScorer(EvidenceScorer):
+    @property
+    def name(self): return "MyScorer"
+    @property
+    def supported_layers(self): return ["genetic", "functional", "population"]
+    def validate_layers(self, layers): return any(l.qc_passed for l in layers)
+    def score(self, gene, evidence_layers, context=None):
+        # deterministic aggregation of qc_passed layers -> ScoredGene
+        ...
+
+reg = PluginRegistry()
+reg.register(MyScorer(), set_default=True)
+```
+
+A ready-made synthetic example lives in `demo_plugins/trivial_scorer.py` (**fake data only** —
+no real genes, no publication data). Third-party scorers can also register through the
+`bioresearch.scorers` entry-point group declared in `setup.py`.
+
+### Hard quality-control assertions
+
+`bioresearch.quality.assertions` enforces non-negotiable statistical gates. A `CRITICAL`
+gate with action `REJECT` raises `HardStopException` and stops the pipeline:
+
+| Assertion | Threshold | Action |
+|:---|:---|:---|
+| `mr_weak_iv` | instrument strength F ≥ 10 | REJECT |
+| `rnaseq_low_mapping` | alignment rate ≥ 70% | REJECT |
+| `scrnaseq_low_umi` | median UMI ≥ 500 | REJECT |
+| `mr_pleiotropy` | MR-Egger intercept p ≥ 0.05 | WARN |
+| `coloc_weak` | PP.H4 ≥ 0.8 | WARN |
+| `multiple_testing_unadjusted` | BH q ≤ 0.05 | WARN |
+
+### Data-governance interceptor
+
+`bioresearch.quality.governance` blocks controlled-access / individual-level sources
+(MetaBrain, UKB-PPP, ADNI, deCODE, personal genome) before any load — see
+[Data & Network Access](#-data--network-access) and `DATA_GOVERNANCE.md`. The framework
+processes only public, de-identified, or summary-level data.
+
+---
+
 ## 🚀 Three Commands, Three Workflows
 
 ### 1. Literature Review
