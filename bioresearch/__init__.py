@@ -144,3 +144,39 @@ class Agent:
 
     def __repr__(self):
         return f"<BioResearchAgent llm={self.llm}>"
+
+
+# --------------------------------------------------------------------------- #
+# Public framework subpackages (deterministic evidence scoring + hard QC).
+#
+# These contain NO LLM calls and NO autonomous research decisions; they are the
+# only scoring / QC contracts the framework ships. Domain-specific scorers
+# (e.g. AD-VCP's private VCIS) plug in via ``bioresearch.scorer.EvidenceScorer``
+# and are NOT distributed with this public framework.
+# --------------------------------------------------------------------------- #
+from . import scorer  # noqa: E402,F401
+from . import quality  # noqa: E402,F401
+from .scorer import (  # noqa: E402,F401
+    EvidenceLayer,
+    EvidenceScorer,
+    LayerConfidence,
+    ScoredGene,
+    DefaultMultiModalScorer,
+    PluginRegistry,
+)
+from .quality import (  # noqa: E402,F401
+    AssertionStatus,
+    HardStopException,
+    AssertionSpec,
+    AssertionResult,
+    AssertionBatch,
+    BUILTIN_ASSERTIONS,
+    run_assertion,
+    DataAccessBlockedError,
+    BLOCKED_DATA_SOURCES,
+    LICENSE_TIER,
+    validate_data_request,
+    compute_sha256,
+    DataProvenance,
+    AuditTrail,
+)

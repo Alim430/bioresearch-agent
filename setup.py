@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="bioresearch-agent",
-    version="1.8.0",
+    version="1.9.0",
     description="An open-source, reproducible workflow framework for structured biomedical research",
     long_description=open("README.md").read(),
     long_description_content_type="text/markdown",
@@ -14,6 +14,11 @@ setup(
         "console_scripts": [
             "bioresearch=bioresearch.cli:main",
         ],
+        # Third-party / private scorers register here as plugin entry points, e.g.:
+        #   "bioresearch.scorers": ["my_scorer = my_pkg.module:MyScorerClass"]
+        # The public framework ships only the EvidenceScorer interface; concrete
+        # scorers (e.g. AD-VCP's private VCIS) live in their own distribution.
+        "bioresearch.scorers": [],
     },
     classifiers=[
         "Development Status :: 3 - Alpha",
