@@ -17,7 +17,7 @@ CLI · Python SDK · API · Agent Skills
 [![CI](https://github.com/Alim430/bioresearch-agent/actions/workflows/ci.yml/badge.svg)](https://github.com/Alim430/bioresearch-agent/actions/workflows/ci.yml)
 [![Python 3.9+](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![v1.8.0](https://img.shields.io/badge/release-v1.8.0-green.svg)](https://github.com/Alim430/bioresearch-agent/releases/tag/v1.8.0)
+[![release](https://img.shields.io/github/v/release/Alim430/bioresearch-agent)](https://github.com/Alim430/bioresearch-agent/releases/latest)
 
 ---
 
@@ -456,22 +456,41 @@ You can audit every request the tool makes before loading it into your assistant
 
 ```
 bioresearch-agent/
-├── bioresearch/         # SDK + CLI package
+├── bioresearch/         # SDK + CLI package (incl. scorer/ + quality/ subpackages)
 ├── bio-research-os/      # core framework (modules, demos, examples)
 ├── skills/              # agent skills (core/ + biomedical/) + registry.json + skills/README.md
 ├── examples/            # copy-paste agent workflow examples (AD / Parkinson / MR)
+├── tests/               # pytest suite (run: pytest tests/)
 ├── docs/                # versioned manuscripts (docs/joss) + case-study evidence packages
+├── demo_plugins/         # pure-SYNTHETIC example EvidenceScorer (zero real data)
 ├── outputs/              # generated outputs (gitignored)
 ├── assets/               # documentation figures
 ├── README.md
 ├── CITATION.cff          # cite this repository
-├── RELEASE_NOTES.md      # v1.8.0 release notes
+├── CONTRIBUTING.md       # how to contribute
+├── RELEASE_NOTES.md      # release notes
 ├── DATA_GOVERNANCE.md    # data-tier classification & repo-hygiene rules
-├── pyproject.toml
+├── GIT_WORKFLOW.md       # branching / commit / release workflow (read before contributing)
+├── pyproject.toml        # single source of truth for packaging metadata
+├── setup.py              # backward-compat shim (defers to pyproject.toml)
 └── Makefile
+# NOTE: framework/ and arxiv-abstract.md are intentionally gitignored (submission-prep
+#       material) and are NEVER published to this public repo. See .gitignore + DATA_GOVERNANCE.md.
 ```
 
 ---
+
+## 🧪 Running tests
+
+```bash
+pip install -e ".[dev]"
+pytest tests/ -v
+```
+
+The suite covers scorer determinism (`seed=42`), hard statistical assertions
+(weak-IV `F<10` → `REJECT`), the data-governance blocklist (ADNI / UKB-PPP /
+MetaBrain / deCODE / personal-genome), and audit-chain continuity. CI also runs
+CLI/SDK smoke tests and a cross-Python determinism check.
 
 ## 🛣️ Roadmap (shipped → planned)
 
