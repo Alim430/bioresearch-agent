@@ -6,10 +6,12 @@ authors:
   - family-names: Tudiyusufu
     given-names: Alimujiang
     email: almj@ibms.pumc.edu.cn
+    orcid: "https://orcid.org/0009-0002-5180-6226"
 repository-code: "https://github.com/Alim430/bioresearch-agent"
 url: "https://github.com/Alim430/bioresearch-agent"
 license: MIT
-version: 1.0.0
+version: 1.9.0
+date-released: "2026-07-16"
 keywords:
   - biomedical research
   - reproducible workflow
