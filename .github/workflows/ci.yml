@@ -295,3 +295,59 @@ jobs:
           name: determinism-outputs
           path: outputs/run*/
           retention-days: 3
+
+  # ──────────────────────────────────────────
+  # Job 4: Pytest suite
+  # ──────────────────────────────────────────
+  pytest:
+    name: Pytest suite
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.9", "3.11", "3.12"]
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install package + dev deps
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e ".[dev]"
+
+      - name: Run pytest
+        run: pytest tests/ -v
+
+  # ──────────────────────────────────────────
+  # Job 5: Submission-material guard
+  # ──────────────────────────────────────────
+  guard:
+    name: Forbidden-path guard
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Ensure no submission-prep material is tracked
+        run: |
+          forbidden=("bioRxiv/" "arxiv-abstract.md" "docs/publication/" "framework/" "docs/roadmap/" "docs/joss/paper.md")
+          tracked=$(git ls-files)
+          fail=0
+          for f in "${forbidden[@]}"; do
+            if echo "$tracked" | grep -qxF "$f"; then
+              echo "❌ Forbidden path is tracked: $f"; fail=1
+            fi
+          done
+          # Safety net: any tracked path mentioning arxiv/biorexiv (case-insensitive)
+          # is rejected, except the literature-review doc which is a legit public file.
+          if echo "$tracked" | grep -iE "arxiv|biorexiv" | grep -v "docs/joss/literature_review.md" | grep -q .; then
+            echo "❌ Suspected submission material tracked:"; echo "$tracked" | grep -iE "arxiv|biorexiv"
+            fail=1
+          fi
+          if [ "$fail" -ne 0 ]; then exit 1; fi
+          echo "✅ No submission-prep material tracked"
