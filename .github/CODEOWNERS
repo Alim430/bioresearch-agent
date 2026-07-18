@@ -1,0 +1,14 @@
+# Default reviewers for the public framework
+*                 @Alim430
+
+# Core SDK + scoring / quality subpackages
+/bioresearch/     @Alim430
+/bio-research-os/ @Alim430
+
+# Documentation + governance
+/docs/            @Alim430
+/*.md             @Alim430
+
+# Submission-prep paths must NEVER be touched in the public repo
+/framework/       @Alim430
+/arxiv-abstract.md @Alim430

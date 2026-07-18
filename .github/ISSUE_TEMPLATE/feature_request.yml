@@ -1,0 +1,33 @@
+name: Feature request
+description: Propose a new capability, skill, or workflow
+title: "[feat] "
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: What gap or pain does this address?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed solution
+      description: How should it work? Reference existing modules/skills if relevant.
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence / validation
+      description: How will we verify it (real public data, synthetic, unit test)?
+    validations:
+      required: false
+  - type: checkboxes
+    id: scope
+    attributes:
+      label: Scope
+      options:
+        - label: "This is a reproducible-workflow / skill-interface feature, not an autonomous-reasoning feature"
+          required: true
