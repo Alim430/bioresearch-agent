@@ -1,3 +1,42 @@
+## BioResearch Agent v1.9.0
+
+**Pluggable evidence scoring + hard quality control. Resumable run state and explicit negative results. 14 skills, 9 validation cases, 23 benchmark tasks, 17 pytest tests.**
+
+```bash
+git clone https://github.com/Alim430/bioresearch-agent.git
+cd bioresearch-agent
+pip install -e .
+pytest tests/                  # 17 passed
+python tests/benchmark_lite.py # 23/23 passing
+```
+
+### What is new in v1.9.0
+
+- **Evidence-scorer plugin interface** (`bioresearch/scorer/`):
+  - `EvidenceScorer` abstract contract (`base.py`) over typed `EvidenceLayer` inputs (`qc_passed`-gated, direction-validated) producing `ScoredGene` rankings.
+  - `DefaultMultiModalScorer` (`default.py`) — the built-in deterministic scorer; pure computation, no LLM calls.
+  - Plugin discovery via the standard Python entry-point group `bioresearch.scorers` (`registry.py`); `demo_plugins/trivial_scorer.py` is a minimal working example.
+  - This is an interface/packaging layer: it standardizes how scoring is invoked and swapped. It does not add new analytical capability by itself.
+- **Hard quality control** (`bioresearch/quality/`):
+  - `assertions.py` — hard statistical assertions that fail a run loudly instead of letting bad numbers through.
+  - `governance.py` — data-governance interceptor that blocks controlled-access / blacklisted data sources from entering a run.
+  - `audit.py` — append-only, chain-hashed audit trail for run provenance.
+- **Resumable runs + negative results** (`bio-research-os/`):
+  - `core/persistence.py` — `StateStore` save/load of `ResearchState`, wired into the engine runtime so interrupted runs resume from persisted state instead of restarting.
+  - `engines/negative_result.py` — classifies every tested result as SIGNIFICANT / NULL / INCONCLUSIVE and emits a structured `NullReport`, so null findings are surfaced explicitly rather than silently dropped.
+- **Test suite**: new pytest suite in `tests/` — 17 tests (router ×10, scorer ×4, quality ×3), all passing. The 23-task Benchmark-Lite regression suite still passes 23/23.
+- **Packaging hardened**: `pyproject.toml` is now the single source of truth (version 1.9.0); `setup.py` reduced to a compatibility shim; `CITATION.cff` synced.
+- **CI expanded**: new pytest job, plus a forbidden-path guard job that fails CI if submission artifacts (paper / JOSS / preprint material) ever enter the public repo. Existing Python 3.9–3.12 CLI/SDK matrix unchanged.
+- **Repository governance**: `docs/GIT_WORKFLOW.md` (trunk-based branching), `CONTRIBUTING` wired to it, issue/PR templates, `CODEOWNERS`.
+- **Docs**: golden-paths matrix, `PLAN_v3_final.md` (evidence-scoring + hard-QC + data-governance subset only), literature review, v1.9 manuscript draft.
+
+### Notes
+
+- v1.9.0 adds **no new skills or validation cases** — it hardens scoring, QC, persistence, packaging, and CI on top of the v1.8.0 feature set (14 skills / 9 cases / 23 benchmark tasks).
+- Evidence-grade discipline unchanged: case grades (B/C) carry over from v1.8.0; mock-mode results validate computation, not etiology.
+
+---
+
 ## BioResearch Agent v1.8.0
 
 **Phase 3a: Cross-ancestry Mendelian Randomization (mock mode). 14 skills, 9 validation cases, 23 benchmark tasks.**
