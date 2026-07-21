@@ -1,0 +1,25 @@
+{
+  "title": "BioResearch Agent Framework",
+  "description": "Executable biomedical workflows for AI assistants — literature analysis, biomarker discovery, and Mendelian randomization through reproducible agent skills. 14 skills, 9 validation cases, 23 benchmark tasks, 17 pytest tests. Pluggable evidence scoring, hard quality control, resumable runs, and explicit negative results.",
+  "creators": [
+    {
+      "name": "Tudiyusufu, Alimujiang",
+      "affiliation": "Institute of Basic Medical Sciences, Peking Union Medical College",
+      "orcid": "0009-0002-5180-6226"
+    }
+  ],
+  "license": "MIT",
+  "keywords": [
+    "biomedical research",
+    "reproducible workflow",
+    "agent skills",
+    "literature analysis",
+    "biomarker discovery",
+    "mendelian randomization",
+    "evidence scoring",
+    "quality control"
+  ],
+  "access_right": "open",
+  "upload_type": "software",
+  "language": "eng"
+}
