@@ -53,3 +53,6 @@ Homepage = "https://github.com/Alim430/bioresearch-agent"
 Documentation = "https://github.com/Alim430/bioresearch-agent#readme"
 Repository = "https://github.com/Alim430/bioresearch-agent"
 Issues = "https://github.com/Alim430/bioresearch-agent/issues"
+
+[tool.setuptools.packages.find]
+include = ["bioresearch*"]
